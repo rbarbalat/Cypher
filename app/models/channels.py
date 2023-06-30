@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Channel(db.Model):
   __tablename__ = 'channels'
@@ -10,5 +10,7 @@ class Channel(db.Model):
   name = db.Column(db.String(255), nullable=False, index=True)
   description = db.Column(db.String(2000))
   private = db.Column(db.Boolean(), nullable=False, default=False)
-  team_id = db.Column(db.Integer(), db.ForeignKey('teams.id'), nullable=False, cascade='all, delete-orphan')
-  
+  team_id = db.Column(db.Integer(), db.ForeignKey(add_prefix_for_prod('teams.id')), nullable=False)
+
+  #users is a list of channel_membership instances for a fixed channel
+  users = db.relationship("ChannelMembership", back_populates="channel", cascade='all, delete-orphan')

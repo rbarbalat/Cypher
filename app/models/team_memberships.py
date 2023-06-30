@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from enum import Enum
 
 class TeamMembership(db.Model):
@@ -9,8 +9,8 @@ class TeamMembership(db.Model):
 
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), cascade='all, delete-orphan', nullable=False)
-    team_id = db.Column(db.Integer, db.ForeignKey("teams.id"), cascade='all, delete-orphan', nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    team_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("teams.id")), nullable=False)
     status = db.Column(db.Enum('owner', 'admin', 'member', name='team_enum'), nullable=False, default='member')
 
     #a user instance corresponding to a teamMembershp instance

@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from enum import Enum
 
 class ChannelMembership(db.Model):
@@ -9,8 +9,8 @@ class ChannelMembership(db.Model):
 
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), cascade='all, delete-orphan', nullable=False)
-    channel_id = db.Column(db.Integer, db.ForeignKey("channels.id"), cascade='all, delete-orphan', nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("channels.id")), nullable=False)
     status = db.Column(db.Enum('owner', 'admin', 'member', name='channel_enum'), nullable=False, default='member')
 
     #a user instance corresponding to a channelMembershp instance

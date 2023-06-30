@@ -15,6 +15,11 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now())
 
+    #channels is a list of channelMembership instances for a fixed user
+    channels = db.relationship("ChannelMembership", back_populates="user", cascade='all, delete-orphan')
+    teams = db.relationship("TeamMembership", back_populates="user", cascade='all, delete-orphan')
+    # lc_senders = db.relationship("Sender", back_populates="lc_channels", cascade='all, delete-orphan')
+
     @property
     def password(self):
         return self.hashed_password
