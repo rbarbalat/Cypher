@@ -1,1 +1,42 @@
-/* TODO Add site wide styles */
+#root {
+    font-family: 'Outfit', sans-serif;
+    --blue: rgb(28, 28, 71);
+    --border: #dadada;
+    --light-hover: #fafafa;
+    --dark-hover: rgba(255,255,255,.1);
+    --color-hover: rgba(90, 140, 240, 0.75);
+    --body: #656565;
+    --shadow: rgba(0,0,0,.1);
+    --content: 1110px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body, html {
+    margin: 0;
+  }
+
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 0;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--blue);
+  }

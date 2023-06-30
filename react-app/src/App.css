@@ -1,0 +1,23 @@
+@import url('./index.css');
+
+#app--wrapper {
+  height: 100dvh;
+  width: 100dvw;
+  user-select: none;
+}
+
+#main--wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  display: flex;
+}
+
+.btn {
+  padding: 10px 25px;
+  font-family: 'Outfit';
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}

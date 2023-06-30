@@ -1,0 +1,93 @@
+@import url('../../index.css');
+
+.auth--wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.auth--contents {
+    width: var(--content);
+    display: flex;
+    justify-content: center;
+}
+
+
+.auth--form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 50px;
+}
+
+.auth--logo {
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.auth--intro {
+    padding: 25px 0;
+}
+
+.auth--intro h1 {
+    margin: 0;
+    text-align: center;
+}
+
+.auth--intro p {
+    margin: 0;
+    text-align: center;
+    color: var(--body)
+}
+
+
+.auth--image {
+    height: 45px;
+    aspect-ratio: 1;
+    background-color: var(--blue);
+    border-radius: 50px;
+}
+
+.auth--text {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+}
+
+#auth-sign-in {
+    margin: 15px 0;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+}
+
+.auth--errors {
+    list-style-type: none;
+    margin: 15px 0;
+    padding: 0;
+}
+
+.auth--error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: red;
+}
+
+.auth--to_login {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    font-size: 12px;
+    text-align: right;
+}
+
+.auth--to_login p {
+    margin: 0;
+}

@@ -1,0 +1,170 @@
+@import url('../../index.css');
+.input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 24px 0; */
+    width: 100%;
+}
+
+.input-wrapper {
+    border-radius: 5px;
+    width: 100%;
+    .body {
+        align-self: flex-start;
+    }
+}
+
+.date_time-input-wrapper {
+    position: relative;
+    display: block;
+    margin-top: 60px;
+}
+
+.price_input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.number_input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.input-with-label {
+    margin-top: 60px;
+}
+
+.input-without-label {
+    margin: 10px 0;
+}
+
+.date_time-wrapper {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+
+}
+
+.input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    background-color: white;
+}
+
+.date_input {
+    width: 250px;
+}
+
+.time_input {
+    width: 150px;
+}
+
+.price_input {
+    width: 150px;
+}
+
+.textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid var(--light-gray);
+    background-color: rgb(244, 255, 254);
+    resize: none;
+    height: 200px;
+}
+
+.input:focus {
+    outline: 1px solid var(--teal)
+}
+
+.input-label {
+    position: absolute;
+    top: -30px;
+    left: 0;
+}
+
+.price_input-wrapper .input-error {
+    left: 0;
+}
+.number_input {
+    width: 150px;
+}
+
+.password-icon {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    color: var(--dark-gray);
+}
+
+.price_input-icon {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: var(--dark-gray);
+}
+
+.pad-left {
+    padding-left: 40px;
+}
+.input-icon-right {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: var(--text-body-color);
+}
+
+.input-icon-left {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: var(--text-body-color);
+}
+
+.input-error {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 5px;
+    color: var(--red)
+}
+
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+}
+
+.select_box-wrapper {
+    border: 1px solid var(--light-gray);
+    background-color: rgb(244, 255, 254);
+    border-radius: 5px;
+    padding-right: 10px;
+}
+
+.select {
+    padding: 15px;
+    border: none;
+    background-color: transparent;
+}
+
+.default-value {
+    color: var(--dark-gray);
+}
+.select:focus {
+    outline: transparent
+}
+
+.select-without-label {
+    margin-top: 30px;
+}
