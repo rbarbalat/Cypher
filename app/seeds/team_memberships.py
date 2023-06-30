@@ -2,6 +2,7 @@ from app.models import db, TeamMembership, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_team_memberships(users, teams):
+    print('wertyuiop[]')
     tm1 = TeamMembership(user=users[0], team=teams[0], status='owner')
     tm2 = TeamMembership(user=users[1], team=teams[0], status='admin')
     tm3 = TeamMembership(user=users[2], team=teams[0])

@@ -3,6 +3,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from ..models.direct_messages import DirectMessage
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -20,10 +21,9 @@ class User(db.Model, UserMixin):
     channels = db.relationship("ChannelMembership", back_populates="user", cascade='all, delete-orphan')
     teams = db.relationship("TeamMembership", back_populates="user", cascade='all, delete-orphan')
     # recipients is a list of DM instances in which the recipient of that DM is this user instance
-    recipient_dms = db.relationship("DirectMessage", back_populates="sender", cascade='all, delete-orphan')
+    recipient_dms = db.relationship("DirectMessage", back_populates="sender", foreign_keys=[DirectMessage.recipient_id], cascade='all, delete-orphan')
     # senders is a list of DM instances in which the sender of that DM is this users instance
-    sender_dms = db.relationship("DirectMessage", back_populates="recipient",  cascade='all, delete-orphan')
-    # lc_senders = db.relationship("Sender", back_populates="lc_channels", cascade='all, delete-orphan')
+    sender_dms = db.relationship("DirectMessage", back_populates="recipient", foreign_keys=[DirectMessage.sender_id], cascade='all, delete-orphan')
     live_chat_user = db.relationship("LiveChat", back_populates="sender_to_channel", cascade='all, delete-orphan')
 
 

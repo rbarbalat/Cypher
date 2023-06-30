@@ -14,4 +14,4 @@ class LiveReplies(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.now())
 
   # lc_sender = db.relationship("User", back_populates="lc_senders")
-  chat = db.relationship("LiveChat", back_populates="replies", cascade="all, delete-orphan" )
+  chat = db.relationship("LiveChat", back_populates="replies")
