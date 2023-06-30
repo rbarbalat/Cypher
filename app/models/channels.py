@@ -15,3 +15,4 @@ class Channel(db.Model):
   #users is a list of channel_membership instances for a fixed channel
   users = db.relationship("ChannelMembership", back_populates="channel", cascade='all, delete-orphan')
   channel_chats = db.relationship("LiveChat", back_populates="channel", cascade='all, delete-orphan')
+  team = db.relationship("Team", back_populates="channels")
