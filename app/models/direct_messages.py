@@ -12,3 +12,6 @@ class DirectMessage(db.Model):
   recipient_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
   message = db.Column(db.String(2000), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.now())
+
+  sender = db.relationship("User", back_populates="recipient_dms")
+  recipient = db.relationship("User", back_populates="sender_dms")
