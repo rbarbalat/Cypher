@@ -19,13 +19,11 @@ class User(db.Model, UserMixin):
 
     # channels is a list of channelMembership instances for a fixed user
     channels = db.relationship("ChannelMembership", back_populates="user", cascade='all, delete-orphan')
+    # teams is a list of teamMemberships instances for a fixed user
     teams = db.relationship("TeamMembership", back_populates="user", cascade='all, delete-orphan')
-    # recipients is a list of DM instances in which the recipient of that DM is this user instance
-    recipient_dms = db.relationship("DirectMessage", back_populates="sender", foreign_keys=[DirectMessage.recipient_id], cascade='all, delete-orphan')
-    # senders is a list of DM instances in which the sender of that DM is this users instance
-    sender_dms = db.relationship("DirectMessage", back_populates="recipient", foreign_keys=[DirectMessage.sender_id], cascade='all, delete-orphan')
     live_chat_user = db.relationship("LiveChat", back_populates="sender_to_channel", cascade='all, delete-orphan')
-
+    sent_messages = db.relationship('DirectMessage', foreign_keys='DirectMessage.sender_id', back_populates='sender', cascade='all, delete-orphan')
+    received_messages = db.relationship('DirectMessage', foreign_keys='DirectMessage.recipient_id', back_populates='recipient', cascade='all, delete-orphan')
 
     @property
     def password(self):

@@ -1,4 +1,5 @@
 from app.models import db, DirectMessage, environment, SCHEMA
+# from app.models import db, direct_messages, environment, SCHEMA
 from sqlalchemy.sql import text
 from random import sample
 

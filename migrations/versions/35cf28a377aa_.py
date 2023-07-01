@@ -1,18 +1,19 @@
 """empty message
 
-Revision ID: 7f0b09205d33
+Revision ID: 35cf28a377aa
 Revises:
-Create Date: 2023-06-30 19:21:52.694185
+Create Date: 2023-07-01 02:13:40.538709
 
 """
 from alembic import op
 import sqlalchemy as sa
+
 import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '7f0b09205d33'
+revision = '35cf28a377aa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,8 +44,10 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
 
     op.create_table('channels',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -75,7 +78,6 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE direct_messages SET SCHEMA {SCHEMA};")
 
-
     op.create_table('team_memberships',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -85,10 +87,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
     if environment == "production":
         op.execute(f"ALTER TABLE team_memberships SET SCHEMA {SCHEMA};")
-
 
     op.create_table('channel_memberships',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -102,7 +102,6 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE channel_memberships SET SCHEMA {SCHEMA};")
 
-
     op.create_table('live_chats',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('sender_id', sa.Integer(), nullable=False),
@@ -113,9 +112,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['sender_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
     if environment == "production":
         op.execute(f"ALTER TABLE live_chats SET SCHEMA {SCHEMA};")
-
 
     op.create_table('live_replies',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -127,7 +126,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['sender_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
     if environment == "production":
         op.execute(f"ALTER TABLE live_replies SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###

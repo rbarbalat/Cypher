@@ -13,8 +13,5 @@ class DirectMessage(db.Model):
   message = db.Column(db.String(2000), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.now())
 
-  sender = db.relationship("User", foreign_keys=[sender_id], back_populates="recipient_dms")
-  recipient = db.relationship("User", foreign_keys=[recipient_id], back_populates="sender_dms")
-
-  # billing_address = relationship("Address", foreign_keys="[Customer.billing_address_id]")
-  # billing_address = relationship("Address", foreign_keys="Customer.billing_address_id")
+  sender = db.relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")
+  recipient = db.relationship("User", foreign_keys=[recipient_id], back_populates="received_messages")
