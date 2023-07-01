@@ -8,7 +8,8 @@ team_routes = Blueprint('teams', __name__)
 def get_teams():
     teams = Team.query.all()
     print(teams)
-    # return f"{teams[0].id}"
+    if len(teams) == 0:
+        return {}
     return [ {
        'id':team.id,
         'name':team.name,
