@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 import Input from "../../components/inputs/input";
 import { FaRegTimesCircle } from 'react-icons/fa'
@@ -9,13 +9,17 @@ import './signup.css'
 function SignUp() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    const history = useHistory('/')
+
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState({});
 
-    if (sessionUser) return <Redirect to="/" />;
+    if (sessionUser) {
+        history.push('/')
+    }
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -25,7 +29,7 @@ function SignUp() {
             setErrors(data)
           }
       } else {
-          setErrors(['Confirm Password field must be the same as the Password field']);
+          setErrors({confirmPassword: 'Passwords should match'});
       }
     };
 
@@ -37,7 +41,7 @@ function SignUp() {
             </div>
             <div className='auth--contents'>
             <form onSubmit={handleSubmit} className='auth--form'>
-                <div className='auth--logo'>
+                <div onClick={() => history.push('/')} className='auth--logo'>
                     <div className='auth--image'></div>
                     <p className='auth--text'>cypher</p>
                 </div>
@@ -50,7 +54,7 @@ function SignUp() {
                     value={email}
                     setValue={(x) => setEmail(x.target.value)}
                     name='email'
-                    error={undefined}
+                    error={errors.email}
                     disabled={false}
                 />
                 <Input
@@ -58,7 +62,7 @@ function SignUp() {
                     value={username}
                     setValue={(x) => setUsername(x.target.value)}
                     name='username'
-                    error={undefined}
+                    error={errors.username}
                     disabled={false}
                 />
                 <Input
@@ -67,7 +71,7 @@ function SignUp() {
                     value={password}
                     setValue={(x) => setPassword(x.target.value)}
                     name='current-password'
-                    error={undefined}
+                    error={errors.password}
                     disabled={false}
                 />
                 <Input
@@ -76,21 +80,16 @@ function SignUp() {
                     value={confirmPassword}
                     setValue={(x) => setConfirmPassword(x.target.value)}
                     name='current-password'
-                    error={undefined}
+                    error={errors.confirmPassword}
                     disabled={false}
                 />
                 <button
                     id="auth-sign-up"
                     className='btn'>Create your account
                 </button>
-                <ul className='auth--errors'>
-                    {errors.map((error, idx) => (
-                        <li  className='auth--error' key={idx}>
-                            <FaRegTimesCircle/>
-                            <span>{error}</span>
-                        </li>
-                    ))}
-                </ul>
+                <button className="btn auth--demo">
+                            Sign in With Demo Account
+                </button>
             </form>
             </div>
         </main>

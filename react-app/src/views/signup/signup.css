@@ -9,7 +9,6 @@
 }
 
 .auth--contents {
-    width: var(--content);
     display: flex;
     justify-content: center;
 }
@@ -28,6 +27,7 @@
     align-items: center;
     gap: 10px;
     margin: 0 auto;
+    cursor: pointer;
 }
 
 .auth--intro {
@@ -84,10 +84,16 @@
     position: absolute;
     right: 50px;
     top: 50px;
-    font-size: 12px;
+    font-size: 15px;
     text-align: right;
 }
 
 .auth--to_login p {
     margin: 0;
+}
+
+.auth--demo {
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    background-color: white;
 }

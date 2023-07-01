@@ -1,23 +1,33 @@
 #root {
     font-family: 'Outfit', sans-serif;
-    --blue: rgb(28, 28, 71);
+    --blue: #1c1c47;
     --border: #dadada;
     --light-hover: #fafafa;
-    --dark-hover: rgba(255,255,255,.1);
-    --color-hover: rgba(90, 140, 240, 0.75);
+    --dark-hover: #ffffff1a;
+    --color-hover: #5a8cf0bf;
     --body: #656565;
-    --shadow: rgba(0,0,0,.1);
+    --shadow: #0000001a;
     --content: 1110px;
+    --red: #ff1313;
   }
 
   * {
     box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
   }
 
   body, html {
     margin: 0;
   }
 
+  .link {
+    color: var(--color-hover);
+    cursor: pointer;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
 
   /* width */
   ::-webkit-scrollbar {

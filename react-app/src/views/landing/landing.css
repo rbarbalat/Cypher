@@ -169,6 +169,7 @@
 #outro-sign-up {
     background-color: var(--blue);
     color: white;
+    border: 2px solid var(--blue);
 }
 
 #outro-sign-in {
