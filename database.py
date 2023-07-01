@@ -26,9 +26,9 @@ with app.app_context():
     # print("channel_id -----  ", cm.channel_id)
     # db.session.delete(cm)
 
-    # _ =[db.session.delete(user) for user in User.query.all()]
-    # _ =[db.session.delete(team) for team in Team.query.all()]
-    # _ = [db.session.delete(chan) for chan in Channel.query.all()]
+    _ =[db.session.delete(user) for user in User.query.all()]
+    _ =[db.session.delete(team) for team in Team.query.all()]
+    _ = [db.session.delete(chan) for chan in Channel.query.all()]
     _ = [db.session.delete(chan_mem) for chan_mem in ChannelMembership.query.all()]
     #db.session.delete(user1)
     db.session.commit()
