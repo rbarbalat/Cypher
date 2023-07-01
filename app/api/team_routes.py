@@ -33,3 +33,21 @@ def get_user_teams():
     "image": team.image
     } for team in team_list]
   return team_list
+
+@team_routes.route("/<int:id>/channels")
+def get_team_channels(id):
+  channel_list=[]
+  team = Team.query.get(id)
+  if team is None:
+    return {"message": "Team not found"}
+  for channel in team.channels:
+    channel_list.append(channel)
+  channel_list = [{
+    "id": channel.id,
+    "name": channel.name,
+    "private": channel.private
+    } for channel in channel_list]
+  return channel_list
+
+# @team_routes.route('/', methods=['POST'])
+# def create_team():
