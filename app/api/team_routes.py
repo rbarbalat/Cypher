@@ -19,18 +19,17 @@ def get_team_by_id(id):
     team = Team.query.get(id)
     if team is None:
         return {"message": "Team not found"}
-    return {"id": team.id, "name": team.name, "image": team.image}
+    return {"id": team.id, "name": team.name, "image": team.image, "description":team.description}
 
 
-@team_routes.route("/user/<int:id>")
-def get_user_teams(id):
-
-    # team_membership = TeamMembership.query.get.filter(current_user.id = team_membership.user)
-    # teams = [team_mem.team for team_mem in current_user.teams]
-    # teams = [{
-    #   'id':team.id,
-    #   'name':team.name,
-    #   'image':team.image
-    #   } for team in teams]
-    # return teams
-    return "hello"
+@team_routes.route("/currentuser")
+def get_user_teams():
+  team_list=[]
+  for membership in current_user.teams:
+    team_list.append(membership.team)
+  team_list = [{
+    "id": team.id,
+    "name": team.name,
+    "image": team.image
+    } for team in team_list]
+  return team_list
