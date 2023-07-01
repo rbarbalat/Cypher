@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 31c3153918b7
+Revision ID: 7127a01abd84
 Revises:
-Create Date: 2023-07-01 11:01:58.291928
+Create Date: 2023-07-01 12:40:39.195933
 
 """
 from alembic import op
@@ -12,7 +12,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '31c3153918b7'
+revision = '7127a01abd84'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -72,6 +72,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['sender_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
     if environment == "production":
         op.execute(f"ALTER TABLE direct_messages SET SCHEMA {SCHEMA};")
 
@@ -84,8 +85,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
     if environment == "production":
         op.execute(f"ALTER TABLE team_memberships SET SCHEMA {SCHEMA};")
+
 
     op.create_table('channel_memberships',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -96,7 +99,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
     if environment == "production":
         op.execute(f"ALTER TABLE channel_memberships SET SCHEMA {SCHEMA};")
 
