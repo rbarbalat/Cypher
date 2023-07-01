@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 import Input from "../../components/inputs/input";
-import { FaRegTimesCircle } from 'react-icons/fa'
 import './signup.css'
 
 function SignUp() {

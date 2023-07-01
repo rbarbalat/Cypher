@@ -3,7 +3,6 @@ import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Input from '../../components/inputs/input';
-import { FaRegTimesCircle } from 'react-icons/fa'
 import './signin.css'
 
 function SignIn() {
@@ -76,14 +75,6 @@ function SignIn() {
                     <button onClick={handleDemoUser} type="button" className="btn auth--demo">
                             Sign in With Demo Account
                     </button>
-                    {/* <ul className='auth--errors'>
-                        {errors.map((error, idx) => (
-                            <li  className='auth--error' key={idx}>
-                                <FaRegTimesCircle/>
-                                <span>{error}</span>
-                            </li>
-                        ))}
-                    </ul> */}
                 </form>
             </div>
         </main>

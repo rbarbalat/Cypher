@@ -60,6 +60,10 @@
     justify-content: space-between;
 }
 
+.dashboard--team:last-of-type {
+   border-radius: 0 0 10px 10px;
+}
+
 .dashboard--team:hover {
     background-color: var(--light-hover);
     cursor: pointer;
@@ -177,6 +181,7 @@
     border: 1px solid var(--border);
     font-weight: 600;
     background-color: white;
+    cursor: pointer;
 }
 
 
