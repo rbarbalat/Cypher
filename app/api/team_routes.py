@@ -4,10 +4,29 @@ from flask_login import current_user
 
 team_routes = Blueprint('teams', __name__)
 
-# @team_routes.route('/')
-# def get_teams():
-#   teams = Team.query.all()
-#   return teams
+@team_routes.route('/')
+def get_teams():
+    teams = Team.query.all()
+    print(teams)
+    # return f"{teams[0].id}"
+    return [ {
+       'id':team.id,
+        'name':team.name,
+       'image':team.image
+        }
+        for team in teams]
+
+@team_routes.route('/<int:id>')
+def get_team_by_id(id):
+    team = Team.query.get(id)
+    if team is None:
+        return {"message": "Team not found"}
+    return {
+        'id': team.id,
+        'name': team.name,
+        'image': team.image
+        }
+
 
 # @team_routes.route('/user/<int:id>')
 # @current_user
