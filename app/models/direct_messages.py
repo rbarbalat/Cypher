@@ -15,3 +15,10 @@ class DirectMessage(db.Model):
 
   sender = db.relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")
   recipient = db.relationship("User", foreign_keys=[recipient_id], back_populates="received_messages")
+
+  def to_dict_no_assoc(self):
+    return {
+      "id": self.id,
+      "message": self.message,
+      "created_at": self.created_at
+    }

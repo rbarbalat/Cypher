@@ -14,3 +14,10 @@ class LiveReplies(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.now())
 
   chat = db.relationship("LiveChat", back_populates="replies")
+
+  def to_dict_no_assoc(self):
+    return {
+      "id": self.id,
+      "message": self.message,
+      'created_at': self.created_at
+    }

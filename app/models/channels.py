@@ -18,3 +18,11 @@ class Channel(db.Model):
   live_chat_users = db.relationship("LiveChat", back_populates="channel", cascade='all, delete-orphan')
 
   team = db.relationship("Team", back_populates="channels")
+
+  def to_dict_no_assoc(self):
+    return {
+      "id": self.id,
+      "name": self.name,
+      'description': self.description,
+      "private": self.private
+    }

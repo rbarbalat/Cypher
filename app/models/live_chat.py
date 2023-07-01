@@ -17,3 +17,10 @@ class LiveChat(db.Model):
 
   channel = db.relationship("Channel", back_populates="live_chat_users")
   sender_to_channel = db.relationship("User", back_populates="channel_chats")
+
+  def to_dict_no_assoc(self):
+    return {
+      "id": self.id,
+      "message": self.message,
+      "created_at": self.created_at
+    }

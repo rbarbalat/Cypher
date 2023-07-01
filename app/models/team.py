@@ -12,3 +12,10 @@ class Team(db.Model):
   image = db.Column(db.String)
   channels = db.relationship('Channel', back_populates="team", cascade='all, delete-orphan')
   users = db.relationship("TeamMembership", back_populates="team", cascade='all, delete-orphan')
+
+  def to_dict_no_assoc(self):
+    return {
+      "id": self.id,
+      "name": self.name,
+      'description': self.description
+    }
