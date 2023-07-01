@@ -5,57 +5,57 @@ from random import choice
 def seed_channels(teams):
     c1 = Channel(
         name="Channel 1",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         private=True,
         team=teams[0]
     )
     c2 = Channel(
         name="Channel 2",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         private=True,
         team=teams[0]
     )
     c3 = Channel(
         name="Channel 3",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         private=True,
         team=teams[0]
     )
     c4 = Channel(
         name="Channel 4",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         private=True,
         team=teams[0]
     )
     c5 = Channel(
         name="Channel 5",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         private=True,
         team=teams[0]
     )
     c6 = Channel(
         name="Channel 6",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         team=teams[1]
     )
     c7 = Channel(
         name="Channel 7",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         team=teams[1]
     )
     c8 = Channel(
         name="Channel 8",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         team=teams[1]
     )
     c9 = Channel(
         name="Channel 9",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         team=teams[1]
     )
     c10 = Channel(
         name="Channel 10",
-        descrtiption="Lorem ipsum color dit senum.",
+        description="Lorem ipsum color dit senum.",
         team=teams[1]
     )
 

@@ -11,3 +11,4 @@ class Team(db.Model):
   description = db.Column(db.String(2000))
   image = db.Column(db.String)
   channels = db.relationship('Channel', back_populates="team", cascade='all, delete-orphan')
+  users = db.relationship("TeamMembership", back_populates="team")
