@@ -11,7 +11,7 @@ team_routes = Blueprint("teams", __name__)
 @team_routes.route("/")
 def get_teams():
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   teams = Team.query.all()
   if len(teams) == 0:
     return []
@@ -21,17 +21,17 @@ def get_teams():
 @team_routes.route("/<int:id>")
 def get_team_by_id(id):
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   team = Team.query.get(id)
   if team is None:
-    return {"message": "Team not found"}
+    return {"error": "Team not found"}
   return {"id": team.id, "name": team.name, "image": team.image, "description":team.description}
 
 
 @team_routes.route("/currentuser")
 def get_user_teams():
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   team_list=[]
   for membership in current_user.teams:
     team_list.append(membership.team)
@@ -45,11 +45,11 @@ def get_user_teams():
 @team_routes.route("/<int:id>/channels")
 def get_team_channels(id):
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   channel_list=[]
   team = Team.query.get(id)
   if team is None:
-    return {"message": "Team not found"}
+    return {"error": "Team not found"}
   for channel in team.channels:
     channel_list.append(channel)
   channel_list = [{
@@ -62,7 +62,7 @@ def get_team_channels(id):
 @team_routes.route('/<int:id>/members')
 def get_members_for_team(id):
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   team = Team.query.get(id)
   users = [{
     "id":membership.user.id,
@@ -73,7 +73,7 @@ def get_members_for_team(id):
 @team_routes.route('/', methods=['POST'])
 def create_team():
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   if form.validate_on_submit():
@@ -93,7 +93,7 @@ def create_team():
 @team_routes.route('/<int:id>', methods=['POST'])
 def delete_team(id):
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   team = Team.query.get(id)
   for team_membership in current_user.teams:
     if team_membership.team_id == team.id:
@@ -102,19 +102,18 @@ def delete_team(id):
           db.session.commit()
           return {"message" : "team deleted :)"}
       else:
-        return {"message" : "not authorized"}
-  return {"message" : "not authorized"}
+        return {"error" : "not authorized"}
+  return {"error" : "not authorized"}
 
 @team_routes.route('/<int:id>/channels', methods=['POST'])
 def create_channel(id):
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   isOwner = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(TeamMembership.team_id == id).first()
-  print(isOwner, 'dfsdfsdfsdfs')
   if not isOwner:
-      return {"message" : "not authorized"}
+      return {"error" : "not authorized"}
   if form.validate_on_submit():
     channel = Channel()
     form.populate_obj(channel)
@@ -134,8 +133,11 @@ def create_channel(id):
 @team_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_team(id):
   if not current_user:
-    return {"message" : "go get logged in"}
+    return {"error" : "go get logged in"}
   team = Team.query.get(id)
+  isAlreadyMember = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(TeamMembership.channel_id == id).first()
+  if isAlreadyMember:
+    return {"error" : "you've already joined"}
   tm = TeamMembership(
     user = current_user,
     team = team,
