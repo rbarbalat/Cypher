@@ -1,0 +1,9 @@
+@import url('../../index.css');
+
+#auth-sign-in {
+    margin: 15px 0;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    cursor: pointer;
+}
