@@ -11,11 +11,14 @@ def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
     """
-    errorMessages = []
+    #errorMessages = []
+    myerrors = {}
     for field in validation_errors:
         for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+            #errorMessages.append(f'{field} : {error}')
+            myerrors[f"{field}"] = error
+    #return errorMessages
+    return myerrors
 
 
 @auth_routes.route('/')
