@@ -14,5 +14,6 @@ class LiveChat(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.now())
 
   replies = db.relationship("LiveReplies", back_populates="chat", cascade="all, delete-orphan")
-  channel = db.relationship("Channel", back_populates="channel_chats")
-  sender_to_channel = db.relationship("User", back_populates="live_chat_user")
+
+  channel = db.relationship("Channel", back_populates="live_chat_users")
+  sender_to_channel = db.relationship("User", back_populates="channel_chats")
