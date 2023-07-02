@@ -3,13 +3,17 @@ import { useSelector } from 'react-redux';
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
 import ChannelItem from './channelitem'
 import ChannelLabel from './channellabel'
+import CreateChannelForm from '../../createchannelform';
+import Modal from '../../modal';
 
 function AsideChannels() {
     const [ expanded, setExpanded ] = useState(true)
+    const [ createChannel, setCreateChannel ] = useState(false)
     const channels = useSelector(state => state.channels.allChannels)
     const normalizedChannels = Object.values(channels)
 
     return (
+        <>
         <div className='aside_dropdown--wrapper'>
         <header className='aside_dropdown--header'>
             <div className='aside_dropdown--arrow_wrapper' onClick={() => setExpanded(!expanded)}>
@@ -32,7 +36,7 @@ function AsideChannels() {
                 )
             })}
                 <li>
-                    <div className='aside_dropdown--add_wrapper'>
+                    <div onClick={() => setCreateChannel(true)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>
@@ -44,6 +48,14 @@ function AsideChannels() {
         null
         }
     </div>
+    {
+        createChannel ?
+        <Modal>
+           <CreateChannelForm setCreateChannel={setCreateChannel}/>
+        </Modal> :
+        null
+    }
+    </>
     )
 }
 

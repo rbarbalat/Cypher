@@ -1,0 +1,53 @@
+@import url('../../index.css');
+
+.create_channel--wrapper {
+    background-color: white;
+    position: relative;
+    width: 500px;
+    border-radius: 10px;
+}
+
+.create_channel--header {
+    color: var(--body);
+    padding: 25px;
+    border-bottom: 1px solid var(--border);
+}
+
+.create_channel--header h3 {
+    margin: 5px 0;
+}
+
+.create_channel--form {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form--label--label {
+    color: var(--body)
+}
+
+.form--label--wrapper {
+    display: flex;
+    align-items: center;
+    color: black;
+    gap: 15px;
+}
+
+.create_channel--button {
+    padding: 15px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--blue);
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.create_channel--button:disabled {
+    background-color: var(--light-hover);
+    color: var(--body);
+    pointer-events: none;
+}

@@ -94,7 +94,7 @@ const teams = (state = initialState, action) => {
         }
         case CREATE_TEAM: {
             const newState = { ...state }
-            newState.allTeams = { ...newState.allTeams, [action.payload.id]: action.payload}
+            newState.allTeams = { ...newState.allTeams, [action.payload.id]: action.payload }
             return newState
         }
         case CLEAR_TEAM: {
