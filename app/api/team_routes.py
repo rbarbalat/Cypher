@@ -55,12 +55,21 @@ def get_user_teams():
   team_list=[]
   for membership in current_user.teams:
     team_list.append(membership.team)
-  team_list = [{
+  list_of_list_of_users = [ [tm.user.to_dict() for tm in team.users] for team in team_list ]
+
+  new_teams = [{
     "id": team.id,
     "name": team.name,
-    "image": team.image
-    } for team in team_list]
-  return team_list
+    "image": team.image,
+    }
+    for team in team_list]
+
+  for i, user_list in enumerate(list_of_list_of_users, start = 0):
+    # print(i)
+    new_teams[i]["users"] = user_list
+    new_teams[i]["numMembers"] = len(user_list)
+
+  return new_teams
 
 #GET CHANNELS BY TEAM ID
 @team_routes.route("/<int:id>/channels")
