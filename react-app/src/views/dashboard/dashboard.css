@@ -40,17 +40,29 @@
     border-radius: 10px;
     box-shadow: 1px 1px 5px 1px var(--shadow);
     margin: 15px 0;
-    width: 650px;
+    max-height: 600px;
 }
 
 .dashboard--teams_header {
     padding: 20px;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .dashboard--teams_header p {
     margin: 0;
     color: var(--body)
+}
+
+.dashboard--teams_header button {
+    padding: 10px 15px;
+    background-color: white;
+    border:1px solid var(--border);
+    border-radius: 5px;
+    color: var(--blue);
+    font-weight: 600;
 }
 
 .dashboard--team {
@@ -59,6 +71,34 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.dashboard--teams_scroller {
+    overflow-y: scroll;
+
+}
+
+.dashboard--teams_scroller::-webkit-scrollbar {
+    width: 0;
+}
+
+.dashboard--teams_input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 70%
+}
+
+.dashboard--teams_input_icon {
+    position: absolute;
+    left: 15px;
+}
+
+.dashboard--teams_input_input {
+    padding: 10px 15px 10px 40px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    width: 100%;
 }
 
 .dashboard--team:last-of-type {
@@ -170,7 +210,6 @@
     padding: 15px 20px;
     border-radius: 10px;
     margin: 20px 0;
-    width: 650px;
 }
 
 .dashboard--create_flex {

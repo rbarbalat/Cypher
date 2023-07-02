@@ -1,4 +1,5 @@
 @import url('../../index.css');
+
 .input-wrapper {
     position: relative;
     display: flex;
@@ -74,10 +75,14 @@
     width: 100%;
     padding: 15px;
     border-radius: 5px;
-    border: 1px solid var(--light-gray);
-    background-color: rgb(244, 255, 254);
+    border: 1px solid var(--border);
+    background-color: white;
     resize: none;
     height: 200px;
+}
+
+.textarea:focus {
+    outline: transparent
 }
 
 .input:focus {

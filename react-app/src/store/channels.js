@@ -1,11 +1,17 @@
 // TYPES
 const GET_CHANNELS = '/channels/GET_CHANNELS'
+const CREATE_CHANNEL = '/channels/GET_CHANNEL'
 const GET_CHANNEL = '/channel/GET_CHANNEL'
 
 // ACTIONS
 const actionGetChannels = (channels) => ({
     type: GET_CHANNELS,
     payload: channels
+})
+
+const actionCreateChannel = (channel) => ({
+    type: CREATE_CHANNEL,
+    payload: channel
 })
 
 const actionGetChannel = (channel) => ({
@@ -16,7 +22,7 @@ const actionGetChannel = (channel) => ({
 
 // THUNKS
 export const thunkGetChannels = (id) => async dispatch => {
-    const res = await fetch("/api/channels/", {
+    const res = await fetch(`/api/teams/${id}/channels`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
@@ -25,8 +31,23 @@ export const thunkGetChannels = (id) => async dispatch => {
         if (data.errors) {
             return data.errors
         }
-        const filteredData = data.filter(channel => channel.id === id)
-        dispatch(actionGetChannels(filteredData))
+        dispatch(actionGetChannels(data))
+    }
+}
+
+export const thunkCreateChannel = (id, channel) => async dispatch => {
+    const res = await fetch(`/api/teams/${id}/channels`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(channel)
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionCreateChannel(data))
+        return data
     }
 }
 
@@ -41,6 +62,11 @@ const channels = (state = initialState, action) => {
             const newState = { allChannels: {} }
             action.payload.forEach(channel => newState.allChannels[channel.id] = channel)
             return newState
+        }
+        case CREATE_CHANNEL: {
+            const newState = { ...state }
+            newState.allChannels = { ...newState.allChannels, [action.payload.id]: action.payload }
+            return newState;
         }
         default:
             return state
