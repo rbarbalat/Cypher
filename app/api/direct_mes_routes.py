@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_socketio import emit
+# from flask_socketio import emit
 from app.models import (
     Team,
     TeamMembership,
@@ -23,16 +23,22 @@ direct_mes_routes = Blueprint("messages", __name__)
 def get_direct_messages():
     if not current_user.is_authenticated:
         return {"error": "go get logged in"}
-    recipient_users = set()
-    messages = DirectMessage.query.filter(
-        DirectMessage.sender_id.in_([current_user.id]),
-        ).order_by(DirectMessage.created_at).all()
+    sent_to_these_users = [ dm.recipient for dm in current_user.sent_messages]
+    received_from_these_users = [dm.sender for dm in current_user.received_messages]
+    dm_partners = {*sent_to_these_users, *received_from_these_users}
+    return [ {"id": partner.id, "partner": partner.username }
+            for partner in dm_partners ]
+    #below doesn't account for users who sent you a msg that you never responded to
+    # recipient_users = set()
+    # messages = DirectMessage.query.filter(
+    #     DirectMessage.sender_id.in_([current_user.id]),
+    #     ).order_by(DirectMessage.created_at).all()
 
-    for message in messages:
-        recipient_users.add((message.recipient.username, message.recipient.id))
-    return [
-        {"id": recipient[1], "recipient": recipient[0]} for recipient in recipient_users
-    ]
+    # for message in messages:
+    #     recipient_users.add((message.recipient.username, message.recipient.id))
+    # return [
+    #     {"id": recipient[1], "recipient": recipient[0]} for recipient in recipient_users
+    # ]
 
 #GET ROUTE FOR GETTING A MESSAGE
 @direct_mes_routes.route("/<int:id>")
@@ -53,7 +59,7 @@ def get_message(id):
         }
 
 # GET ALL MESSAGES BETWEEN 2 USERS
-@direct_mes_routes.route("/recipient/<int:id>")
+@direct_mes_routes.route("/partner/<int:id>")
 def get_messages(id):
     if not current_user.is_authenticated:
         return {"error": "go get logged in"}
