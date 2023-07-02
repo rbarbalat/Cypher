@@ -6,6 +6,7 @@ from sqlalchemy import or_
 
 channel_routes = Blueprint('channels', __name__)
 
+#GET ALL CHANNELS
 @channel_routes.route('/')
 def get_channels():
     if not current_user.is_authenticated:
@@ -24,6 +25,7 @@ def get_channels():
         }
         for channel in channels]
 
+#GET CHANNEL BY ID
 @channel_routes.route('/<int:id>')
 def get_channel_by_id(id):
     if not current_user.is_authenticated:
@@ -39,6 +41,7 @@ def get_channel_by_id(id):
         "description": channel.description
         }
 
+#GET MEMBERS OF A CHANNEL
 @channel_routes.route('/<int:id>/members')
 def get_members_for_channel(id):
     if not current_user.is_authenticated:
@@ -51,6 +54,7 @@ def get_members_for_channel(id):
     return users
 
 
+#DELETE A CHANNEL BY ID
 @channel_routes.route('/<int:id>', methods=['POST'])
 def delete_channel(id):
     if not current_user.is_authenticated:
