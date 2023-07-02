@@ -11,8 +11,8 @@ def get_channels():
     if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
     channels = Channel.query.all()
-    print("hello world")
-    print(channels)
+    # print("hello world")
+    # print(channels)
     if len(channels) == 0:
         return {}
     return [ {
@@ -56,7 +56,27 @@ def delete_channel(id):
     if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
     channel = Channel.query.get(id)
-    is_authorized = ChannelMembership.query.filter(ChannelMembership.user_id == current_user.id).filter(or_(ChannelMembership.status == "admin", ChannelMembership.status == "owner")).filter(ChannelMembership.channel_id == id).first()
+    if channel is None:
+       return {"error": "channel not found"}
+
+    team = channel.team
+    #shouldn't happen but informative error in development, prevents keying into none
+    if len(team.users) == 0:
+       return {"error": "the channel belongs to a team with no users including admins"}
+
+    #shouldn't happen but informatiave error in development, prevents keying into none
+    if len(channel.users) == 0:
+       return {"error": "the channel has no users including no admin/owner"}
+
+    #replaced this query with something cleaner for now, keeping it as a reference
+    #is_authorized = ChannelMembership.query.filter(ChannelMembership.user_id == current_user.id).filter(or_(ChannelMembership.status == "admin", ChannelMembership.status == "owner")).filter(ChannelMembership.channel_id == id).first()
+
+    is_authorized_by_team = current_user.id in [tm.user_id for tm in team.users if tm.status in ["owner", "admin"]]
+    is_authorized_by_channel = current_user.id in [cm.user_id for cm in channel.users if cm.status in ["owner", "admin"]]
+
+    is_authorized = is_authorized_by_team or is_authorized_by_channel
+     #can be authorized by being an owner/admin of the team or channel
+
     if not is_authorized:
         return {"error" : "not authorized"}
     db.session.delete(channel)
