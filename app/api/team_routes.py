@@ -15,7 +15,22 @@ def get_teams():
   teams = Team.query.all()
   if len(teams) == 0:
     return []
-  return [{"id": team.id, "name": team.name, "image": team.image} for team in teams]
+
+  list_of_list_of_users = [ [tm.user.to_dict() for tm in team.users] for team in teams ]
+
+  new_teams = [{
+    "id": team.id,
+    "name": team.name,
+    "image": team.image,
+    }
+    for team in teams]
+
+  for i, user_list in enumerate(list_of_list_of_users, start = 0):
+    # print(i)
+    new_teams[i]["users"] = user_list
+    new_teams[i]["numMembers"] = len(user_list)
+
+  return new_teams
 
 #GET TEAMS BY ID
 @team_routes.route("/<int:id>")
@@ -25,7 +40,12 @@ def get_team_by_id(id):
   team = Team.query.get(id)
   if team is None:
     return {"error": "Team not found"}
-  return {"id": team.id, "name": team.name, "image": team.image, "description":team.description}
+  users = [tm.user.to_dict() for tm in team.users]
+  numMembers = len(users)
+  return {"id": team.id, "name": team.name,
+           "image": team.image, "description":team.description,
+             "users": users, "numMembers": numMembers
+             }
 
 #GET CURRENT USER'S TEAMS
 @team_routes.route("/currentuser")
