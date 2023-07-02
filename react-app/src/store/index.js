@@ -4,12 +4,14 @@ import session from './session'
 import teams from './teams';
 import channels from './channels';
 import messages from './messages';
+import feed from './feed';
 
 const rootReducer = combineReducers({
   session,
   teams,
   channels,
-  messages
+  messages,
+  feed
 });
 
 
