@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 
 function MessageFeed({messages, setThread}) {
-  const start = new Date(messages[0].date);
-  const end = new Date(messages[messages.length - 1].date)
+  console.log("messages on line 9.5  ", messages)
+  const start = new Date(messages[0].created_at);
+  const end = new Date(messages[messages.length - 1].created_at)
   const dates = [];
 
   const { pathname } = useLocation()
@@ -19,10 +20,11 @@ function MessageFeed({messages, setThread}) {
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, 'P'))
   }
+  console.log("printing dates on line 23", dates);
 
   const areMessagesPresent = (messages, specificDate) => {
     return messages.some(message => {
-      return isSameDay(new Date(message.date), new Date(specificDate))
+      return isSameDay(new Date(message.created_at), new Date(specificDate))
     })
   }
 
@@ -46,7 +48,7 @@ function MessageFeed({messages, setThread}) {
                 areMessagesPresent(messages, date) ?
                 <TimeStamp label={date}>
                   {
-                    messages.filter(message => isSameDay(new Date(message.date), new Date(date))).map(message => {
+                    messages.filter(message => isSameDay(new Date(message.created_at), new Date(date))).map(message => {
                       return (
                         <Message setThread={setThread} data={message}/>
                       )

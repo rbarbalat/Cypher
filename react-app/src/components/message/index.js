@@ -6,14 +6,18 @@ import { format, addHours, addMinutes, startOfDay } from 'date-fns';
 function Message({data, setThread}) {
     console.log(data, 'This is probably a message object');
     const convertTime = () => {
-        const [hours, minutes] = data.time.split(':')
-        const dayStart = startOfDay(new Date(data.date))
+        // const [hours, minutes] = data.time.split(':')
+        const [hours, minutes] = data.created_at.split(':')
+        const dayStart = startOfDay(new Date(data.created_at))
         const addedHours = addHours(new Date(dayStart), hours)
         const addedMinutes = addMinutes(new Date(addedHours), minutes)
         return format(new Date(addedMinutes), 'p')
     }
 
-    convertTime()
+    // console.log()
+
+    //commented out for now
+    // convertTime()
 
     return (
         <div className='message--wrapper'>
@@ -21,7 +25,8 @@ function Message({data, setThread}) {
             <div className='message--details_wrapper'>
                 <div className='message--name_time'>
                     <p className='message--sender_name'>{data.sender}</p>
-                    <span className='message--time'>{convertTime()}</span>
+                    {/* <span className='message--time'>{convertTime()}</span> */}
+                    <span className='message--time'>{"commented out convertTime() b/c of error"}</span>
                 </div>
                 <p className='message--message'>{data.message}</p>
                 {

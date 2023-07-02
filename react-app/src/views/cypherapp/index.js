@@ -25,6 +25,8 @@ function CypherApp() {
 
     if (!sessionUser) return <Redirect to='/sign-in' />
 
+    //since team is a filled object or an empty object,
+    //isn't !team always falsy, this is just if loading?
     if (loading || !team) return <div>Loading...</div>
 
     return (
