@@ -6,7 +6,7 @@ function StepTwo({handleStep, description, setDescription}) {
     return (
         <section className='create_form_step--container'>
             <span>Step 2 of 4</span>
-            <h1>What's your team working on right now or describe your team.</h1>
+            <h1>Describe what your team is working on now.</h1>
             <p>This could be anything: a project, campaign, event, or the deal you’re trying to close.</p>
             <div className='create_form_step--input_container'>
                 <Input
@@ -19,13 +19,13 @@ function StepTwo({handleStep, description, setDescription}) {
                 />
             </div>
             <div className='create_form_step--actions'>
-                <button onClick={(e) => handleStep(1, e)} type='button'  className='create_form_step--back'>
+                <button onClick={() => handleStep(1)} type='button'  className='create_form_step--back'>
                     Back
                 </button>
                 <button
                     type='button'
                     className='create_form_step--next'
-                    onClick={(e) => handleStep(3, e)}
+                    onClick={() => handleStep(3)}
                     disabled={!description.length}>
                     Next
                 </button>

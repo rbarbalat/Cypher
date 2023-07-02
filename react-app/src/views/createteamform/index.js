@@ -9,27 +9,24 @@ import StepFour from './stepfour'
 import './createteamform.css'
 
 function CreateTeamForm() {
-    const [ step, setStep ] = useState(1)
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ image, setImage ] = useState('');
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const handleStep = (num, e) => {
-        e.preventDefault();
-        setStep(num)
+    const handleStep = (num) => {
         history.push(`/create-team/new/${num}`)
     }
 
-    const handleCreateTeam = async (e) => {
-        e.preventDefault();
+    const handleCreateTeam = async () => {
         const newTeam = {name, description, image}
         const data = await dispatch(thunkCreateTeam(newTeam))
+        console.log(data)
         if (data.error) {
             console.log(data.error)
         } else {
-            history.push(`/teams/${data.id}`)
+            history.push(`/dashboard`)
         }
     }
 
@@ -43,7 +40,7 @@ function CreateTeamForm() {
                         <span>{name}</span>
                     </header>
                 </div>
-                <form onSubmit={handleCreateTeam} className='create_team_form--step'>
+                <div className='create_team_form--step'>
                     <Switch>
                         <Route exact path="/create-team/new/1" >
                             <StepOne handleStep={handleStep} name={name} setName={setName}/>
@@ -55,10 +52,10 @@ function CreateTeamForm() {
                             <StepThree handleStep={handleStep} image={image} setImage={setImage} />
                         </Route>
                         <Route exact path="/create-team/new/4">
-                            <StepFour handleStep={handleStep} name={name} />
+                            <StepFour handleCreateTeam={handleCreateTeam} handleStep={handleStep} name={name} />
                         </Route>
                     </Switch>
-                </form>
+                </div>
             </div>
         </main>
     )

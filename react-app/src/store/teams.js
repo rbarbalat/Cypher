@@ -57,7 +57,7 @@ export const thunkGetTeam = (id) => async dispatch => {
 }
 
 export const thunkCreateTeam = (team) => async dispatch => {
-    const res = await fetch(`/api/teams`, {
+    const res = await fetch(`/api/teams/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(team)
