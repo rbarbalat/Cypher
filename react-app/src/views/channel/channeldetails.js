@@ -31,7 +31,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
             </div>
             <header className='channel_details--header'>
                 <span className='channel_details--title'>
-                    { data.private ?
+                    {data.private ?
                     <FaLock/>
                     :
                     <FaHashtag/>
