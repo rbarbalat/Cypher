@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_socketio import emit
+# from flask_socketio import emit
 from app.models import (
     Team,
     TeamMembership,
@@ -23,6 +23,13 @@ direct_mes_routes = Blueprint("messages", __name__)
 def get_direct_messages():
     if not current_user.is_authenticated:
         return {"error": "go get logged in"}
+
+    sent_to_these_users = [ dm.recipient for dm in current_user.sent_messages]
+    received_from_these_users = [dm.sender for dm in current_user.received_messages]
+    dm_partners = {*sent_to_these_users, *received_from_these_users}
+    return [ {"id": partner.id, "partner": partner.username }
+            for partner in dm_partners ]
+
     recipient_users = set()
     messages = DirectMessage.query.filter(
         DirectMessage.sender_id.in_([current_user.id]),

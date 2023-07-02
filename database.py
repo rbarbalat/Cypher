@@ -9,12 +9,12 @@ from app.models.channels import Channel
 from app.models.live_chat import LiveChat
 
 with app.app_context():
-    # user = User.query.get(3)
+    user = User.query.get(1)
     # print(user)
     # arr = DirectMessage.query.filter(DirectMessage.sender_id == 3).all()
     # print(arr)
-    # print(user.sent_messages)
-    # print(user.received_messages)
+    print(user.sent_messages)
+    print(user.received_messages)
 
     # dm = DirectMessage.query.get(1)
     # print(dm.sender_id)
@@ -32,12 +32,12 @@ with app.app_context():
     # _ = [db.session.delete(chan) for chan in Channel.query.all()]
     # _ = [db.session.delete(chan_mem) for chan_mem in ChannelMembership.query.all()]
     #db.session.delete(user1)
-    team = Team.query.get(1)
-    print(team.to_dict_no_assoc())
-    team = Channel.query.get(1)
-    print(team.to_dict_no_assoc())
-    team = DirectMessage.query.get(1)
-    print(team.to_dict_no_assoc())
-    team = LiveChat.query.get(1)
-    print(team.to_dict_no_assoc())
-    db.session.commit()
+    # team = Team.query.get(1)
+    # print(team.to_dict_no_assoc())
+    # team = Channel.query.get(1)
+    # print(team.to_dict_no_assoc())
+    # team = DirectMessage.query.get(1)
+    # print(team.to_dict_no_assoc())
+    # team = LiveChat.query.get(1)
+    # print(team.to_dict_no_assoc())
+    # db.session.commit()
