@@ -1,0 +1,120 @@
+@import url('../../../index.css');
+
+
+.recipients--wrapper {
+    border-bottom: 1px solid var(--border);
+    box-shadow: 1px 0px 5px 1px var(--shadow);
+    height: 60px;
+    padding: 0 15px;
+    position: relative
+}
+
+.recipients--list {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recipients--input {
+    border: none;
+    font-family: 'Outfit';
+    font-size: 18px;
+
+}
+
+.recipients--input:focus {
+    outline: transparent
+}
+
+.recipients--members_list {
+    position: absolute;
+    list-style-type: none;
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+    margin: 0;
+    top: 50px;
+    border-radius: 5px;
+    left: 20;
+    width: calc(100% - 40px);
+    background-color: white;
+    border: 1px solid var(--border);
+    padding: 10px 0;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.recipient_item--wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-hover);
+    gap: 5px;
+    padding: 0 5px 0 0;
+    border-radius: 5px;
+}
+
+.recipient_item--image {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    background-color: var(--color-hover);
+    border-radius: 5px;
+
+}
+.recipient_item--image span {
+    font-weight: 600;
+    color: white;
+}
+
+.recipient_item--name {
+    margin-right: 10px;
+}
+.recipient_item--close_wrapper {
+    cursor: pointer;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 5px;
+}
+.recipient_item--close_wrapper:hover {
+    background-color: var(--border);
+
+}
+
+.recipient_item--close {
+    font-size: 12px;
+}
+
+.recipient_list_item--wrapper {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.recipient_list_item--wrapper:hover {
+    background-color: var(--light-hover);
+}
+
+.recipient_list_item--image {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    background-color: var(--color-hover);
+    border-radius: 5px;
+}
+
+.recipient_list_item--image span {
+    font-weight: 600;
+    color: white;
+}
+
+.recipient_list_item--name {
+    font-weight: 600;
+}

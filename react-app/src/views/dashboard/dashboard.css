@@ -1,6 +1,6 @@
 @import url('../../index.css');
 
-#dashboard--wrapper {
+.dashboard--wrapper {
     position: relative;
     height: 100%;
     width: 100%;
@@ -40,6 +40,7 @@
     border-radius: 10px;
     box-shadow: 1px 1px 5px 1px var(--shadow);
     margin: 15px 0;
+    width: 650px;
 }
 
 .dashboard--teams_header {
@@ -169,6 +170,13 @@
     padding: 15px 20px;
     border-radius: 10px;
     margin: 20px 0;
+    width: 650px;
+}
+
+.dashboard--create_flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .dashboard--create span {

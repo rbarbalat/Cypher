@@ -1,0 +1,85 @@
+@import url('../../../index.css');
+
+.aside_team--wrapper {
+    position: relative;
+}
+
+.aside_team--name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.aside_team--name:hover {
+    background-color: var(--dark-hover);
+}
+
+.aside_team--label {
+    margin: 0;
+    font-size: 20px;
+}
+
+.aside_team--icon {
+    font-size: 10px;
+}
+
+.aside_team--details {
+    width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+    border: 1px solid var(--border);
+    position: absolute;
+    left: 20px;
+    top: 35px;
+    z-index: 125;
+}
+
+.aside_team--header {
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.aside_team--image {
+    height: 40px;
+    aspect-ratio: 1;
+    background-color: var(--border);
+    border-radius: 5px;
+}
+
+.aside_team--information p {
+    margin: 0;
+    color: var(--body);
+    font-size: 15px;
+}
+
+.aside_team--information p:first-of-type {
+    margin: 0;
+    color: black;
+    font-weight: 600;
+}
+
+.aside_team--links_section p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--body);
+    font-weight: 300;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.aside_team--links_section p:hover {
+    background-color: var(--color-hover);
+    color: white;
+}
+
+.aside_team--links_section {
+    padding: 10px 0;
+
+}

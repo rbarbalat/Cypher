@@ -1,0 +1,105 @@
+@import url('../../../index.css');
+
+.direct_message_item--wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    padding: 2.5px 0;
+    cursor: pointer;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.direct_message_item--wrapper:hover {
+    background-color: var(--dark-hover);
+}
+
+.direct_message_item--profile_image {
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    background-color: var(--border);
+}
+
+.direct_message_item--icon {
+    font-size: 12px;
+}
+
+.direct_message_item--wrapper:hover > .direct_message_item--close {
+    display: block;
+}
+
+.direct_message_item--label {
+    text-transform: capitalize;
+}
+
+.direct_message_item--close {
+    position: absolute;
+    right: 5px;
+    display: none;
+}
+
+.direct_message_label--wrapper {
+    position: relative;
+}
+
+.direct_message_label--label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.direct_message_label--label:hover {
+    background-color: var(--dark-hover);
+
+}
+
+.direct_message_label--label:hover .direct_message_label--icon {
+    opacity: 1;
+}
+
+.direct_message_label--icon {
+    font-size: 10px;
+    opacity: 0;
+}
+
+.direct_message_label--options {
+    position: absolute;
+    left: 20px;
+    top: 35px;
+    background-color: white;
+    z-index: 120;
+    width: 300px;
+    border-radius: 5px;
+    padding: 10px 0;
+    border: 1px solid var(--border);
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+}
+
+.direct_message_label--option--wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--body);
+    padding: 5px 20px;
+}
+
+.direct_message_label--option {
+    margin: 0;
+}
+
+.direct_message_label--option--icon {
+    font-size: 12px;
+}
+
+.direct_message_label--option--wrapper:hover  {
+    background-color: var(--color-hover);
+    color: white;
+}

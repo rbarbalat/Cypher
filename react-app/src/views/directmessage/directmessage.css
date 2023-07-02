@@ -1,0 +1,132 @@
+@import url('../../index.css');
+
+.direct_message_recipient--wrapper {
+    position: relative;
+}
+
+.direct_message_recipient--name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.direct_message_recipient--name:hover {
+    background-color: var(--light-hover);
+}
+
+.direct_message_recipient--label {
+    margin: 0;
+    font-size: 18px;
+}
+
+.direct_message_recipient--icon {
+    font-size: 10px;
+}
+
+.direct_message_details--wrapper {
+    width: 600px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+    border: 1px solid var(--border);
+    z-index: 125;
+    position: relative;
+    background-color: var(--light-hover);
+    border-radius: 10px;
+    padding-bottom: 50px;
+}
+
+.direct_message_details--header {
+    background-color: white;
+    border-bottom: 1px solid var(--border);
+    padding: 25px;
+    border-radius: 10px 10px 0 0;
+}
+
+.direct_message_details--close_wrapper {
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    color: var(--body);
+    cursor: pointer;
+}
+
+.direct_message_details--close_wrapper:hover {
+    background-color: var(--light-hover);
+}
+
+
+.direct_message_details--intro {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.direct_message_details--image {
+    height: 80px;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background-color: var(--border);
+}
+
+.direct_message_details--title {
+    font-size: 25px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.direct_message_details--subtitle {
+    font-size: 18px;
+    margin: 0;
+    color: var(--body)
+}
+
+.direct_message_details--contents {
+    padding: 25px;
+}
+
+.direct_message_details--container {
+    background-color: white;
+    border: 1px solid var(--border);
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.direct_message_details--flex {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    gap: 10px;
+    color: var(--body)
+}
+
+.direct_message_details--link {
+    color: var(--color-hover);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    cursor: pointer;
+}
+
+.direct_message_details--link:hover {
+    text-decoration: underline;
+}
+
+.direct_message_details--channel_id {
+    margin-top: 20px;
+    display: block;
+    font-size: 15px;
+    color: var(--border)
+}
