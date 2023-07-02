@@ -8,15 +8,13 @@ import {thunkGetPartners } from '../../../store/messages'
 
 function AsideDirectMessages() {
     const [ expanded, setExpanded ] = useState(true)
-    const directMessages = useSelector(state => state.messages.partners);
-    const normalizedDirectMessages = Object.values(directMessages)
+    const directPartners = useSelector(state => state.messages.partners);
+    // const directMessages = useSelector(state => state.messages.directMessages);
+    const normalizedDirectPartners = Object.values(directPartners)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(thunkGetPartners)
-    }, [dispatch])
-
-    console.log(normalizedDirectMessages);
+    console.log("normalized DirectMessages line 20 --------")
+    console.log(normalizedDirectPartners);
 
     return (
         <div className='aside_dropdown--wrapper'>
@@ -33,10 +31,10 @@ function AsideDirectMessages() {
             {
             expanded ?
             <ul className='aside-dropdown--list'>
-                {normalizedDirectMessages.map((directMessage) => {
+                {normalizedDirectPartners.map((directPartner) => {
                     return (
-                       <li key={directMessage.id}>
-                        <DirectMessageItem directMessage={directMessage}/>
+                       <li key={directPartner.id}>
+                        <DirectMessageItem directPartner={directPartner}/>
                        </li>
                     )
                 })}
