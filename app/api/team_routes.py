@@ -92,7 +92,7 @@ def create_team():
 
 @team_routes.route('/<int:id>', methods=['POST'])
 def delete_team(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team = Team.query.get(id)
   for team_membership in current_user.teams:
@@ -107,7 +107,7 @@ def delete_team(id):
 
 @team_routes.route('/<int:id>/channels', methods=['POST'])
 def create_channel(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
@@ -132,7 +132,7 @@ def create_channel(id):
 
 @team_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_team(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team = Team.query.get(id)
   isAlreadyMember = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(TeamMembership.channel_id == id).first()

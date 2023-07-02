@@ -8,7 +8,7 @@ channel_routes = Blueprint('channels', __name__)
 
 @channel_routes.route('/')
 def get_channels():
-    if not current_user:
+    if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
     channels = Channel.query.all()
     print("hello world")
@@ -26,7 +26,7 @@ def get_channels():
 
 @channel_routes.route('/<int:id>')
 def get_channel_by_id(id):
-    if not current_user:
+    if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
     channel = Channel.query.get(id)
     if channel is None:
@@ -41,7 +41,7 @@ def get_channel_by_id(id):
 
 @channel_routes.route('/<int:id>/members')
 def get_members_for_channel(id):
-    if not current_user:
+    if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
     channel = Channel.query.get(id)
     users = [{
@@ -53,7 +53,7 @@ def get_members_for_channel(id):
 
 @channel_routes.route('/<int:id>', methods=['POST'])
 def delete_channel(id):
-    if not current_user:
+    if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
     channel = Channel.query.get(id)
     is_authorized = ChannelMembership.query.filter(ChannelMembership.user_id == current_user.id).filter(or_(ChannelMembership.status == "admin", ChannelMembership.status == "owner")).filter(ChannelMembership.channel_id == id).first()
@@ -65,7 +65,7 @@ def delete_channel(id):
 
 @channel_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_channel(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   channel = Channel.query.get(id)
   team_id = channel.team.id
@@ -83,3 +83,38 @@ def add_member_to_channel(id):
   db.session.add(cm)
   db.session.commit()
   return {"message":"added"}
+
+@channel_routes.route("/<int:chan_id>/member/<int:mem_id>", methods=["POST"])
+def delete_member_from_channel(chan_id, mem_id):
+  if not current_user.is_authenticated:
+    return {"error" : "go get logged in"}
+  print("PRINTING CURRENT USER ----  ", current_user.id)
+
+  #this is the cm to be deleted
+  cm = ChannelMembership.query.filter(ChannelMembership.user_id == mem_id).filter(ChannelMembership.channel_id == chan_id).first()
+  if not cm:
+     return {"error": "no such user"}
+
+   # the user to be deleted is the owner but it is not the owner trying to delete himself
+  if cm.status == "owner" and cm.user_id != current_user.id:
+     return {"error": "unauthorized"}
+
+  #owner deletes himself and a new owner is randomly chosen
+  if cm.status == "owner" and cm.user_id == current_user.id:
+     db.session.delete(cm)
+     db.session.commit()
+     return {"message": "successfully deleted"}
+
+    #regular user deletes himself
+  if cm.user.id == current_user.id:
+     db.session.delete(cm)
+     db.session.commit()
+     return {"message": "successfully deleted"}
+  #an owner or admin deletes a user
+  elif current_user.id in [ chan_men.user.id for chan_men in
+                           ChannelMembership.query.filter(ChannelMembership.status != "member").filter(ChannelMembership.channel_id == chan_id).all() ]:
+    db.session.delete(cm)
+    db.session.commit()
+    return {"message": "successfully deleted"}
+
+  return {"error": "Unauthorized"}
