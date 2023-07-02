@@ -98,7 +98,7 @@ def create_team():
   return {"errors": form.errors}
 
 #DELETE A TEAM
-@team_routes.route('/<int:id>', methods=['POST'])
+@team_routes.route('/<int:id>')
 def delete_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
@@ -170,9 +170,9 @@ def add_member_to_team(id):
 
 #DELETE A MEMBER FROM TEAM
 
-@team_routes.route("/<int:team_id>/member/<int:mem_id>", methods=["POST"])
+@team_routes.route("/<int:team_id>/member/<int:mem_id>")
 def delete_member_from_team(team_id, mem_id):
-  
+
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   print("PRINTING CURRENT USER ----  ", current_user.id)

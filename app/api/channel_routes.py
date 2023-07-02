@@ -55,7 +55,7 @@ def get_members_for_channel(id):
 
 
 #DELETE A CHANNEL BY ID
-@channel_routes.route('/<int:id>', methods=['POST'])
+@channel_routes.route('/<int:id>')
 def delete_channel(id):
     if not current_user.is_authenticated:
         return {"error" : "go get logged in"}
@@ -108,7 +108,8 @@ def add_member_to_channel(id):
   db.session.commit()
   return {"message":"added"}
 
-@channel_routes.route("/<int:chan_id>/member/<int:mem_id>", methods=["POST"])
+# DELETE
+@channel_routes.route("/<int:chan_id>/member/<int:mem_id>")
 def delete_member_from_channel(chan_id, mem_id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
