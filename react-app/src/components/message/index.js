@@ -4,7 +4,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { format, addHours, addMinutes, startOfDay } from 'date-fns';
 
 function Message({data, setThread}) {
-
+    console.log(data, 'This is probably a message object');
     const convertTime = () => {
         const [hours, minutes] = data.time.split(':')
         const dayStart = startOfDay(new Date(data.date))

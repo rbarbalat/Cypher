@@ -93,10 +93,10 @@ function Channel({setThread}) {
 
     // useEffect(() => {
     //     socket = io();
-    //     dispatchEvent(thunkGetDirectMessages(userId, ownerId));
+    //     dispatchEvent(thunkGetPartnerMessages(userId, ownerId));
     //     socket.emit("direct-message", {user: user.username, msg: "has connected", recipient_id: ownerId, sender_id: userId})
     //     socket.on("direct-message", (dm) => {
-    //         let msg = dispatch(thunkGetDirectMessages(userId, ownerId))
+    //         let msg = dispatch(thunkGetPartnerMessages(userId, ownerId))
     //         let msgArr = Object.values(msg);
     //         setMessages(...msgArr)
     //     })

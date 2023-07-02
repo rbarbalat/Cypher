@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
 import DirectMessageItem from './directmessageitem'
 import DirectMessageLabel from './directmessagelabel'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useInsertionEffect } from 'react'
+import {thunkGetPartners } from '../../../store/messages'
 
 function AsideDirectMessages() {
     const [ expanded, setExpanded ] = useState(true)
-    const directMessages = useSelector(state => state.messages.directMessages);
+    const directMessages = useSelector(state => state.messages.partners);
     const normalizedDirectMessages = Object.values(directMessages)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(thunkGetPartners)
+    }, [dispatch])
+
+    console.log(normalizedDirectMessages);
 
     return (
         <div className='aside_dropdown--wrapper'>

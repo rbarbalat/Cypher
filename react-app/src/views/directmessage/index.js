@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useParams } from 'react-router-dom';
 import SendMessage from '../../components/sendmessage'
@@ -8,6 +8,7 @@ import MessageFeed from '../../components/messagefeed';
 import Modal from '../../components/modal';
 import '../views.css';
 import './directmessage.css';
+import { useSelector } from 'react-redux'
 
 const messages = [
     {
@@ -64,7 +65,9 @@ const fakeUsers = [
 function DirectMessage() {
     const { userId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
-    const recipient = fakeUsers.find(user => user.id == userId)
+    const directMessages = useSelector(state => state.messages);
+
+
 
     return (
         <main className='views--wrapper'>
@@ -72,18 +75,18 @@ function DirectMessage() {
                     <div className='views--header'>
                         <DirectMessageRecipient
                             setIsVisible={setIsVisible}
-                            data={recipient}
+                            data={directMessages}
                         />
                     </div>
                 </header>
                 <MessageFeed messages={messages}/>
-                <SendMessage data={recipient}/>
+                <SendMessage data={{}}/>
                 {
                     isVisible ?
                     <Modal>
                         <DirectMessageDetails
                             setIsVisible={setIsVisible}
-                            data={recipient}
+                            data={{}}
                             ref={ref}
                         />
                     </Modal> :
