@@ -1,0 +1,26 @@
+@import url('../../../index.css');
+
+.time_stamp--wrapper {
+    margin-top: 30px;
+    border-top: 1px solid var(--border);
+    position: relative;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time_stamp--node {
+    padding: 0 20px;
+    position: relative;
+    top: -17px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    background-color: white;
+}

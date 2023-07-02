@@ -5,8 +5,12 @@ import { authenticate } from "./store/session";
 import Landing from "./views/landing";
 import SignIn from "./views/signin";
 import SignUp from "./views/signup";
-import './App.css';
 import Dashboard from "./views/dashboard";
+import CypherApp from "./views/cypherapp";
+import './App.css';
+import CreateTeam from "./views/createteam";
+import CreateTeamForm from "./views/createteamform";
+import TeamProvider from "./context/teamProvider";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,9 +43,15 @@ function App() {
             <Route exact path='/dashboard'>
               <Dashboard/>
             </Route>
-            {/* <Route path='/team/:teamId'>
+            <Route path='/create-team/new'>
+              <CreateTeamForm/>
+            </Route>
+            <Route exact path='/create-team'>
+              <CreateTeam/>
+            </Route>
+            <Route path='/team/:teamId'>
               <CypherApp/>
-            </Route> */}
+            </Route>
         </Switch>
       </div>
 

@@ -1,0 +1,99 @@
+@import url('../../index.css');
+
+#create_team_form--wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.create_team_form--navigation {
+    height: 60px;
+    width: 100%;
+    background-color: var(--blue);
+}
+
+.create_team_form--main {
+    flex: 1;
+    display: flex;
+}
+
+.create_team_form--aside {
+    background-color: var(--blue);
+    width: 300px;
+
+}
+
+.create_team_form--header {
+    display: flex;
+    color: white;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 20px;
+    font-weight: 600;
+    height: 60px;
+    border-top: 1px solid var(--dark-hover);
+    border-bottom: 1px solid var(--dark-hover);
+}
+
+.create_team_form--step {
+    flex: 1;
+}
+
+
+.create_form_step--container {
+    width: 100%;
+    height: 100%;
+    padding: 50px 75px;
+}
+
+.create_form_step--container h1 {
+    font-size: 50px;
+    width: 40%;
+    margin: 25px 0;
+}
+
+.create_form_step--container p {
+    font-weight: 20px;
+    width: 50%;
+}
+
+.create_form_step--input_container {
+    width: 50%;
+    margin: 20px 0;
+}
+
+.create_form_step--next {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 200px;
+}
+
+.create_form_step--next:disabled {
+    color: var(--body);
+    background-color: var(--light-hover);
+}
+
+.create_form_step--back {
+    border: 2px solid var(--blue);
+    background-color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.create_form_step--actions {
+    margin-top: 75px;
+    display: flex;
+    gap: 20px
+}

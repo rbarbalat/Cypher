@@ -1,0 +1,36 @@
+@import url('../../index.css');
+
+#modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    width: 100vw;
+    height: 100dvh;
+    height: 100vh;
+    background-color: rgba(0,0,0,.3);
+    z-index: 125;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-contents {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 24px 24px 24px;
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.modal-close {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    cursor: pointer;
+    color: var(--border);
+}

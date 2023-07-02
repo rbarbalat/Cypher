@@ -1,0 +1,40 @@
+@import url('../../index.css');
+
+#message_feed--wrapper {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 70px 0 175px 0;
+}
+
+.message_feed--introduction {
+    padding: 30px 15px;
+}
+
+.message_feed--introduction--recipient {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message_feed--introduction--image {
+    height: 70px;
+    aspect-ratio: 1;
+    background-color: var(--border);
+    border-radius: 10px;
+}
+
+.message_feed--introduction--information p {
+    margin: 0;
+    color: var(--body)
+}
+
+.message_feed--introduction--information p:first-of-type {
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+}
+
+.message_feed--introduction--greeting {
+    font-size: 18px;
+    color: var(--body)
+}

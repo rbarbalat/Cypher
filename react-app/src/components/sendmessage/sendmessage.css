@@ -1,0 +1,77 @@
+@import url('../../index.css');
+
+.send_message--wrapper {
+    width: calc(100% - 30px);
+    position: absolute;
+    z-index: 100;
+    border: 1px solid #dadada;
+    bottom: 15px;
+    left: 15px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.message_toolbar--wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--light-hover);
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+.message_toolbar--icon {
+    height: 30px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.message_toolbar--icon:hover {
+    background-color: #efefef;
+}
+
+.break {
+    color: var(--border)
+}
+
+.send_message--messenger {
+    padding: 15px;
+    position: relative;
+}
+
+.placeholder {
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    color: var(--border);
+    font-weight: 300;
+}
+
+
+.send_message--send_wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px 10px 0;
+}
+
+.send_message--send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    border-radius: 5px;
+    aspect-ratio: 1;
+    color: #c4c4c4;
+}
+
+.active-send {
+    background-color: green;
+    color: white;
+}

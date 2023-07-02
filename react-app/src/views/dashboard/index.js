@@ -1,42 +1,45 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
+import { thunkGetTeams } from '../../store/teams';
 import { logout } from "../../store/session";
 import { FaArrowRight } from 'react-icons/fa'
 import './dashboard.css';
 
-const fakeTeams = [
-    {
-        name: "Fake Team 1",
-        numMembers: 300
-    },
-    {
-        name: "Fake Team 2",
-        numMembers: 1300
-    },
-    {
-        name: "Fake Team 3",
-        numMembers: 3450
-    },
-]
 
 function Dashboard() {
+    const [ loading, setLoading ] = useState(true)
     const sessionUser = useSelector((state) => state.session.user);
+    const userTeams = useSelector((state) => state.teams.allTeams)
+    const normalizedTeams = Object.values(userTeams)
     const dispatch = useDispatch();
     const history = useHistory();
 
-    console.log(sessionUser)
-
     const handleLogout = (e) => {
         e.preventDefault();
+        history.push('/sign-in')
         dispatch(logout())
-        .then(() => history.push('/sign-in'));
     };
+
+    const handleTeam = (id) => {
+        history.push(`/team/${id}`)
+    }
+
+    const handleCreateTeam = () => {
+        history.push('/create-team')
+    }
+
+    useEffect(() => {
+        dispatch(thunkGetTeams())
+        .then(() => setLoading(false))
+    }, [dispatch])
 
     if (!sessionUser) return <Redirect to='/sign-in' />
 
+    if (loading) return <div>Loading...</div>
+
     return (
-        <main id='dashboard--wrapper'>
+        <main className='dashboard--wrapper'>
             <div className='dashboard--contents'>
                 <div className='dashboard--container'>
                     <div onClick={(e) => handleLogout(e)} className='auth--logo'>
@@ -49,10 +52,10 @@ function Dashboard() {
                     </div>
                     <div className='dashboard--teams'>
                         <header className='dashboard--teams_header'>
-                            <p>Teams for {sessionUser.email}</p>
+                            <p>Teams for <strong>{sessionUser.email}</strong></p>
                         </header>
-                        {fakeTeams.map(team => (
-                            <div className='dashboard--team'>
+                        {normalizedTeams.map(team => (
+                            <div key={team.id}  onClick={() => handleTeam(team.id)} className='dashboard--team'>
                                 <div className='dashboard--team--info'>
                                     <div className='dashboard--team--info_image'></div>
                                     <div>
@@ -60,7 +63,7 @@ function Dashboard() {
                                         <div className='dashboard_team_members--wrapper'>
                                             <div className='dashboard_team_members--span'>
                                                 {[1,2,3,4,5].map(member => (
-                                                    <div className='dashboard_team_members--member'></div>
+                                                    <div key={member} className='dashboard_team_members--member'></div>
                                                 ))}
                                             </div>
                                             <span className='dashboard_team_members--count'>{team.numMembers} members</span>
@@ -79,7 +82,7 @@ function Dashboard() {
                             <div></div>
                             <span>Want to use Cypher with a different team?</span>
                         </div>
-                        <button>Create Another Team</button>
+                        <button onClick={() => handleCreateTeam()}>Create Another Team</button>
                     </div>
                     <div className='dashboard--logout'>
                         <p>Not seeing your workspace?</p>

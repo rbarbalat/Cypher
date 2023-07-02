@@ -1,0 +1,89 @@
+@import url('../../../index.css');
+
+.channel_item--wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    padding: 2px 0;
+    margin-bottom: 2.5px;
+    cursor: pointer;
+}
+
+.channel_item--wrapper:hover {
+    background-color: var(--dark-hover);
+}
+
+.channel_item--icon_wrapper {
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 5px;
+}
+
+.channel_item--icon {
+    font-size: 12px;
+}
+
+.channel_label--wrapper {
+    position: relative;
+}
+
+.channel_label--label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.channel_label--label:hover {
+    background-color: var(--dark-hover);
+
+}
+
+.channel_label--label:hover .channel_label--icon {
+    opacity: 1;
+}
+
+.channel_label--icon {
+    font-size: 10px;
+    opacity: 0;
+}
+
+.channel_label--options {
+    position: absolute;
+    left: 20px;
+    top: 35px;
+    background-color: white;
+    z-index: 120;
+    width: 300px;
+    border-radius: 5px;
+    padding: 10px 0;
+    border: 1px solid var(--border);
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+}
+
+.channel_label--option--wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--body);
+    padding: 5px 20px;
+}
+
+.channel_label--option {
+    margin: 0;
+}
+
+.channel_label--option--icon {
+    font-size: 12px;
+}
+
+.channel_label--option--wrapper:hover  {
+    background-color: var(--color-hover);
+    color: white;
+}

@@ -1,0 +1,46 @@
+@import url('../../index.css');
+
+#thread--wrapper {
+    max-width: 400px;
+    border-left: 1px solid var(--border);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-right: 5px;
+}
+
+.thread--header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+}
+
+.thread--header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.thread--close_wrapper {
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--body);
+    cursor: pointer;
+}
+
+.thread--close_wrapper:hover {
+    background-color: var(--light-hover);
+}
+
+#thread_feed--wrapper {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 0px 0 175px 0;
+}
