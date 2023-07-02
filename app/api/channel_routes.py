@@ -15,15 +15,25 @@ def get_channels():
     # print("hello world")
     # print(channels)
     if len(channels) == 0:
-        return {}
-    return [ {
-        'id': channel.id,
-        'name': channel.name,
-        'private': channel.private,
-        'team_id': channel.team_id,
-        "description": channel.description
-        }
-        for channel in channels]
+        return []
+
+    list_of_list_of_users = [ [cm.user.to_dict() for cm in channel.users] for channel in channels ]
+
+    new_channels = [{
+    "id": channel.id,
+    "name": channel.name,
+    "description": channel.description,
+    "private": channel.private,
+    "team_id": channel.team_id
+    }
+    for channel in channels]
+
+    for i, user_list in enumerate(list_of_list_of_users, start = 0):
+    # print(i)
+      new_channels[i]["users"] = user_list
+      new_channels[i]["numMembers"] = len(user_list)
+
+    return new_channels
 
 #GET CHANNEL BY ID
 @channel_routes.route('/<int:id>')
@@ -33,12 +43,17 @@ def get_channel_by_id(id):
     channel = Channel.query.get(id)
     if channel is None:
         return {"error": "Channel not found"}
+
+    users = [cm.user.to_dict() for cm in channel.users]
+    numMembers = len(users)
     return {
         'id': channel.id,
         'name': channel.name,
         'private': channel.private,
         'team_id': channel.team_id,
-        "description": channel.description
+        "description": channel.description,
+        "users": users,
+        "numMembers": numMembers
         }
 
 #GET MEMBERS OF A CHANNEL
