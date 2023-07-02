@@ -7,30 +7,30 @@ from sqlalchemy import or_
 
 team_routes = Blueprint("teams", __name__)
 
-
+#GET ALL TEAMS
 @team_routes.route("/")
 def get_teams():
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   teams = Team.query.all()
   if len(teams) == 0:
     return []
   return [{"id": team.id, "name": team.name, "image": team.image} for team in teams]
 
-
+#GET TEAMS BY ID
 @team_routes.route("/<int:id>")
 def get_team_by_id(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team = Team.query.get(id)
   if team is None:
     return {"error": "Team not found"}
   return {"id": team.id, "name": team.name, "image": team.image, "description":team.description}
 
-
+#GET CURRENT USER'S TEAMS
 @team_routes.route("/currentuser")
 def get_user_teams():
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team_list=[]
   for membership in current_user.teams:
@@ -44,7 +44,7 @@ def get_user_teams():
 
 @team_routes.route("/<int:id>/channels")
 def get_team_channels(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   channel_list=[]
   team = Team.query.get(id)
@@ -61,7 +61,7 @@ def get_team_channels(id):
 
 @team_routes.route('/<int:id>/members')
 def get_members_for_team(id):
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team = Team.query.get(id)
   users = [{
@@ -72,7 +72,7 @@ def get_members_for_team(id):
 
 @team_routes.route('/', methods=['POST'])
 def create_team():
-  if not current_user:
+  if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
