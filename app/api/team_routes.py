@@ -42,6 +42,7 @@ def get_user_teams():
     } for team in team_list]
   return team_list
 
+#GET CHANNELS BY TEAM ID
 @team_routes.route("/<int:id>/channels")
 def get_team_channels(id):
   if not current_user.is_authenticated:
@@ -59,21 +60,27 @@ def get_team_channels(id):
     } for channel in channel_list]
   return channel_list
 
+#GET ALL MEMBERS OF A TEAM
 @team_routes.route('/<int:id>/members')
 def get_members_for_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
+
+  #DO WE NEED TO PREVENT NON TEAM MEMBERS FROM HAVING ACCESS??
   team = Team.query.get(id)
+  #DO WE NEED TO ADD USER'S EMAIL?
   users = [{
     "id":membership.user.id,
     "username":membership.user.username
       } for membership in team.users]
   return users
 
+#CREATE A TEAM
 @team_routes.route('/', methods=['POST'])
 def create_team():
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
+  #weird syntax was jonathan testing something
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   if form.validate_on_submit():
@@ -90,11 +97,14 @@ def create_team():
     }
   return {"errors": form.errors}
 
+#DELETE A TEAM
 @team_routes.route('/<int:id>', methods=['POST'])
 def delete_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team = Team.query.get(id)
+  if not team:
+    return {"error": "Team does not exist"}
   for team_membership in current_user.teams:
     if team_membership.team_id == team.id:
       if team_membership.status == "owner":
@@ -105,18 +115,22 @@ def delete_team(id):
         return {"error" : "not authorized"}
   return {"error" : "not authorized"}
 
+
+#CREATE A CHANNEL FOR A TEAM (ID)
 @team_routes.route('/<int:id>/channels', methods=['POST'])
 def create_channel(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
-  isOwner = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(TeamMembership.team_id == id).first()
-  if not isOwner:
+  #DO WE WANT ONLY TEAM OWNNERS/ADMIN TO BE ABLE TO CREATE CHANNELS FOR A TEAM?
+  isOwnerOrAdmin = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(TeamMembership.team_id == id).first()
+  if not isOwnerOrAdmin:
       return {"error" : "not authorized"}
   if form.validate_on_submit():
     channel = Channel()
     form.populate_obj(channel)
+    #id from the route parameter
     channel.team_id = id
     db.session.add(channel)
     db.session.add(ChannelMembership(user=current_user, channel=channel, status="owner"))
@@ -130,12 +144,19 @@ def create_channel(id):
     }
   return {"errors": form.errors}
 
+#ADD A MEMBER TO A TEAM (USER ADDS HIMSELF)
 @team_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   team = Team.query.get(id)
-  isAlreadyMember = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(TeamMembership.channel_id == id).first()
+  if team is None:
+    return {"error": "team does not exist"}
+  if len(team.users) == 0:
+    return {"error": "can't add yourself to a team with zero members"}
+  isAlreadyMember = current_user.id in [tm.user_id for tm in team.users]
+  #replaced with cleaner code
+  #isAlreadyMember = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(TeamMembership.team_id == id).first()
   if isAlreadyMember:
     return {"error" : "you've already joined"}
   tm = TeamMembership(
