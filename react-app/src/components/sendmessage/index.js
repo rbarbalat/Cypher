@@ -14,6 +14,8 @@ function SendMessage({partnerId}) {
     const dispatch = useDispatch()
     const editor = useRef(null);
     const [message, setMessage] = useState("")
+    const user = useSelector(state => state.session.user)
+
 
     const styleMap = {
         CODE: {
@@ -76,6 +78,12 @@ function SendMessage({partnerId}) {
         // console.log(contentState.toJS())
         const text = {"message" : message }
         await dispatch(thunkCreateDirectMessage(partnerId, text))
+       socket.emit("chat", {
+          "user": user.username,
+          "message": text,
+          "sender_id": user.id,
+          "recipient_id": partnerId
+        })
     }
 
 

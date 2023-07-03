@@ -38,6 +38,8 @@ app.register_blueprint(direct_mes_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
 
+socketio.init_app(app)
+
 if __name__ == "__main__":
     socketio.run(app)
 

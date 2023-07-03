@@ -89,31 +89,34 @@ function DirectMessage() {
       dispatch(thunkGetDirectMessages(partnerId))
   }, [dispatch, partnerId])
 
-    // useEffect(() => {
-    //     socket = io()
-    //     // setMessages(dispatch(thunkGetDirectMessages(partnerId)))
-    //     console.log("socket connected")
-    //     socket.emit("chat", {
-    //       "user": user.username,
-    //       "message": "has connected",
-    //       "sender_id": userId,
-    //       "recipient_id": partnerId
-    //     })
-    //     socket.on("chat", (chat) => {
-    //         //need to await dispatch?
-    //         // setMessages(messages => [...messages, chat])
-    //     })
 
-    //     return (() => {
-    //       socket.emit("chat", {
-    //         "user": user.username,
-    //         "message": "has disconnected",
-    //         "sender_id": user.id,
-    //         "recipient_id": partnerId
-    //       })
-    //       socket.disconnect()
-    //     })
-    // }, []);//empty in the sample code, maybe needs dispatch, partnerId
+    useEffect(() => {
+        socket = io()
+        console.log(socket)
+        dispatch(thunkGetDirectMessages(partnerId))
+        console.log("socket connected")
+        // socket.emit("chat", {
+        //   "user": user.username,
+        //   "message": "has connected",
+        //   "sender_id": userId,
+        //   "recipient_id": partnerId
+        // })
+        socket.on("chat", (chat) => {
+            dispatch(thunkGetDirectMessages(partnerId))
+            //need to await dispatch?
+            // setMessages(messages => [...messages, chat])
+        })
+
+        return (() => {
+        //   socket.emit("chat", {
+        //     "user": user.username,
+        //     "message": "has disconnected",
+        //     "sender_id": user.id,
+        //     "recipient_id": partnerId
+        //   })
+          socket.disconnect()
+        })
+    }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
   if(normalizedDirectMessages.length == 0) return <div>loading</div>

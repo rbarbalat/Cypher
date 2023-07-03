@@ -12,7 +12,7 @@ socketio = SocketIO(cors_allowed_origins = origins)
 
 @socketio.on("chat")
 def handle_direct_messages(data):
-    print(data)
+    print(data, "ASIHNFOAKNEOGJKFNAKONGA")
     if data != "User connected!":
         dm = DirectMessage(
             sender_id = data["sender_id"],
