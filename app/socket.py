@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, emit
-from app.models import DirectMessage
+from app.models import DirectMessage, db
 import os
 
 socketio = SocketIO()
@@ -14,8 +14,11 @@ socketio = SocketIO(cors_allowed_origins = origins)
 def handle_direct_messages(data):
     print(data)
     if data != "User connected!":
-        dms = DirectMessage(
+        dm = DirectMessage(
             sender_id = data["sender_id"],
             recipient_id = data["recipient_id"],
             message = data["message"],
         )
+        db.session.add(dm)
+        db.session.commit
+    emit("direct_messages", data, broadcast=True)
