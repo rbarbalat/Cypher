@@ -49,7 +49,7 @@ export const thunkGetDirectMessages = (id) => async dispatch => {
         console.log(data)
         dispatch(actionGetDirectMessagesWithPartner(data))
         //need return value inside useEffect for socket
-        // return data.messages
+        return data.messages
     }
 }
 

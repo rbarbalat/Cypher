@@ -15,7 +15,7 @@ function SendMessage({partnerId}) {
     const editor = useRef(null);
     const [message, setMessage] = useState("")
     const user = useSelector(state => state.session.user)
-
+    // const {socket}  = socket
 
     const styleMap = {
         CODE: {
@@ -72,48 +72,20 @@ function SendMessage({partnerId}) {
 
 
     const handleContent = async () => {
-        // const contentState = editorState.getCurrentContent();
-        // const json = JSON.stringify(contentState.toJS(), null, 4)
-        // console.log(json)
-        // console.log(contentState.toJS())
         const text = {"message" : message }
-        await dispatch(thunkCreateDirectMessage(partnerId, text))
-       socket.emit("chat", {
-          "user": user.username,
-          "message": text,
-          "sender_id": user.id,
-          "recipient_id": partnerId
-        })
+        await dispatch(thunkCreateDirectMessage(parseInt(partnerId), text))
     }
 
 
     return (
         <div className='send_message--wrapper'>
-            {/* <MessageToolbar editorState={editorState} setEditorState={setEditorState}/> */}
-            {/* <div className='send_message--messenger'>
-                {!editorState.getCurrentContent().hasText() ? <p className='placeholder'>Message</p> : null }
-                <Editor
-                    ref={editor}
-                    editorState={editorState}
-                    onChange={(editorState) => {
-                        setEditorState(editorState)
-                    }}
-                    handleKeyCommand={handleKeyCommand}
-                    customStyleMap={styleMap}
-                    blockStyleFn={myBlockStyleFn}
-                />
-            </div> */}
             <textarea value={message} onChange={(e) => setMessage(e.target.value)}>
 
             </textarea>
             <button onClick={handleContent}>
               SEND A MESSAGE
             </button>
-            {/* <div className='send_message--send_wrapper'>
-                <div onClick={() => handleContent()} className={`send_message--send ${editorState.getCurrentContent().hasText() ? 'active-send' : ''}`}>
-                    <FaPaperPlane className='send_message--send_icon'/>
-                </div>
-            </div> */}
+
         </div>
     )
 }

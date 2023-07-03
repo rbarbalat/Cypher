@@ -9,8 +9,11 @@ import { useLocation } from 'react-router-dom'
 function DirectMessageFeed({messages}) {
   const [ loading, setLoading ] = useState(true)
   console.log("messages on line 9.5  ", messages)
-  const start = new Date(messages[0].created_at);
-  const end = new Date(messages[messages.length - 1].created_at)
+  console.log("messages in DirectMessagefood")
+  let start;
+  start = messages.length != 0 ? new Date(messages[0].created_at) : new Date()
+  let end;
+  end = messages.length != 0 ? new Date(messages[messages.length - 1].created_at) : new Date()
   const dates = [];
 
   const { pathname } = useLocation()

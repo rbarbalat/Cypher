@@ -9,73 +9,20 @@ import Modal from '../../components/modal';
 import '../views.css';
 import './directmessage.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { thunkGetDirectMessages } from '../../store/messages';
+import { thunkGetDirectMessages, thunkCreateDirectMessage } from '../../store/messages';
 import { io } from "socket.io-client"
 import {useState} from "react"
 let socket;
 
-
-// const messages = [
-//     {
-//         sender: 'Sender 1',
-//         date: '01/01/2023',
-//         time: '1:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     },
-//     {
-//         sender: 'Sender 2',
-//         date: '01/01/2023',
-//         time: '3:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     },
-//     {
-//         sender: 'Sender 3',
-//         date: '01/02/2023',
-//         time: '12:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     },
-//     {
-//         sender: 'Sender 4',
-//         date: '01/03/2023',
-//         time: '11:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     },
-//     {
-//         sender: 'Sender 5',
-//         date: '01/03/2023',
-//         time: '15:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-//     },
-//   ]
-
-// const fakeUsers = [
-//     {
-//         id: 1,
-//         name: 'Omar El Sahalah'
-//     },
-//     {
-//         id: 2,
-//         name: 'Roman Barabalat'
-//     },
-//     {
-//         id: 3,
-//         name: 'Jonathan Carter'
-//     },
-//     {
-//         id: 4,
-//         name: 'Chris Eke'
-//     }
-// ]
-
 function DirectMessage() {
     const { userId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
-    // const directMessages = useSelector(state => state.messages);
     const directMessages = useSelector(state => state.messages.directMessages);
-    const normalizedDirectMessages = Object.values(directMessages)
+    let normalizedDirectMessages = Object.values(directMessages)
 
-    // const [messages, setMessages] = useState(normalizedDirectMessages)
-    // const [messages, setMessages] = useState([])
+    const [chatInput, setChatInput] = useState("")
+    const [messages, setMessages] = useState([])
+
     const user = useSelector(state => state.session.user)
 
     console.log("normalized messages, line 74 ---",normalizedDirectMessages)
@@ -84,39 +31,54 @@ function DirectMessage() {
     const partnerId = pathname.split('/')[4]
     const dispatch = useDispatch()
 
+    const handleContent = async () => {
+        const text = {"message" : chatInput }
+        await dispatch(thunkCreateDirectMessage(parseInt(partnerId), text))
+        socket.emit("chat", {
+            "user": user.username,
+            "message": chatInput,
+            "sender_id": parseInt(user.id),
+            "recipient_id": parseInt(partnerId)
+          })
+    }
 
     useEffect(() => {
-      dispatch(thunkGetDirectMessages(partnerId))
-  }, [dispatch, partnerId])
+        normalizedDirectMessages = Object.values(directMessages)
+        setMessages([...normalizedDirectMessages])
+  }, [directMessages])
 
 
     useEffect(() => {
         socket = io()
         console.log(socket)
-        dispatch(thunkGetDirectMessages(partnerId))
+        dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         console.log("socket connected")
-        // socket.emit("chat", {
-        //   "user": user.username,
-        //   "message": "has connected",
-        //   "sender_id": userId,
-        //   "recipient_id": partnerId
-        // })
-        socket.on("chat", (chat) => {
-            dispatch(thunkGetDirectMessages(partnerId))
-            //need to await dispatch?
-            // setMessages(messages => [...messages, chat])
+
+        socket.on("chat", async (chat) => {
+            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            console.log("msgs ---- line 51,", msgs)
+            let normMsgs = Object.values(msgs)
+            console.log("normMsgs   line 53,   ", normMsgs)
+            setMessages([...normMsgs])
+            console.log("normMsgs inside directMesssage   ", normMsgs)
         })
+        socket.emit("chat", {
+            "user": user.username,
+            "message": "has connected",
+            "sender_id": parseInt(user.id),
+            "recipient_id": parseInt(partnerId)
+          })
 
         return (() => {
-        //   socket.emit("chat", {
-        //     "user": user.username,
-        //     "message": "has disconnected",
-        //     "sender_id": user.id,
-        //     "recipient_id": partnerId
-        //   })
+            socket.emit("chat", {
+                "user": user.username,
+                "message": "is offline",
+                "sender_id": parseInt(user.id),
+                "recipient_id": parseInt(partnerId)
+              })
           socket.disconnect()
         })
-    }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
+    }, [partnerId, dispatch,]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
   if(normalizedDirectMessages.length == 0) return <div>loading</div>
@@ -126,15 +88,22 @@ function DirectMessage() {
         <main className='views--wrapper'>
                 <header className='views--header--wrapper'>
                     <div className='views--header'>
-                        <DirectMessageRecipient
+                        {/* <DirectMessageRecipient
                             setIsVisible={setIsVisible}
-                            data={normalizedDirectMessages}
-                        />
+                            // data={normalizedDirectMessages}
+                            data = {messages}
+                        /> */}
                     </div>
                 </header>
-                <DirectMessageFeed messages={normalizedDirectMessages}/>
-                {/* <DirectMessageFeed messages={messages}/> */}
-                <SendMessage partnerId={partnerId}/>
+                {/* <DirectMessageFeed messages={normalizedDirectMessages}/> */}
+                <DirectMessageFeed messages={messages}/>
+                {/* <SendMessage partnerId={partnerId}/> */}
+                <div className='send_message--wrapper'>
+                    <textarea value={chatInput} onChange={(e) => setChatInput(e.target.value)}>
+                    </textarea>
+                    <button onClick={handleContent}>SEND A MESSAGE</button>
+                </div>
+
                 {
                     isVisible ?
                     <Modal>
