@@ -97,7 +97,7 @@ function DirectMessage() {
                     </div>
                 </header>
                 <DirectMessageFeed messages={normalizedDirectMessages}/>
-                <SendMessage data={{}}/>
+                <SendMessage partnerId={partnerId}/>
                 {
                     isVisible ?
                     <Modal>
