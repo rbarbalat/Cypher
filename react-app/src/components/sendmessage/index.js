@@ -4,7 +4,10 @@ import MessageToolbar from './messagetoolbar';
 import { FaPaperPlane } from 'react-icons/fa'
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import './sendmessage.css'
-import { thunkCreateDirectMessage } from "../../store/messages"
+import { thunkCreateDirectMessage, thunkGetDirectMessages } from "../../store/messages"
+import { io } from "socket.io-client"
+import { useSelector } from 'react-redux';
+let socket;
 
 function SendMessage({partnerId}) {
     const [ editorState, setEditorState ] = useState(() => EditorState.createEmpty())
@@ -65,22 +68,6 @@ function SendMessage({partnerId}) {
         }
     };
 
-    // useEffect(() => {
-    //     focusEditor();
-    // }, []);
-
-    // const focusEditor = () => {
-    //     editor.current.focus();
-    // };
-
-    // const handleKeyCommand = (command) => {
-    //     const newState = RichUtils.handleKeyCommand(editorState, command);
-    //     if (newState) {
-    //         setEditorState(newState)
-    //         return true
-    //     }
-    //     return false
-    // }
 
     const handleContent = async () => {
         // const contentState = editorState.getCurrentContent();

@@ -10,6 +10,9 @@ import '../views.css';
 import './directmessage.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetDirectMessages } from '../../store/messages';
+import { io } from "socket.io-client"
+import {useState} from "react"
+let socket;
 
 
 // const messages = [
@@ -71,16 +74,46 @@ function DirectMessage() {
     const directMessages = useSelector(state => state.messages.directMessages);
     const normalizedDirectMessages = Object.values(directMessages)
 
+    // const [messages, setMessages] = useState(normalizedDirectMessages)
+    // const [messages, setMessages] = useState([])
+    const user = useSelector(state => state.session.user)
+
     console.log("normalized messages, line 74 ---",normalizedDirectMessages)
 
     const { pathname } = useLocation()
     const partnerId = pathname.split('/')[4]
     const dispatch = useDispatch()
 
+
     useEffect(() => {
-      console.log("printing partner ind ------ ", partnerId);
       dispatch(thunkGetDirectMessages(partnerId))
   }, [dispatch, partnerId])
+
+    // useEffect(() => {
+    //     socket = io()
+    //     // setMessages(dispatch(thunkGetDirectMessages(partnerId)))
+    //     console.log("socket connected")
+    //     socket.emit("chat", {
+    //       "user": user.username,
+    //       "message": "has connected",
+    //       "sender_id": userId,
+    //       "recipient_id": partnerId
+    //     })
+    //     socket.on("chat", (chat) => {
+    //         //need to await dispatch?
+    //         // setMessages(messages => [...messages, chat])
+    //     })
+
+    //     return (() => {
+    //       socket.emit("chat", {
+    //         "user": user.username,
+    //         "message": "has disconnected",
+    //         "sender_id": user.id,
+    //         "recipient_id": partnerId
+    //       })
+    //       socket.disconnect()
+    //     })
+    // }, []);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
   if(normalizedDirectMessages.length == 0) return <div>loading</div>
@@ -97,6 +130,7 @@ function DirectMessage() {
                     </div>
                 </header>
                 <DirectMessageFeed messages={normalizedDirectMessages}/>
+                {/* <DirectMessageFeed messages={messages}/> */}
                 <SendMessage partnerId={partnerId}/>
                 {
                     isVisible ?
