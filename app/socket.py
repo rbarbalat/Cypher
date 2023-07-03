@@ -4,13 +4,13 @@ import os
 
 socketio = SocketIO()
 
-if os.environ.get(FLASK_ENV) == "production":
+if os.environ.get("FLASK_ENV") == "production":
     origins = ["http://cypher-app.onrender.com","https://cypher-app.onrender.com" ]
 else:
     origins = "*"
 socketio = SocketIO(cors_allowed_origins = origins)
 
-@socketio.on("direct_messages")
+@socketio.on("chat")
 def handle_direct_messages(data):
     print(data)
     if data != "User connected!":
@@ -21,4 +21,4 @@ def handle_direct_messages(data):
         )
         db.session.add(dm)
         db.session.commit
-    emit("direct_messages", data, broadcast=True)
+    emit("chat", data, broadcast=True)
