@@ -19,7 +19,6 @@ function Dashboard() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    console.log(normalizedEveryTeam)
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -32,7 +31,6 @@ function Dashboard() {
     }
 
     const handleJoinTeam = (id) => {
-        console.log(id)
         dispatch(thunkJoinTeam(id))
         .then(() => handleGoToTeam(id))
     }

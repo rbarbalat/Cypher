@@ -83,29 +83,11 @@ const fakeMembers = [
     1,2,3,4,5
 ]
 
-// let socket;
 
 function Channel({setThread}) {
     const { channelId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const channel = fakeChannels.find(channel => channel.id == channelId)
-
-    // useEffect(() => {
-    //     socket = io();
-    //     dispatchEvent(thunkGetPartnerMessages(userId, ownerId));
-    //     socket.emit("direct-message", {user: user.username, msg: "has connected", recipient_id: ownerId, sender_id: userId})
-    //     socket.on("direct-message", (dm) => {
-    //         let msg = dispatch(thunkGetPartnerMessages(userId, ownerId))
-    //         let msgArr = Object.values(msg);
-    //         setMessages(...msgArr)
-    //     })
-
-    //     return () => {
-    //         socket.emit("direct-message" {user: user.username, msg: "has disconnected, recipient_id: ownerId, sender_id: userId"})
-    //         console.log('disconnected')
-    //         socket.disconnect();
-    //     }
-    // }, [dispatch])
 
     return (
         <main className='views--wrapper'>

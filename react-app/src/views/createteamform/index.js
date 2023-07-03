@@ -22,7 +22,6 @@ function CreateTeamForm() {
     const handleCreateTeam = async () => {
         const newTeam = {name, description, image}
         const data = await dispatch(thunkCreateTeam(newTeam))
-        console.log(data)
         if (data.error) {
             console.log(data.error)
         } else {

@@ -16,7 +16,6 @@ function LiveChatFeed({messages}) {
     const { pathname } = useLocation()
     const recipientId = pathname.split('/')[4]
     const partner = useSelector(state => state.messages.partners[recipientId].partner)
-    console.log(partner);
     for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
         dates.push(format(date, 'P'))
     }

@@ -40,7 +40,6 @@ import { useSelector } from 'react-redux';
 
 function Thread({close}) {
     const messages = Object.values(useSelector(state => state.messages.directMessages))
-    console.log(messages, 'messages');
     return (
     <aside id='thread--wrapper'>
         <header className='thread--header'>

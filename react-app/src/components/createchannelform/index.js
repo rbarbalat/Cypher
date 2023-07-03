@@ -19,7 +19,6 @@ function CreateChannelForm({ setCreateChannel }) {
         const data = await dispatch(thunkCreateChannel(team.id, newChannel))
         if (data) {
             setErrors(data)
-            console.log(data)
         }
         setCreateChannel(false)
 

@@ -9,7 +9,6 @@ function DirectMessageRecipient({setIsVisible, data}) {
   const recipientId = pathname.split('/')[4]
 
   useEffect(() => {
-    console.log(recipientId);
     dispatch(thunkGetDirectMessages(recipientId))
 }, [dispatch])
 

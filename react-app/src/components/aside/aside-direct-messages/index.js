@@ -13,8 +13,6 @@ function AsideDirectMessages() {
     const normalizedDirectPartners = Object.values(directPartners)
     const dispatch = useDispatch()
 
-    console.log("normalized DirectMessages line 20 --------")
-    console.log(normalizedDirectPartners);
 
     return (
         <div className='aside_dropdown--wrapper'>

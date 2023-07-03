@@ -31,7 +31,6 @@ export const thunkGetPartners = () => async dispatch => {
         if (data.errors) {
             return data.errors
         }
-        console.log(data)
         dispatch(actionGetPartners(data))
     }
 }
@@ -46,7 +45,6 @@ export const thunkGetDirectMessages = (id) => async dispatch => {
         if (data.errors) {
             return data.errors
         }
-        console.log(data)
         dispatch(actionGetDirectMessagesWithPartner(data))
         //need return value inside useEffect for socket
         return data.messages
@@ -64,7 +62,6 @@ export const thunkCreateDirectMessage = (id, message) => async dispatch => {
         if (data.errors) {
             return data.errors
         }
-        console.log(data)
         dispatch(actionCreateDirectMessage(data))
     }
 }

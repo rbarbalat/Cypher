@@ -25,7 +25,6 @@ function DirectMessage() {
 
     const user = useSelector(state => state.session.user)
 
-    console.log("normalized messages, line 74 ---",normalizedDirectMessages)
 
     const { pathname } = useLocation()
     const partnerId = pathname.split('/')[4]
@@ -33,7 +32,6 @@ function DirectMessage() {
 
     const handleContent = async () => {
         const text = {"message" : chatInput }
-        await dispatch(thunkCreateDirectMessage(parseInt(partnerId), text))
         socket.emit("chat", {
             "user": user.username,
             "message": chatInput,
@@ -42,26 +40,14 @@ function DirectMessage() {
           })
     }
 
-//     useEffect(() => {
-//         normalizedDirectMessages = Object.values(directMessages)
-//         setMessages([...normalizedDirectMessages])
-//         console.log("line 48 line 48 line 48")
-//   }, [])
-
-
     useEffect(() => {
         socket = io()
-        console.log(socket)
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-        console.log("socket connected")
 
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-            // console.log("msgs ---- line 51,", msgs)
             let normMsgs = Object.values(msgs)
-            // console.log("normMsgs   line 53,   ", normMsgs)
             setMessages([...normMsgs])
-            // console.log("normMsgs inside directMesssage   ", normMsgs)
         })
         socket.emit("chat", {
             "user": user.username,
@@ -96,9 +82,7 @@ function DirectMessage() {
                         /> */}
                     </div>
                 </header>
-                {/* <DirectMessageFeed messages={normalizedDirectMessages}/> */}
                 <DirectMessageFeed messages={messages}/>
-                {/* <SendMessage partnerId={partnerId}/> */}
                 <div className='send_message--wrapper'>
                     <textarea value={chatInput} onChange={(e) => setChatInput(e.target.value)}>
                     </textarea>

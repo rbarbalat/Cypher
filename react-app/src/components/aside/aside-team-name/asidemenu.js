@@ -23,7 +23,6 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
     }
 
     const isOwner = (status === "owner")
-    console.log(isOwner);
     return (
         <div ref={ref} className='aside_team--details'>
             <div className='aside_team--header'>

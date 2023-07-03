@@ -8,8 +8,6 @@ import { useLocation } from 'react-router-dom'
 
 function DirectMessageFeed({messages}) {
   const [ loading, setLoading ] = useState(true)
-  // console.log("messages on line 9.5  ", messages)
-  // console.log("messages in DirectMessagefood")
   let start;
   start = messages.length != 0 ? new Date(messages[0].created_at) : new Date()
   let end;
@@ -19,11 +17,10 @@ function DirectMessageFeed({messages}) {
   const { pathname } = useLocation()
   const recipientId = pathname.split('/')[4]
   const partner = useSelector(state => state.messages.partners[recipientId].partner)
-  console.log(partner);
+
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, 'P'))
   }
-  console.log("printing dates on line 23", dates);
 
   const areMessagesPresent = (messages, specificDate) => {
     return messages.some(message => {
