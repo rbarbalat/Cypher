@@ -20,5 +20,5 @@ def handle_direct_messages(data):
             message = data["message"],
         )
         db.session.add(dm)
-        db.session.commit
+        db.session.commit()
     emit("chat", data, broadcast=True)
