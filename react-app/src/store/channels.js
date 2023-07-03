@@ -1,6 +1,6 @@
 // TYPES
 const GET_CHANNELS = '/channels/GET_CHANNELS'
-const CREATE_CHANNEL = '/channels/GET_CHANNEL'
+const CREATE_CHANNEL = '/channels/CREATE_CHANNEL'
 const GET_CHANNEL = '/channel/GET_CHANNEL'
 
 // ACTIONS
