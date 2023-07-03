@@ -1,9 +1,9 @@
 from flask import Blueprint, request
-from app.models import Channel, db, ChannelMembership, TeamMembership
+from app.models import Channel, db, ChannelMembership, TeamMembership, LiveChat
 from flask_login import current_user
 from app.forms.channel_form import ChannelForm
 from sqlalchemy import or_
-
+from app.forms.live_chat_form import LiveChatForm
 channel_routes = Blueprint('channels', __name__)
 
 #GET ALL CHANNELS
@@ -158,3 +158,34 @@ def delete_member_from_channel(chan_id, mem_id):
     return {"message": "successfully deleted"}
 
   return {"error": "Unauthorized"}
+
+#GET all chats for channel
+@channel_routes.route('/<int:id>/chats')
+def get_all_chats_by_channel(id):
+  if not current_user.is_authenticated:
+    return {"error": "go get logged in"}
+  channel = Channel.query.get(id)
+  if not channel:
+    return {"error": "channel not found"}
+  chats = LiveChat.query.filter(LiveChat.channel_id == id).order_by(LiveChat.created_at).all()
+  return {"chats":[chat.to_dict_no_assoc() for chat in chats]}
+
+#POST chat
+@channel_routes.route('/<int:id>/chats', methods=['POST'])
+def send_live_chat(id):
+  if not current_user.is_authenticated:
+    return {"error": "go get logged in"}
+  channel_membership = ChannelMembership.query.filter_by(channel_id=id, user_id=current_user.id).first()
+  if not channel_membership:
+    return {"error": "Not authorized to post in this channel"}
+  form = LiveChatForm()
+  form["csrf_token"].data = request.cookies["csrf_token"]
+  if form.validate_on_submit():
+    chat = LiveChat()
+    form.populate_obj(chat)
+    chat.sender_id = current_user.id
+    chat.channel_id = id
+    db.session.add(chat)
+    db.session.commit()
+    return chat.to_dict_no_assoc()
+  return {"errors": form.errors}
