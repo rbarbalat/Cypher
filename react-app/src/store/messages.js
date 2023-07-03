@@ -1,6 +1,7 @@
 // TYPES
 const GET_PARTNERS = '/directmessages/GET_PARTNERS'
 const GET_DIRECT_MESSAGES_WITH_PARTNER = '/directmessages/GET_DIRECT_MESSAGES_WITH_PARTNER'
+const CREATE_DIRECT_MESSAGE = '/directmessages/CREATE_DIRECT_MESSAGE'
 
 // ACTIONS
 const actionGetPartners = (partners) => ({
@@ -12,6 +13,12 @@ const actionGetDirectMessagesWithPartner = (messages) => ({
     type: GET_DIRECT_MESSAGES_WITH_PARTNER,
     payload: messages
 })
+
+const actionCreateDirectMessage= (message) => ({
+    type: CREATE_DIRECT_MESSAGE,
+    payload: message
+})
+
 
 // THUNK
 export const thunkGetPartners = () => async dispatch => {
@@ -44,6 +51,21 @@ export const thunkGetDirectMessages = (id) => async dispatch => {
     }
 }
 
+export const thunkCreateDirectMessage = (id) => async dispatch => {
+    const res = await fetch(`/api/messages/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        console.log(data)
+        dispatch(actionCreateDirectMessage(data))
+    }
+}
+
 // REDUX
 const initialState = { partners: {}, directMessages: {}}
 
@@ -57,6 +79,11 @@ const messages = (state = initialState, action) => {
         case GET_DIRECT_MESSAGES_WITH_PARTNER: {
             const newState = { ...state, directMessages: {}}
             action.payload.forEach(message => newState.directMessages[message.id] = message)
+            return newState
+        }
+        case CREATE_DIRECT_MESSAGE: {
+            const newState = { ...state }
+            newState.directMessages = { ...newState.directMessages, [action.payload.id]: action.payload }
             return newState
         }
         default:
