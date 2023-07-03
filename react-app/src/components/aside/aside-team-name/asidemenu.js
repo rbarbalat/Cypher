@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { clearTeam } from '../../../store/teams';
+import { clearTeam, deleteTeam } from '../../../store/teams';
 
 const AsideTeamMenu = React.forwardRef((props, ref) => {
     const dispatch = useDispatch();
@@ -12,6 +12,8 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
         history.push('/dashboard')
         dispatch(clearTeam())
     }
+
+    
 
     return (
         <div ref={ref} className='aside_team--details'>

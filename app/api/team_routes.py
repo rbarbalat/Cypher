@@ -40,7 +40,10 @@ def get_team_by_id(id):
   team = Team.query.get(id)
   if team is None:
     return {"error": "Team not found"}
-  users = [tm.user.to_dict() for tm in team.users]
+  users = [{**tm.user.to_dict(), "status": tm.status} for tm in team.users]
+  # statuses = [tm.status for tm in team.users]
+  # for i in range(len(users)):
+  #   users[i]["status"] = statuses[i]
   numMembers = len(users)
   return {"id": team.id, "name": team.name,
            "image": team.image, "description":team.description,
@@ -234,3 +237,7 @@ def delete_member_from_team(team_id, mem_id):
     return {"message": "successfully deleted"}
 
   return {"error": "Unauthorized"}
+
+# # GET MEMBERSHIP OF USER
+# @team_routes.route('/<int:id>/member')
+# def get_member_user(id):
