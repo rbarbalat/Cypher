@@ -12,6 +12,7 @@ from .api.auth_routes import auth_routes
 from .api.team_routes import team_routes
 from .api.channel_routes import channel_routes
 from .api.direct_mes_routes import direct_mes_routes
+from .api.live_chat import live_chat_routes
 from .seeds import seed_commands
 from .config import Config
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
@@ -35,6 +36,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(team_routes, url_prefix='/api/teams')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(direct_mes_routes, url_prefix='/api/messages')
+app.register_blueprint(live_chat_routes, url_prefix='/api/chats')
+
 db.init_app(app)
 Migrate(app, db)
 
