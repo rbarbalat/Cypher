@@ -10,6 +10,11 @@
     padding: 30px 15px;
 }
 
+.message_feed--user {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
 .message_feed--introduction--recipient {
     display: flex;
     align-items: center;

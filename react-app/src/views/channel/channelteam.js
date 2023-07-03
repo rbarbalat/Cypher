@@ -5,7 +5,7 @@ function ChannelTeam({setIsVisible, data}) {
   return (
     <div onClick={() => setIsVisible(true)} className='channel--wrapper'>
         <div className='channel--name'>
-            <h1 className='channel--label'>{data.name}</h1>
+            <h1 className='channel--label'></h1>
             <FaChevronDown className='channel--icon'/>
         </div>
     </div>

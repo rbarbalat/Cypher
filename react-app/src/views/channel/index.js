@@ -8,7 +8,6 @@ import ChannelMembers from './channelmembers';
 import Modal from '../../components/modal';
 import '../views.css';
 import './channel.css';
-import MessageFeed from '../../components/messagefeed';
 const messages = [
     {
         sender: 'Sender 1',
@@ -122,7 +121,7 @@ function Channel({setThread}) {
                 />
             </div>
         </header>
-        <MessageFeed setThread={setThread}  messages={messages}/>
+        {` Channel Message Feed`}
         <SendMessage data={channel}/>
         {
             isVisible ?

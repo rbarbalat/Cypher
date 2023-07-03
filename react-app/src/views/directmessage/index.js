@@ -4,7 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import SendMessage from '../../components/sendmessage'
 import DirectMessageRecipient from './directmessagerecipient';
 import DirectMessageDetails from './directmessagedetails';
-import MessageFeed from '../../components/messagefeed';
+import DirectMessageFeed from '../../components/directmessagefeed';
 import Modal from '../../components/modal';
 import '../views.css';
 import './directmessage.css';
@@ -96,8 +96,7 @@ function DirectMessage() {
                         />
                     </div>
                 </header>
-                {/* <MessageFeed messages={messages}/> */}
-                <MessageFeed messages={normalizedDirectMessages}/>
+                <DirectMessageFeed messages={normalizedDirectMessages}/>
                 <SendMessage data={{}}/>
                 {
                     isVisible ?

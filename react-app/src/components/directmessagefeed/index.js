@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Message from '../message'
 import TimeStamp from '../message/timestamp'
-import { format, isSameDay, addDays } from 'date-fns';
-import './messagefeed.css';
+import { format, isSameDay } from 'date-fns';
+import './directmessagefeed.css';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 
-function MessageFeed({messages, setThread}) {
+function DirectMessageFeed({messages}) {
+  const [ loading, setLoading ] = useState(true)
   console.log("messages on line 9.5  ", messages)
   const start = new Date(messages[0].created_at);
   const end = new Date(messages[messages.length - 1].created_at)
@@ -14,7 +15,6 @@ function MessageFeed({messages, setThread}) {
 
   const { pathname } = useLocation()
   const recipientId = pathname.split('/')[4]
-
   const partner = useSelector(state => state.messages.partners[recipientId].partner)
   console.log(partner);
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
@@ -28,17 +28,21 @@ function MessageFeed({messages, setThread}) {
     })
   }
 
+
+
+
+
   return (
     <section id='message_feed--wrapper'>
         <div className='message_feed--introduction'>
             <div className='message_feed--introduction--recipient'>
                 <div className='message_feed--introduction--image'></div>
                 <div className='message_feed--introduction--information'>
-                    <p>{partner}</p>
+                    <p className='message_feed--user'>{partner}</p>
                     <p>Status</p>
                 </div>
             </div>
-            <p className='message_feed--introduction--greeting' >This conversation is just between @{partner} and you. Check out their profile to learn more about them. <span>View Profile</span></p>
+            <p className='message_feed--introduction--greeting' >This conversation is just between <span className='message_feed--user'>@{partner}</span> and you. Check out their profile to learn more about them. <span>View Profile</span></p>
         </div>
         {
           dates.map(date => {
@@ -50,7 +54,7 @@ function MessageFeed({messages, setThread}) {
                   {
                     messages.filter(message => isSameDay(new Date(message.created_at), new Date(date))).map(message => {
                       return (
-                        <Message setThread={setThread} data={message}/>
+                        <Message type='direct' message={message}/>
                       )
                     })
                   }
@@ -65,4 +69,4 @@ function MessageFeed({messages, setThread}) {
   )
 }
 
-export default MessageFeed
+export default DirectMessageFeed
