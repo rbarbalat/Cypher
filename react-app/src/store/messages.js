@@ -9,9 +9,9 @@ const actionGetPartners = (partners) => ({
     payload: partners
 })
 
-const actionGetDirectMessagesWithPartner = (messages) => ({
+const actionGetDirectMessagesWithPartner = (data) => ({
     type: GET_DIRECT_MESSAGES_WITH_PARTNER,
-    payload: messages
+    payload: data
 })
 
 const actionCreateDirectMessage= (message) => ({
@@ -39,7 +39,7 @@ export const thunkGetPartners = () => async dispatch => {
 export const thunkGetDirectMessages = (id) => async dispatch => {
     const res = await fetch(`/api/messages/partner/${id}`, {
         method: "GET",
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
     })
     if (res.ok) {
         const data = await res.json()
@@ -51,10 +51,11 @@ export const thunkGetDirectMessages = (id) => async dispatch => {
     }
 }
 
-export const thunkCreateDirectMessage = (id) => async dispatch => {
+export const thunkCreateDirectMessage = (id, message) => async dispatch => {
     const res = await fetch(`/api/messages/${id}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
     })
     if (res.ok) {
         const data = await res.json()
@@ -67,7 +68,7 @@ export const thunkCreateDirectMessage = (id) => async dispatch => {
 }
 
 // REDUX
-const initialState = { partners: {}, directMessages: {}}
+const initialState = { partners: {}, directMessages: {}, currentPartner: {}}
 
 const messages = (state = initialState, action) => {
     switch(action.type) {
@@ -77,8 +78,10 @@ const messages = (state = initialState, action) => {
             return newState
         }
         case GET_DIRECT_MESSAGES_WITH_PARTNER: {
-            const newState = { ...state, directMessages: {}}
-            action.payload.forEach(message => newState.directMessages[message.id] = message)
+            // const newState = { ...state, directMessages: {}}
+            const newState = {...state, directMessages: {}, currentPartner: {}}
+            action.payload.messages.forEach(message => newState.directMessages[message.id] = message)
+            newState.currentPartner = action.payload.user
             return newState
         }
         case CREATE_DIRECT_MESSAGE: {

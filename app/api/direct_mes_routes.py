@@ -71,7 +71,7 @@ def get_messages(id):
             DirectMessage.recipient_id == id,
         )).order_by(DirectMessage.created_at).all()
     partner = User.query.get(id)
-    return [{
+    messages =  [{
             "id": message.id,
             "sender": message.sender.username,
             "recipient": message.recipient.username,
@@ -82,6 +82,7 @@ def get_messages(id):
             "partner": id,
             "partner_name": partner.username
         }for message in messages]
+    return {"messages": messages, "user": partner.to_dict()}
 
 @direct_mes_routes.route("/<int:id>", methods=["POST"])
 def send_direct_messages(id):

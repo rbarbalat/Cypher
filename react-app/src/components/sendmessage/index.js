@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react'
+import {useDispatch} from "react-redux"
 import MessageToolbar from './messagetoolbar';
 import { FaPaperPlane } from 'react-icons/fa'
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import './sendmessage.css'
+import { thunkCreateDirectMessage } from "../../store/messages"
 
-function SendMessage({data}) {
+function SendMessage({partnerId}) {
     const [ editorState, setEditorState ] = useState(() => EditorState.createEmpty())
-
+    const dispatch = useDispatch()
     const editor = useRef(null);
+    const [message, setMessage] = useState("")
 
     const styleMap = {
         CODE: {
@@ -62,34 +65,38 @@ function SendMessage({data}) {
         }
     };
 
-    useEffect(() => {
-        focusEditor();
-    }, []);
+    // useEffect(() => {
+    //     focusEditor();
+    // }, []);
 
-    const focusEditor = () => {
-        editor.current.focus();
-    };
+    // const focusEditor = () => {
+    //     editor.current.focus();
+    // };
 
-    const handleKeyCommand = (command) => {
-        const newState = RichUtils.handleKeyCommand(editorState, command);
-        if (newState) {
-            setEditorState(newState)
-            return true
-        }
-        return false
+    // const handleKeyCommand = (command) => {
+    //     const newState = RichUtils.handleKeyCommand(editorState, command);
+    //     if (newState) {
+    //         setEditorState(newState)
+    //         return true
+    //     }
+    //     return false
+    // }
+
+    const handleContent = async () => {
+        // const contentState = editorState.getCurrentContent();
+        // const json = JSON.stringify(contentState.toJS(), null, 4)
+        // console.log(json)
+        // console.log(contentState.toJS())
+        const text = {"message" : message }
+        await dispatch(thunkCreateDirectMessage(partnerId, text))
     }
 
-    const handleContent = () => {
-        const contentState = editorState.getCurrentContent();
-        const json = JSON.stringify(contentState.toJS(), null, 4)
-        console.log(json)
-    }
 
     return (
         <div className='send_message--wrapper'>
-            <MessageToolbar editorState={editorState} setEditorState={setEditorState}/>
-            <div className='send_message--messenger'>
-                {!editorState.getCurrentContent().hasText() ? <p className='placeholder'>Message {data?.name}</p> : null }
+            {/* <MessageToolbar editorState={editorState} setEditorState={setEditorState}/> */}
+            {/* <div className='send_message--messenger'>
+                {!editorState.getCurrentContent().hasText() ? <p className='placeholder'>Message</p> : null }
                 <Editor
                     ref={editor}
                     editorState={editorState}
@@ -100,12 +107,18 @@ function SendMessage({data}) {
                     customStyleMap={styleMap}
                     blockStyleFn={myBlockStyleFn}
                 />
-            </div>
-            <div className='send_message--send_wrapper'>
+            </div> */}
+            <textarea value={message} onChange={(e) => setMessage(e.target.value)}>
+
+            </textarea>
+            <button onClick={handleContent}>
+              SEND A MESSAGE
+            </button>
+            {/* <div className='send_message--send_wrapper'>
                 <div onClick={() => handleContent()} className={`send_message--send ${editorState.getCurrentContent().hasText() ? 'active-send' : ''}`}>
                     <FaPaperPlane className='send_message--send_icon'/>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
