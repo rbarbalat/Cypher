@@ -4,7 +4,7 @@ const GET_TEAM = '/teams/GET_TEAM'
 const CREATE_TEAM = '/teams/CREATE_TEAM'
 const GET_EVERY_TEAM = '/teams/GET_EVERY_TEAM'
 const CLEAR_TEAM = '/teams/CLEAR_TEAM'
-
+const DELETE_TEAM = '/teams/DELETE_TEAM'
 // ACTIONS
 const actionGetTeams = (teams) => ({
     type: GET_TEAMS,
@@ -29,7 +29,10 @@ const actionCreateTeam = (team) => ({
 const actionClearTeam = () => ({
     type: CLEAR_TEAM
 })
-
+const actionDeleteTeam = (teamId) => ({
+    type: DELETE_TEAM,
+    payload: teamId
+})
 
 // THUNKS
 export const thunkGetTeams = () => async dispatch => {
@@ -113,6 +116,20 @@ export const clearTeam = () => async dispatch => {
     dispatch(actionClearTeam())
 }
 
+export const deleteTeam = (id) => async dispatch => {
+    const res = await fetch(`/api/teams/${id}/delete`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionDeleteTeam(id))
+        return data
+    }
+}
 
 // REDUCER
 const initialState = { allTeams: {}, singleTeam: {}, everyTeam: {} }
@@ -142,6 +159,13 @@ const teams = (state = initialState, action) => {
         case CLEAR_TEAM: {
             const newState = {...state, singleTeam: {} }
             return newState
+        }
+        case DELETE_TEAM: {
+            const newAllTeams = {...state.allTeams}
+            delete newAllTeams[action.payload]
+            const newEveryTeam = {...state.everyTeam}
+            delete newEveryTeam[action.payload]
+            return {everyTeam:newEveryTeam, allTeams:newAllTeams, singleTeam: {}}
         }
         default:
             return state

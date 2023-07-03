@@ -130,7 +130,7 @@ def create_team():
   return {"errors": form.errors}
 
 #DELETE A TEAM
-@team_routes.route('/<int:id>')
+@team_routes.route('/<int:id>/delete')
 def delete_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
