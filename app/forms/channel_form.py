@@ -5,7 +5,7 @@ from wtforms.validators import URL, DataRequired, Email, ValidationError, Length
 class ChannelForm(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
     description = StringField("description", validators=[DataRequired(), Length(max=2000)] )
-    private = BooleanField("private", validators=[DataRequired()])
+    private = BooleanField("private")
     # team = IntegerField("team_id", validators=[DataRequired()])
     # team = SelectField("team", choices = [], validators = [DataRequired()])
     #need to insert the choices inside the route handler
