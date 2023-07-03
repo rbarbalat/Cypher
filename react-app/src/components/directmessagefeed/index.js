@@ -8,8 +8,8 @@ import { useLocation } from 'react-router-dom'
 
 function DirectMessageFeed({messages}) {
   const [ loading, setLoading ] = useState(true)
-  console.log("messages on line 9.5  ", messages)
-  console.log("messages in DirectMessagefood")
+  // console.log("messages on line 9.5  ", messages)
+  // console.log("messages in DirectMessagefood")
   let start;
   start = messages.length != 0 ? new Date(messages[0].created_at) : new Date()
   let end;

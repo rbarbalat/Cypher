@@ -42,10 +42,11 @@ function DirectMessage() {
           })
     }
 
-    useEffect(() => {
-        normalizedDirectMessages = Object.values(directMessages)
-        setMessages([...normalizedDirectMessages])
-  }, [directMessages])
+//     useEffect(() => {
+//         normalizedDirectMessages = Object.values(directMessages)
+//         setMessages([...normalizedDirectMessages])
+//         console.log("line 48 line 48 line 48")
+//   }, [])
 
 
     useEffect(() => {
@@ -56,11 +57,11 @@ function DirectMessage() {
 
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-            console.log("msgs ---- line 51,", msgs)
+            // console.log("msgs ---- line 51,", msgs)
             let normMsgs = Object.values(msgs)
-            console.log("normMsgs   line 53,   ", normMsgs)
+            // console.log("normMsgs   line 53,   ", normMsgs)
             setMessages([...normMsgs])
-            console.log("normMsgs inside directMesssage   ", normMsgs)
+            // console.log("normMsgs inside directMesssage   ", normMsgs)
         })
         socket.emit("chat", {
             "user": user.username,
@@ -78,7 +79,7 @@ function DirectMessage() {
               })
           socket.disconnect()
         })
-    }, [partnerId, dispatch,]);//empty in the sample code, maybe needs dispatch, partnerId
+    }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
   if(normalizedDirectMessages.length == 0) return <div>loading</div>
