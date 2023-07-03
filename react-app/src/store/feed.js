@@ -23,6 +23,7 @@ export const thunkGetFeed = (type, id) => async dispatch => {
         if (data.errors) {
             return data.errors
         }
+        console.log('did we get this far?');
         dispatch(actionGetFeed(data))
     }
 }

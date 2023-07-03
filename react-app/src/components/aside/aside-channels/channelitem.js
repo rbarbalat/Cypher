@@ -11,6 +11,7 @@ function ChannelItem({channel}) {
   const dispatch = useDispatch();
 
   const handlePopulateChannel = (id) => {
+    console.log(id, 'this is the id');
     const type = 'channel'
     dispatch(thunkGetFeed(type, id))
     .then(() => history.push(`/team/${team.id}/channels/${id}`))

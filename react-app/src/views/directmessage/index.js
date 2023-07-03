@@ -97,7 +97,7 @@ function DirectMessage() {
                     </div>
                 </header>
                 {/* <MessageFeed messages={messages}/> */}
-                <MessageFeed messages={normalizedDirectMessages}/>
+                <MessageFeed messages={normalizedDirectMessages} needsPartner={true}/>
                 <SendMessage data={{}}/>
                 {
                     isVisible ?

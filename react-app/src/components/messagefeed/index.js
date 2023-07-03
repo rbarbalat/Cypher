@@ -14,9 +14,12 @@ function MessageFeed({messages, setThread}) {
 
   const { pathname } = useLocation()
   const recipientId = pathname.split('/')[4]
+  let partner = useSelector(state => state.messages.partners)
+  console.log(partner, 'lots of characters');
+  if (pathname.split('/')[3] === 'direct-messages') {
+    partner = partner[recipientId].partner
+  }
 
-  const partner = useSelector(state => state.messages.partners[recipientId].partner)
-  console.log(partner);
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, 'P'))
   }
