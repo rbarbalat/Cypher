@@ -16,13 +16,14 @@ import MessageTextArea from '../../components/MessageTextBox';
 let socket;
 
 function DirectMessage() {
+    // const [loading, setLoading] = useState(true)
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
-    let normalizedDirectMessages = Object.values(directMessages)
+    const normalizedDirectMessages = Object.values(directMessages)
     console.log("normDMS on line 22    ", normalizedDirectMessages)
 
     const [chatInput, setChatInput] = useState("")
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState([...normalizedDirectMessages])
 
 
     const user = useSelector(state => state.session.user)
@@ -43,13 +44,13 @@ function DirectMessage() {
     }
 
     useEffect(() => {
-        dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-        .then(() => setMessages([...normalizedDirectMessages])
-        )
-    }, [partnerId, dispatch])
+        setMessages([...normalizedDirectMessages])
+    }, [directMessages, dispatch])
+
 
     useEffect(() => {
         socket = io()
+        dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
             let normMsgs = Object.values(msgs)
@@ -71,8 +72,9 @@ function DirectMessage() {
     }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
-  if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
-  if(messages.length === 0)  return <DataLoading></DataLoading>
+//   if(loading)  return <DataLoading></DataLoading>
+    if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
+//   if(messages.length === 0)  return <DataLoading></DataLoading>
     // return <div>loading</div>
 
 
@@ -85,9 +87,9 @@ function DirectMessage() {
                         />
                     </div>
                 </header>
-                { messages.length != 0 &&
+                {/* { messages && */}
                 <DirectMessageFeed messages={messages} socket={socket} partnerId={partnerId}/>
-                }
+                {/* } */}
                 <MessageTextArea
                     value={chatInput}
                     setValue={(e) => setChatInput(e.target.value)}

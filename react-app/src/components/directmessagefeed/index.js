@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 function DirectMessageFeed({ messages, socket, partnerId }) {
+  console.log(messages, 'skdjfsdkfjsdkfjksdjfksdjkfsjdkfjsdsf');
   let start;
   start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
   let end;
