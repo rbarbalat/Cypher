@@ -4,23 +4,46 @@ import { FaChevronRight } from "react-icons/fa";
 import { format } from "date-fns";
 import { thunkGetDirectMessages } from "../../store/messages";
 import { useDispatch } from "react-redux";
+import { useState } from "react"
+import { useSelector } from "react-redux"
 
 function Message({ message, setThread, socket, partnerId }) {
   const dispatch = useDispatch();
+  const [update, setUpdate] = useState("")
+
   const convertTime = () => {
     const date = new Date(message.created_at);
     return format(new Date(date), "p");
   };
 
-  const setEdit = () => {
-    console.log(socket);
-    socket.emit("update_chat", { id: message.id, message: "message" });
+  // const setEdit = () => {
+  //   console.log(socket);
+  //   socket.emit("update_chat", { id: message.id, message: "message" });
+  //   dispatch(thunkGetDirectMessages(parseInt(partnerId)));
+  // };
+
+  function editDM(){
+    console.log("the edited DM is  ---     ", update)
+    console.log("the id of the edited DM is  ---  ", message.id)
+    socket.emit("update_chat", { id: message.id, message: update });
     dispatch(thunkGetDirectMessages(parseInt(partnerId)));
-  };
+    //message.message is the content of the paragraph below
+    message.message = update
+    setUpdate("")
+  }
+
+  function deleteDM(){
+    socket.emit("delete_chat", { "id": message.id})
+  }
 
   return (
     <div className="message--wrapper">
-      <div onClick={() => setEdit()}>Changes text to message</div>
+      {/* <div onClick={() => setEdit()}>Changes text to message</div> */}
+      <div>
+        <input type="text" value={update} onChange={(e) => setUpdate(e.target.value)}></input>
+        <button onClick={editDM}>Edit Message</button>
+        <button onClick={deleteDM}>Delete Message</button>
+      </div>
       <div className="message--sender_image"></div>
       <div className="message--details_wrapper">
         <div className="message--name_time">

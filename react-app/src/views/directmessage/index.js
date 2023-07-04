@@ -52,6 +52,16 @@ function DirectMessage() {
             let normMsgs = Object.values(msgs)
             setMessages([...normMsgs])
         })
+        socket.on("update_chat", async (chat) => {
+            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            let normMsgs = Object.values(msgs)
+            setMessages([...normMsgs])
+        })
+        socket.on("delete_chat", async (chat) => {
+            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            let normMsgs = Object.values(msgs)
+            setMessages([...normMsgs])
+        })
         return (() => {
           socket.disconnect()
         })
