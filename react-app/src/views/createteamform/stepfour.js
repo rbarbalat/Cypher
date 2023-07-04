@@ -1,5 +1,4 @@
 import React from 'react'
-import Input from '../../components/inputs/input'
 
 function StepFour({name, handleCreateTeam, handleStep}) {
 

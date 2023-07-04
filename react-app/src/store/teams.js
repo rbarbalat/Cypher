@@ -73,9 +73,10 @@ export const thunkGetEveryTeam = () => async dispatch => {
     })
     if (res.ok) {
         const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        console.log(data)
+        // if (data.errors) {
+        //     return data.errors
+        // }
         dispatch(actionGetEveryTeam(data))
         return data
     }

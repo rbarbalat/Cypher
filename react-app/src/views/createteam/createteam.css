@@ -46,6 +46,10 @@
     width: var(--content);
 }
 
+.create_team--width {
+    width: 650px;
+}
+
 .create_landing--grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

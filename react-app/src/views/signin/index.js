@@ -3,6 +3,7 @@ import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Input from '../../components/inputs/input';
+import logo from '../../assets/cypher-logo.svg'
 import './signin.css'
 
 function SignIn() {
@@ -44,8 +45,7 @@ function SignIn() {
             <div className='auth--contents'>
                 <form onSubmit={handleSubmit} className='auth--form'>
                     <div onClick={() => history.push('/')} className='auth--logo'>
-                        <div className='auth--image'></div>
-                        <p className='auth--text'>cypher</p>
+                        <img src={logo} className='auth--image'/>
                     </div>
                     <div className='auth--intro'>
                         <h1>Sign in to Cypher</h1>

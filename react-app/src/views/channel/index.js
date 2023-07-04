@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useParams } from 'react-router-dom';
-import SendMessage from '../../components/sendmessage'
+import MessageTextArea from '../../components/MessageTextBox';
 import ChannelTeam from './channelteam';
 import ChannelDetails from './channeldetails';
 import ChannelMembers from './channelmembers';
@@ -104,7 +104,11 @@ function Channel({setThread}) {
             </div>
         </header>
         {` Channel Message Feed`}
-        <SendMessage data={channel}/>
+        <MessageTextArea
+            value={''}
+            setValue={(e) => console.log(e.target.value)}
+            action={null}
+        />
         {
             isVisible ?
             <Modal>

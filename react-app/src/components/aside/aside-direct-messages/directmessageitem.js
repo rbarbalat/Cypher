@@ -1,15 +1,15 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTeam } from '../../../context/teamProvider';
+import { useSelector } from 'react-redux'
 import './directmessageitem.css'
 import { FaTimes } from 'react-icons/fa'
 
 function DirectMessageItem({directPartner}) {
   const history = useHistory();
-  const { teamId } = useTeam();
+  const team = useSelector(state => state.teams.singleTeam)
 
   return (
-    <div onClick={() => history.push(`/team/${teamId}/direct-messages/${directPartner.id}`)} className='direct_message_item--wrapper'>
+    <div onClick={() => history.push(`/team/${team.id}/direct-messages/${directPartner.id}`)} className='direct_message_item--wrapper'>
         <div className='direct_message_item--profile_image'>
         </div>
         <span className='direct_message_item--label'>{directPartner.partner}</span>

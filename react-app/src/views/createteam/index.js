@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useHistory, Redirect, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetTeams } from '../../store/teams';
 import { logout } from "../../store/session";
 import { FaArrowRight, FaSearch } from 'react-icons/fa'
+import logo from '../../assets/cypher-logo.svg'
 import './createteam.css';
 import '../dashboard/dashboard.css';
 
 function CreateTeam() {
-    const [ loading, setLoading ] = useState(true)
     const sessionUser = useSelector((state) => state.session.user);
     const userTeams = useSelector((state) => state.teams.allTeams)
     const normalizedTeams = Object.values(userTeams)
@@ -32,8 +31,7 @@ function CreateTeam() {
         <main className='create_team--wrapper'>
             <div className='create_landing--wrapper'>
                 <div onClick={(e) => handleLogout(e)} className='auth--logo'>
-                    <div className='auth--image'></div>
-                    <p className='auth--text'>cypher</p>
+                    <img src={logo} className='auth--image'/>
                 </div>
                 <div className='create_landing--auth'>
                     <span className='create_landing--user'>Confirmed as <strong>{sessionUser.email}</strong></span>
@@ -55,7 +53,7 @@ function CreateTeam() {
             </div>
             <div className='create_team--contents'>
                 <h3>Open Team</h3>
-                <div className='dashboard--teams'>
+                <div className='dashboard--teams create_team--width'>
                     <header className='dashboard--teams_header'>
                         <p>Teams for <strong>{sessionUser.email}</strong></p>
                     </header>
@@ -82,7 +80,7 @@ function CreateTeam() {
                         </div>
                     ))}
                 </div>
-                <div className='dashboard--create create_landing--logout'>
+                <div className='dashboard--create create_landing--logout create_team--width'>
                     <div className='dashboard--create_flex'><FaSearch/><p>Not seeing your workspace?</p></div>
                     <button onClick={(e) => handleLogout(e)}>Try a Different Email</button>
                 </div>

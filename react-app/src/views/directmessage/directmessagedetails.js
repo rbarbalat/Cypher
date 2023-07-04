@@ -1,8 +1,10 @@
 import React from 'react'
 import { FaRegClock, FaTimes } from 'react-icons/fa'
+import {  useSelector } from 'react-redux'
 
 const DirectMessageDetails = React.forwardRef((props, ref) => {
-    const { data, setIsVisible } = props;
+    const { setIsVisible } = props;
+    const partner = useSelector(state => state.messages.currentPartner)
     return (
         <div ref={ref} className='direct_message_details--wrapper'>
             <div onClick={() => setIsVisible(false)}
@@ -13,8 +15,8 @@ const DirectMessageDetails = React.forwardRef((props, ref) => {
                 <div className='direct_message_details--intro'>
                     <div className='direct_message_details--image'></div>
                     <div className='direct_message_details--information'>
-                        <p className='direct_message_details--title'>{data.name}</p>
-                        <p className='direct_message_details--subtitle'>Sub Title</p>
+                        <p className='direct_message_details--title'>{partner.username}</p>
+                        <p className='direct_message_details--subtitle'>{partner.email}</p>
                     </div>
                 </div>
             </header>

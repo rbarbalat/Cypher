@@ -24,18 +24,14 @@
     color: white;
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .landing_header--image {
-    height: 45px;
-    aspect-ratio: 1;
-    background-color: white;
-    border-radius: 50px;
+    height: 60px;
 }
 
 .landing_header--text {
-    font-size: 20px;
+    font-size: 25px;
     margin: 0;
     font-weight: 600;
 }

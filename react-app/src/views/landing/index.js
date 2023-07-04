@@ -2,6 +2,7 @@ import React from 'react'
 import './landing.css';
 import { useHistory } from 'react-router-dom';
 import { FaPython, FaReact, FaCss3, FaAws, FaGithub, FaJsSquare,  } from 'react-icons/fa';
+import logo from '../../assets/cypher-white.svg'
 
 function Landing() {
 
@@ -12,8 +13,8 @@ function Landing() {
             <header className='landing_header--wrapper'>
                 <div className='landing_header--contents'>
                     <div className='landing_header--logo'>
-                        <div className='landing_header--image'></div>
-                        <p className='landing_header--text'>cypher</p>
+                        <img src={logo} className='landing_header--image' />
+                        <span className='landing_header--text'>cypher</span>
                     </div>
                     <div className='landing_header--actions'>
                         <button onClick={() => history.push('/sign-in')} id='sign-in' className='btn'>Sign In</button>

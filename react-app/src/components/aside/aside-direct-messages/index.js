@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
 import DirectMessageItem from './directmessageitem'
 import DirectMessageLabel from './directmessagelabel'
-import { useSelector, useDispatch } from 'react-redux'
-import { useInsertionEffect } from 'react'
-import {thunkGetPartners } from '../../../store/messages'
+import { useSelector } from 'react-redux'
 
 function AsideDirectMessages() {
     const [ expanded, setExpanded ] = useState(true)
     const directPartners = useSelector(state => state.messages.partners);
-    // const directMessages = useSelector(state => state.messages.directMessages);
     const normalizedDirectPartners = Object.values(directPartners)
-    const dispatch = useDispatch()
 
 
     return (

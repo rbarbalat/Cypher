@@ -6,8 +6,8 @@ import Aside from '../../components/aside'
 import Channel from '../channel'
 import DirectMessage from '../directmessage'
 import NewMessage from '../newmessage'
+import DataLoading from '../../components/loading/DataLoading';
 import Thread from '../../components/thread'
-import { useTeam } from '../../context/teamProvider';
 
 function CypherApp() {
     const [ loading, setLoading ] = useState(true)
@@ -15,11 +15,9 @@ function CypherApp() {
     const team = useSelector(state => state.teams.singleTeam)
     const { teamId } = useParams();
     const dispatch = useDispatch();
-    const { setTeamId } = useTeam()
 
     useEffect(() => {
         dispatch(thunkGetTeam(teamId))
-        .then(() => setTeamId(teamId))
         .then(() => setLoading(false))
     }, [dispatch])
 
@@ -27,7 +25,7 @@ function CypherApp() {
 
     //since team is a filled object or an empty object,
     //isn't !team always falsy, this is just if loading?
-    if (loading || !team) return <div>Loading...</div>
+    if (loading || !team) return <DataLoading></DataLoading>
 
     return (
         <>

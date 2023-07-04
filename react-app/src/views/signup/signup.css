@@ -25,7 +25,6 @@
     color: var(--blue);
     display: flex;
     align-items: center;
-    gap: 10px;
     margin: 0 auto;
     cursor: pointer;
 }
@@ -47,14 +46,11 @@
 
 
 .auth--image {
-    height: 45px;
-    aspect-ratio: 1;
-    background-color: var(--blue);
-    border-radius: 50px;
+    height: 60px;
 }
 
 .auth--text {
-    font-size: 20px;
+    font-size: 25px;
     margin: 0;
     font-weight: 600;
 }

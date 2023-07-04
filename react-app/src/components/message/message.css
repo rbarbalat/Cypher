@@ -2,6 +2,7 @@
 
 .message--wrapper {
    padding: 20px 15px;
+   width: 100%;
    display: flex;
    gap: 10px;
 }

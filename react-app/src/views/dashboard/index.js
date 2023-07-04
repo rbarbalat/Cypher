@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetEveryTeam, thunkGetTeams, thunkJoinTeam } from '../../store/teams';
+import { thunkGetTeams, thunkJoinTeam } from '../../store/teams';
 import { logout } from "../../store/session";
 import { FaArrowRight, FaSearch } from 'react-icons/fa'
+import DataLoading from '../../components/loading/DataLoading';
+import logo from '../../assets/cypher-logo.svg'
 import './dashboard.css';
 
 
@@ -18,6 +20,14 @@ function Dashboard() {
     const normalizedEveryTeam = Object.values(everyTeam)
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const teamsNotJoined = normalizedEveryTeam.filter(team => !normalizedEveryTeam.some(tm => tm.id === team.id));
+    let filteredTeams = teamsNotJoined;
+    if (teamQuery !== '') {
+        filteredTeams = filteredTeams.filter(team => team.name.toLowerCase().includes(teamQuery.toLowerCase()))
+    }
+
+
 
 
     const handleLogout = (e) => {
@@ -41,21 +51,19 @@ function Dashboard() {
 
     useEffect(() => {
         dispatch(thunkGetTeams())
-        .then(() => dispatch(thunkGetEveryTeam()))
         .then(() => setLoading(false))
     }, [dispatch])
 
     if (!sessionUser) return <Redirect to='/sign-in' />
 
-    if (loading) return <div>Loading...</div>
+    if (loading ) return <DataLoading></DataLoading>
 
     return (
         <main className='dashboard--wrapper'>
             <div className='dashboard--contents'>
                 <div className='dashboard--container'>
                     <div onClick={(e) => handleLogout(e)} className='auth--logo'>
-                        <div className='auth--image'></div>
-                        <p className='auth--text'>cypher</p>
+                        <img src={logo} className='auth--image'/>
                     </div>
                     <div className='dashboard--intro'>
                         <h1>Welcome back. You smell wonderful.</h1>
@@ -72,7 +80,7 @@ function Dashboard() {
                                 <button onClick={() => setTeamList(false)}>My Teams</button>
                             </header>
                             <div className='dashboard--teams_scroller'>
-                            {normalizedEveryTeam.map(team => (
+                            {filteredTeams.length > 0 ? filteredTeams.map(team => (
                                 <div key={team.id} onClick={() => handleJoinTeam(team.id)} className='dashboard--team'>
                                     <div className='dashboard--team--info'>
                                         <div className='dashboard--team--info_image'></div>
@@ -93,7 +101,16 @@ function Dashboard() {
                                         <FaArrowRight/>
                                     </div>
                                 </div>
-                            ))}
+                            ))
+                            :
+                             <div className='dashboard--team--none'>
+                                <span>No Teams Available to Join</span>
+                                <div className='dashboard--team-none-actions'>
+                                    <button onClick={() => setTeamList(false)}>View My Teams</button>
+                                    <button onClick={() => handleCreateTeam()}>Create A Team</button>
+                                </div>
+                            </div>
+                            }
                             </div>
                         </div> :
                         <div className='dashboard--teams'>

@@ -63,6 +63,7 @@
     border-radius: 5px;
     color: var(--blue);
     font-weight: 600;
+    cursor: pointer;
 }
 
 .dashboard--team {
@@ -233,7 +234,7 @@
 
 
 .dashboard--logout {
-    margin: 50px;
+    padding: 50px 0 100px 0;
     font-size: 15px;
     text-align: center;
     color: var(--body)
@@ -242,4 +243,31 @@
 .dashboard--logout p {
     margin: 0;
     margin-bottom: 5px;
+}
+
+.dashboard--team--none {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard--team--none span {
+    font-weight: 600;
+    color: var(--body)
+}
+.dashboard--team-none-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.dashboard--team-none-actions button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    font-weight: 600;
+    background-color: white;
+    cursor: pointer;
 }

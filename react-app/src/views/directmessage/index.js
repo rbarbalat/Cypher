@@ -1,21 +1,21 @@
 import React, {useEffect} from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { useParams, useLocation } from 'react-router-dom';
-import SendMessage from '../../components/sendmessage'
+import { useLocation } from 'react-router-dom';
 import DirectMessageRecipient from './directmessagerecipient';
 import DirectMessageDetails from './directmessagedetails';
 import DirectMessageFeed from '../../components/directmessagefeed';
 import Modal from '../../components/modal';
+import DataLoading from '../../components/loading/DataLoading';
 import '../views.css';
 import './directmessage.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { thunkGetDirectMessages, thunkCreateDirectMessage } from '../../store/messages';
+import { thunkGetDirectMessages } from '../../store/messages';
 import { io } from "socket.io-client"
 import {useState} from "react"
+import MessageTextArea from '../../components/MessageTextBox';
 let socket;
 
 function DirectMessage() {
-    const { userId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
     let normalizedDirectMessages = Object.values(directMessages)
@@ -30,71 +30,57 @@ function DirectMessage() {
     const partnerId = pathname.split('/')[4]
     const dispatch = useDispatch()
 
-    const handleContent = async () => {
-        const text = {"message" : chatInput }
+    const handleContent = () => {
         socket.emit("chat", {
             "user": user.username,
             "message": chatInput,
             "sender_id": parseInt(user.id),
-            "recipient_id": parseInt(partnerId)
-          })
+            "recipient_id": parseInt(partnerId),
+            "created_at": new Date()
+        })
     }
+
+    useEffect(() => {
+        setMessages([...normalizedDirectMessages])
+    }, [partnerId, dispatch])
 
     useEffect(() => {
         socket = io()
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
             let normMsgs = Object.values(msgs)
             setMessages([...normMsgs])
         })
-        socket.emit("chat", {
-            "user": user.username,
-            "message": "has connected",
-            "sender_id": parseInt(user.id),
-            "recipient_id": parseInt(partnerId)
-          })
-
         return (() => {
-            socket.emit("chat", {
-                "user": user.username,
-                "message": "is offline",
-                "sender_id": parseInt(user.id),
-                "recipient_id": parseInt(partnerId)
-              })
           socket.disconnect()
         })
     }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
-  if(normalizedDirectMessages.length == 0) return <div>loading</div>
+  if(normalizedDirectMessages.length === 0) return <DataLoading></DataLoading>
 
 
     return (
         <main className='views--wrapper'>
                 <header className='views--header--wrapper'>
                     <div className='views--header'>
-                        {/* <DirectMessageRecipient
+                        <DirectMessageRecipient
                             setIsVisible={setIsVisible}
-                            // data={normalizedDirectMessages}
-                            data = {messages}
-                        /> */}
+                        />
                     </div>
                 </header>
                 <DirectMessageFeed messages={messages}/>
-                <div className='send_message--wrapper'>
-                    <textarea value={chatInput} onChange={(e) => setChatInput(e.target.value)}>
-                    </textarea>
-                    <button onClick={handleContent}>SEND A MESSAGE</button>
-                </div>
-
+                <MessageTextArea
+                    value={chatInput}
+                    setValue={(e) => setChatInput(e.target.value)}
+                    action={handleContent}
+                />
                 {
                     isVisible ?
                     <Modal>
                         <DirectMessageDetails
                             setIsVisible={setIsVisible}
-                            data={{}}
                             ref={ref}
                         />
                     </Modal> :

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { FaChevronDown } from 'react-icons/fa'
 import './asideteamname.css';

@@ -1,0 +1,51 @@
+@import url('../../index.css');
+
+.message_textarea--wrapper {
+    border: 1px solid var(--border);
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+
+.message_textarea--input {
+    height: 100px;
+    padding: 20px;
+    border: none;
+    font-size: 18px;
+    border-radius: 10px;
+    resize: none;
+}
+
+.message_textarea--input:focus {
+    outline: transparent;
+}
+
+.message_textarea--actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 15px 15px 15px;
+}
+
+.message_textarea--button {
+    padding: 10px 15px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    background-color: var(--light-hover);
+    color: var(--body);
+    border-radius: 5px;
+}
+
+.active-btn {
+    background-color: green;
+    color: white;
+}

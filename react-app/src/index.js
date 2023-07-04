@@ -5,9 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
-
 import "./index.css";
-import TeamProvider from "./context/teamProvider";
+import LoadingProvider from "./context/loadingProvider";
 
 const store = configureStore();
 
@@ -23,9 +22,9 @@ function Root() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				<TeamProvider>
+				<LoadingProvider>
 					<App />
-				</TeamProvider>
+				</LoadingProvider>
 			</BrowserRouter>
 		</Provider>
 	);

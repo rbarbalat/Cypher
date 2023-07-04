@@ -1,0 +1,47 @@
+@import url('../../index.css');
+
+.loading-wrapper {
+    position: fixed;
+    height: 100dvh;
+    width: 100dvw;
+    background-color: rgba(255,255,255,1);
+    z-index: 250;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+@keyframes swell {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(1.2,1.2);
+    }
+    100% {
+        transform: scale(1,1);
+    }
+}
+
+.loading-logo {
+    height: 70px;
+    font-size: 50px;
+    /* color: var(--primary-color); */
+    animation-name: swell;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.data_loading-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fixed-height {
+    height: 400px;
+}

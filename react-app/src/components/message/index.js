@@ -1,7 +1,7 @@
 import React from 'react'
 import './message.css';
 import { FaChevronRight } from 'react-icons/fa';
-import { format, addHours, addMinutes, startOfDay, parseJSON } from 'date-fns';
+import { format } from 'date-fns';
 
 function Message({message, setThread}) {
 

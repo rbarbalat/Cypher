@@ -20,6 +20,7 @@
 .direct_message_recipient--label {
     margin: 0;
     font-size: 18px;
+    text-transform: capitalize;
 }
 
 .direct_message_recipient--icon {
@@ -82,6 +83,7 @@
     font-size: 25px;
     font-weight: 600;
     margin: 0;
+    text-transform: capitalize;
 }
 
 .direct_message_details--subtitle {

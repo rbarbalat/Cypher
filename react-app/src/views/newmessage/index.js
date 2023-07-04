@@ -1,5 +1,5 @@
 import React from 'react'
-import SendMessage from '../../components/sendmessage'
+import MessageTextArea from '../../components/MessageTextBox';
 import Recipients from './recipients';
 import '../views.css';
 import './newmessage.css';
@@ -17,7 +17,11 @@ function NewMessage() {
             <section className='views--feed'>
 
             </section>
-            <SendMessage data={{}}/>
+            <MessageTextArea
+                value={'none'}
+                setValue={(e) => console.log(e.target.value)}
+                action={null}
+            />
         </main>
   )
 }

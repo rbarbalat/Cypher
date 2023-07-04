@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 import Input from "../../components/inputs/input";
+import logo from '../../assets/cypher-logo.svg'
 import './signup.css'
 
 function SignUp() {
@@ -41,8 +42,7 @@ function SignUp() {
             <div className='auth--contents'>
             <form onSubmit={handleSubmit} className='auth--form'>
                 <div onClick={() => history.push('/')} className='auth--logo'>
-                    <div className='auth--image'></div>
-                    <p className='auth--text'>cypher</p>
+                    <img src={logo} className='auth--image'/>
                 </div>
                 <div className='auth--intro'>
                     <h1>Create your account</h1>
