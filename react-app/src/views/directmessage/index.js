@@ -19,6 +19,7 @@ function DirectMessage() {
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
     let normalizedDirectMessages = Object.values(directMessages)
+    console.log("normDMS on line 22    ", normalizedDirectMessages)
 
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([])
@@ -41,7 +42,9 @@ function DirectMessage() {
     }
 
     useEffect(() => {
+        dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         setMessages([...normalizedDirectMessages])
+        console.log("forty four and a half")
     }, [partnerId, dispatch])
 
     useEffect(() => {
@@ -68,7 +71,8 @@ function DirectMessage() {
     }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
-  if(normalizedDirectMessages.length === 0) return <DataLoading></DataLoading>
+  if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
+    // return <div>loading</div>
 
 
     return (
