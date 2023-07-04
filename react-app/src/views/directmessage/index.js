@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef } from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useLocation } from 'react-router-dom';
 import DirectMessageRecipient from './directmessagerecipient';
@@ -20,13 +20,10 @@ function DirectMessage() {
     const directMessages = useSelector(state => state.messages.directMessages);
     let normalizedDirectMessages = Object.values(directMessages)
     console.log("normDMS on line 22    ", normalizedDirectMessages)
-
+    const messageRef = useRef(null)
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([])
-
     const user = useSelector(state => state.session.user)
-
-
     const { pathname } = useLocation()
     const partnerId = pathname.split('/')[4]
     const dispatch = useDispatch()
