@@ -16,12 +16,6 @@ function Message({ message, setThread, socket, partnerId }) {
     return format(new Date(date), "p");
   };
 
-  // const setEdit = () => {
-  //   console.log(socket);
-  //   socket.emit("update_chat", { id: message.id, message: "message" });
-  //   dispatch(thunkGetDirectMessages(parseInt(partnerId)));
-  // };
-
   function editDM(){
     console.log("the edited DM is  ---     ", update)
     console.log("the id of the edited DM is  ---  ", message.id)

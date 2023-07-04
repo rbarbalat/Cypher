@@ -45,6 +45,7 @@ function DirectMessage() {
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         setMessages([...normalizedDirectMessages])
         console.log("forty four and a half")
+        console.log(messages)
     }, [partnerId, dispatch])
 
     useEffect(() => {
@@ -72,6 +73,7 @@ function DirectMessage() {
 
   //shouldn't be zero if clic
   if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
+  if(messages.length === 0)  return <DataLoading></DataLoading>
     // return <div>loading</div>
 
 
@@ -84,7 +86,9 @@ function DirectMessage() {
                         />
                     </div>
                 </header>
+                { messages.length != 0 &&
                 <DirectMessageFeed messages={messages} socket={socket} partnerId={partnerId}/>
+                }
                 <MessageTextArea
                     value={chatInput}
                     setValue={(e) => setChatInput(e.target.value)}

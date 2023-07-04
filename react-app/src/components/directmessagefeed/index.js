@@ -31,7 +31,9 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
       return isSameDay(new Date(message.created_at), new Date(specificDate));
     });
   };
-
+  console.log("inside the direct message feed")
+  console.log(messages)
+  if(messages.length == 0) return <div>loading</div>
   return (
     <section id="message_feed--wrapper">
       <div className="message_feed--introduction">
