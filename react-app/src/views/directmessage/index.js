@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useLocation } from 'react-router-dom';
 import DirectMessageRecipient from './directmessagerecipient';
@@ -19,7 +19,8 @@ function DirectMessage() {
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
     let normalizedDirectMessages = Object.values(directMessages)
-    const messageRef = useRef(null)
+    console.log("normDMS on line 22    ", normalizedDirectMessages)
+
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([])
 
@@ -45,7 +46,10 @@ function DirectMessage() {
     }
 
     useEffect(() => {
+        dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         setMessages([...normalizedDirectMessages])
+        console.log("forty four and a half")
+        console.log(messages)
     }, [partnerId, dispatch])
 
     useEffect(() => {
@@ -56,13 +60,25 @@ function DirectMessage() {
             let normMsgs = Object.values(msgs)
             setMessages([...normMsgs])
         })
+        socket.on("update_chat", async (chat) => {
+            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            let normMsgs = Object.values(msgs)
+            setMessages([...normMsgs])
+        })
+        socket.on("delete_chat", async (chat) => {
+            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            let normMsgs = Object.values(msgs)
+            setMessages([...normMsgs])
+        })
         return (() => {
           socket.disconnect()
         })
     }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
 
   //shouldn't be zero if clic
-  if(normalizedDirectMessages.length === 0) return <DataLoading></DataLoading>
+  if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
+  if(messages.length === 0)  return <DataLoading></DataLoading>
+    // return <div>loading</div>
 
 
     return (
@@ -74,7 +90,9 @@ function DirectMessage() {
                         />
                     </div>
                 </header>
-                <DirectMessageFeed ref={messageRef} messages={messages}/>
+                { messages.length != 0 &&
+                <DirectMessageFeed ref={messageRef} messages={messages} socket={socket} partnerId={partnerId}/>
+                }
                 <MessageTextArea
                     value={chatInput}
                     setValue={(e) => setChatInput(e.target.value)}
