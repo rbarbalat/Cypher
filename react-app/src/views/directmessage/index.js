@@ -44,12 +44,12 @@ function DirectMessage() {
 
     useEffect(() => {
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-        setMessages([...normalizedDirectMessages])
+        .then(() => setMessages([...normalizedDirectMessages])
+        )
     }, [partnerId, dispatch])
 
     useEffect(() => {
         socket = io()
-        dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
             let normMsgs = Object.values(msgs)
