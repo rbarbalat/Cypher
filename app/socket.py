@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, emit
-from app.models import DirectMessage, db
+from app.models import DirectMessage, db, LiveChat
 from datetime import datetime
 import os
 from app.api.direct_mes_routes import send_direct_messages, edit_direct_message
@@ -11,6 +11,7 @@ if os.environ.get("FLASK_ENV") == "production":
 else:
     origins = "*"
 socketio = SocketIO(cors_allowed_origins = origins)
+socketio_channel = SocketIO(cors_allowed_origins = origins)
 
 @socketio.on("chat")
 def handle_direct_messages(data):
@@ -48,3 +49,38 @@ def delete_direct_message(data):
     db.session.delete(deleted_chat)
     db.session.commit()
     emit("delete_chat", data, broadcast=True)
+
+@socketio_channel.on("live_chat")
+def handle_live_chat(data):
+    if data != "User connected!":
+        lc = LiveChat(
+            sender_id = data["sender_id"],
+            channel_id = data["channel_id"],
+            message = data["message"],
+            created_at = datetime.now()
+        )
+        db.session.add(lc)
+        db.session.commit()
+    # send_direct_messages(data["recipient_id"])
+    emit("live_chat", data, broadcast=True)
+
+#Update Live chat
+@socketio_channel.on("update_live_chat")
+def update_live_chat(data):
+    id = data["id"]
+    message = data["message"]
+    print("printing message inside backend---", message)
+    lc = LiveChat.query.get(id)
+    lc.message = message
+    db.session.commit()
+    print(lc.message)
+    emit("update_live_chat", data, broadcast=True)
+
+#Delete Live chat
+@socketio_channel.on("delete_live_chat")
+def delete_live_chat(data):
+    id = data["id"]
+    deleted_chat = LiveChat.query.get(id)
+    db.session.delete(deleted_chat)
+    db.session.commit()
+    emit("delete_live_chat", data, broadcast=True)
