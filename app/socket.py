@@ -23,3 +23,15 @@ def handle_direct_messages(data):
         db.session.add(dm)
         db.session.commit()
     emit("chat", data, broadcast=True)
+
+#Update Chat
+@socketio.on("update_chat")
+def handle_direct_messages(data):
+    id = data["id"]
+    message = data["message"]
+    uc = DirectMessage.query.get(id)
+    uc.message = message
+    db.session.add(uc)
+    db.session.commit()
+    print(uc.message)
+    emit("update_chat", data, broadcast=True)

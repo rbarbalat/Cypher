@@ -70,7 +70,7 @@ function DirectMessage() {
                         />
                     </div>
                 </header>
-                <DirectMessageFeed messages={messages}/>
+                <DirectMessageFeed messages={messages} socket={socket} partnerId={partnerId}/>
                 <MessageTextArea
                     value={chatInput}
                     setValue={(e) => setChatInput(e.target.value)}
