@@ -2,6 +2,8 @@
 const GET_CHANNELS = '/channels/GET_CHANNELS'
 const CREATE_CHANNEL = '/channels/CREATE_CHANNEL'
 const GET_CHANNEL = '/channel/GET_CHANNEL'
+const GET_LIVE_CHATS = '/channel/GET_LIVE_CHATS'
+const DELETE_CHANNEL = "/channel/DELETE_CHANNEL"
 
 // ACTIONS
 const actionGetChannels = (channels) => ({
@@ -18,6 +20,17 @@ const actionGetChannel = (channel) => ({
     type: GET_CHANNEL,
     payload: channel
 })
+
+const actionDeleteChannel = (channelId) => ({
+    type: DELETE_CHANNEL,
+    payload: channelId
+})
+
+const actionGetLiveChats = (live_chats) => ({
+    type: GET_LIVE_CHATS,
+    payload: live_chats
+})
+
 
 
 // THUNKS
@@ -51,21 +64,66 @@ export const thunkCreateChannel = (id, channel) => async dispatch => {
     }
 }
 
+export const deleteChannel = (id) => async dispatch => {
+    const res = await fetch(`/api/channels/${id}/delete`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionDeleteChannel(id))
+        return data
+    }
+}
+
+export const thunkGetLiveChats = (id) => async dispatch => {
+    const res = await fetch(`/api/channels/${id}/chats`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionGetLiveChats(data))
+    }
+}
+
 
 // REDUCER
 
-const initialState = { allChannels: {} }
+const initialState = { allChannels: {}, singleChannel: {}, liveChats: {} }
 
 const channels = (state = initialState, action) => {
     switch(action.type) {
         case GET_CHANNELS: {
-            const newState = { allChannels: {} }
+            const newState = {...state, allChannels: {} }
+            console.log("action.payload inside teh reducer    ", action.payload)
             action.payload.forEach(channel => newState.allChannels[channel.id] = channel)
+            return newState
+        }
+        case GET_CHANNEL: {
+            const newState = {...state, singleChannel: {} }
+            newState.singleChannel = action.payload
             return newState
         }
         case CREATE_CHANNEL: {
             const newState = { ...state }
             newState.allChannels = { ...newState.allChannels, [action.payload.id]: action.payload }
+            return newState;
+        }
+        case GET_LIVE_CHATS: {
+            const newState = {...state, liveChats: {}}
+            action.payload.forEach(chat => newState.liveChats[chat.id] = chat)
+            return newState
+        }
+        case DELETE_CHANNEL: {
+            const newState = {...state}
+            delete newState[action.payload];
             return newState;
         }
         default:

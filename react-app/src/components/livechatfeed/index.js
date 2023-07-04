@@ -9,16 +9,24 @@ import './livechatfeed.css'
 
 function LiveChatFeed({messages}) {
     const [ loading, setLoading ] = useState(true)
-    const start = new Date(messages[0].created_at);
-    const end = new Date(messages[messages.length - 1].created_at)
+    // const start = new Date(messages[0].created_at);
+    // const end = new Date(messages[messages.length - 1].created_at)
+    // const dates = [];
+    let start;
+    start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
+    let end;
+    end =
+      messages.length !== 0
+        ? new Date(messages[messages.length - 1].created_at)
+        : new Date();
     const dates = [];
 
     const { pathname } = useLocation()
     const recipientId = pathname.split('/')[4]
-    const partner = useSelector(state => state.messages.partners[recipientId].partner)
-    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-        dates.push(format(date, 'P'))
-    }
+    // const partner = useSelector(state => state.messages.partners[recipientId].partner)
+    // for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+    //     dates.push(format(date, 'P'))
+    // }
 
     const areMessagesPresent = (messages, specificDate) => {
         return messages.some(message => {
@@ -36,7 +44,7 @@ function LiveChatFeed({messages}) {
                     <p>{`Channel Owner`} created this {`private or public`} channel on {`formatted created date`}. This is the very beginning of the {`Channel Name`} channel.</p>
                 </div>
             </div>
-            <p className='message_feed--introduction--greeting' >This conversation is just between <span className='message_feed--user'>@{partner}</span> and you. Check out their profile to learn more about them. <span>View Profile</span></p>
+            <p className='message_feed--introduction--greeting' >This conversation is just between <span className='message_feed--user'>partner used to behere</span> and you. Check out their profile to learn more about them. <span>View Profile</span></p>
         </div>
         {/* {
           dates.map(date => {

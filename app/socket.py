@@ -5,11 +5,13 @@ import os
 from app.api.direct_mes_routes import send_direct_messages, edit_direct_message
 
 socketio = SocketIO()
+socketio_channel = SocketIO()
 
 if os.environ.get("FLASK_ENV") == "production":
     origins = ["http://cypher-app.onrender.com","https://cypher-app.onrender.com" ]
 else:
     origins = "*"
+
 socketio = SocketIO(cors_allowed_origins = origins)
 socketio_channel = SocketIO(cors_allowed_origins = origins)
 
