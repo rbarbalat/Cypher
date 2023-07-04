@@ -23,6 +23,10 @@
     aspect-ratio: 1;
     border-radius: 5px;
     background-color: var(--border);
+    color: black;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .direct_message_item--icon {

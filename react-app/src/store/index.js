@@ -5,13 +5,15 @@ import teams from './teams';
 import channels from './channels';
 import messages from './messages';
 import feed from './feed';
+import thread from './thread';
 
 const rootReducer = combineReducers({
   session,
   teams,
   channels,
   messages,
-  feed
+  feed,
+  thread
 });
 
 

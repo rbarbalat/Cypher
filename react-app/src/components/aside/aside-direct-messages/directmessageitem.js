@@ -11,6 +11,7 @@ function DirectMessageItem({directPartner}) {
   return (
     <div onClick={() => history.push(`/team/${team.id}/direct-messages/${directPartner.id}`)} className='direct_message_item--wrapper'>
         <div className='direct_message_item--profile_image'>
+        {directPartner.partner.charAt(0)}
         </div>
         <span className='direct_message_item--label'>{directPartner.partner}</span>
         <FaTimes className='direct_message_item--close'/>

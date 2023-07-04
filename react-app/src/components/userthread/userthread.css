@@ -24,6 +24,27 @@
     margin: 0;
 }
 
+.thread_user_profile-contents {
+    padding: 20px;
+}
+
+.thread_user_profile-image {
+    aspect-ratio: 1;
+    width: 80%;
+    margin: 0 auto;
+    background-color: var(--border);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 150px;
+    text-transform: uppercase;
+}
+
+.thread_user_profile-contents h2 {
+    text-transform: capitalize;
+}
 .thread--close_wrapper {
     width: 30px;
     aspect-ratio: 1;

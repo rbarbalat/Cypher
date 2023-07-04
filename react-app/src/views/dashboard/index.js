@@ -87,11 +87,6 @@ function Dashboard() {
                                         <div>
                                             <p>{team.name}</p>
                                             <div className='dashboard_team_members--wrapper'>
-                                                <div className='dashboard_team_members--span'>
-                                                    {[1,2,3,4,5].map(member => (
-                                                        <div key={member} className='dashboard_team_members--member'></div>
-                                                    ))}
-                                                </div>
                                                 <span className='dashboard_team_members--count'>{team.numMembers} members</span>
                                             </div>
                                         </div>
@@ -125,12 +120,9 @@ function Dashboard() {
                                     <div>
                                         <p>{team.name}</p>
                                         <div className='dashboard_team_members--wrapper'>
-                                            <div className='dashboard_team_members--span'>
-                                                {[1,2,3,4,5].map(member => (
-                                                    <div key={member} className='dashboard_team_members--member'></div>
-                                                ))}
-                                            </div>
-                                            <span className='dashboard_team_members--count'>{team.numMembers} members</span>
+                                            <span className='dashboard_team_members--count'>
+                                                {team.numMembers} {team.numMembers === 1 ? 'member' : 'members'}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

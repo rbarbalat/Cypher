@@ -82,11 +82,13 @@
 }
 
 .textarea:focus {
-    outline: transparent
+    outline: transparent;
+    border: 1px solid var(--active-border)
 }
 
 .input:focus {
-    outline: 1px solid var(--teal)
+    outline: transparent;
+    border: 1px solid var(--active-border)
 }
 
 .input-label {

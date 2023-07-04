@@ -26,6 +26,12 @@
     aspect-ratio: 1;
     background-color: var(--border);
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 40px;
+    text-transform: uppercase;
 }
 
 .message_feed--introduction--information p {
@@ -42,4 +48,34 @@
 .message_feed--introduction--greeting {
     font-size: 18px;
     color: var(--body)
+}
+
+.link-to-user {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.link-to-user:hover {
+    text-decoration: underline;
+}
+
+.most_recent--button {
+    padding: 10px 15px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    gap: 10px;
+    font-weight: 600;
+    background-color: white;
+    cursor: pointer;
+}
+
+.most_recent--button:hover {
+    background-color: var(--light-hover);
+}
+
+.most_recent--icon {
+    font-size: 12px;
 }

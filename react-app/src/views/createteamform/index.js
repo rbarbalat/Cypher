@@ -7,6 +7,7 @@ import StepTwo from './steptwo'
 import StepThree from './stepthree'
 import StepFour from './stepfour'
 import './createteamform.css'
+import { FaArrowLeft } from 'react-icons/fa';
 
 function CreateTeamForm() {
     const [ name, setName ] = useState('')
@@ -17,6 +18,10 @@ function CreateTeamForm() {
 
     const handleStep = (num) => {
         history.push(`/create-team/new/${num}`)
+    }
+
+    const backToDashboard = () => {
+        history.push('/dashboard')
     }
 
     const handleCreateTeam = async () => {
@@ -32,6 +37,10 @@ function CreateTeamForm() {
     return (
         <main id='create_team_form--wrapper'>
             <div className='create_team_form--navigation'>
+                <button onClick={() => backToDashboard()} className='create_team--back_button'>
+                    <FaArrowLeft className='create_team--back_icon'/>
+                   <span>Back to Dashboard</span>
+                </button>
             </div>
             <div className='create_team_form--main'>
                 <div className='create_team_form--aside'>

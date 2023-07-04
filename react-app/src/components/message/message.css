@@ -16,6 +16,12 @@
    aspect-ratio: 1;
    border-radius: 5px;
    background-color: var(--border);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-transform: uppercase;
+   font-weight: 600;
+   font-size: 25px;
 }
 
 .message--name_time {

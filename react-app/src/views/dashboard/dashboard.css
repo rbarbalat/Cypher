@@ -66,6 +66,10 @@
     cursor: pointer;
 }
 
+.dashboard--teams_header button:hover {
+    background-color: var(--light-hover);
+}
+
 .dashboard--team {
     border-bottom: 1px solid var(--border);
     padding: 20px;
@@ -100,6 +104,16 @@
     border: 1px solid var(--border);
     border-radius: 5px;
     width: 100%;
+}
+
+.dashboard--teams_input_icon {
+    font-size: 15px;
+    color: var(--body);
+}
+
+.dashboard--teams_input_input:focus {
+    outline: transparent;
+    border: 1px solid var(--active-border)
 }
 
 .dashboard--team:last-of-type {
@@ -153,6 +167,8 @@
 .dashboard_team_members--span {
     display: flex;
     align-items: center;
+    position: relative;
+    width: fit-content;
 }
 
 .dashboard_team_members--member {
@@ -161,33 +177,29 @@
     border-radius: 5px;
     background-color: var(--border);
     border: 2px solid white;
+    position: relative;
 }
 
 .dashboard_team_members--member:nth-of-type(1) {
-    position: relative;
     z-index: 50;
 }
 
 .dashboard_team_members--member:nth-of-type(2) {
-    position: relative;
     right: 5px;
     z-index: 45;
 }
 
 .dashboard_team_members--member:nth-of-type(3) {
-    position: relative;
     right: 10px;
     z-index: 40;
 }
 
 .dashboard_team_members--member:nth-of-type(4) {
-    position: relative;
     right: 15px;
     z-index: 35;
 }
 
 .dashboard_team_members--member:nth-of-type(5) {
-    position: relative;
     right: 20px;
     z-index: 30;
 }
@@ -198,7 +210,7 @@
     margin-right: 5px;
     font-weight: 400;
     position: relative;
-    left: -10px;
+    /* left: -10px; */
     color: var(--body)
 }
 
@@ -232,6 +244,9 @@
     cursor: pointer;
 }
 
+.dashboard--create button:hover {
+    background-color: var(--light-hover);
+}
 
 .dashboard--logout {
     padding: 50px 0 100px 0;
@@ -270,4 +285,8 @@
     font-weight: 600;
     background-color: white;
     cursor: pointer;
+}
+
+.dashboard--team-none-actions button:hover {
+    background-color: var(--light-hover);
 }
