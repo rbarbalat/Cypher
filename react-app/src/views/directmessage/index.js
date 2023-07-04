@@ -24,6 +24,7 @@ function DirectMessage() {
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([])
 
+
     const user = useSelector(state => state.session.user)
 
 
@@ -44,8 +45,6 @@ function DirectMessage() {
     useEffect(() => {
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         setMessages([...normalizedDirectMessages])
-        console.log("forty four and a half")
-        console.log(messages)
     }, [partnerId, dispatch])
 
     useEffect(() => {
