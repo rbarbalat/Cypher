@@ -20,7 +20,6 @@ function DirectMessage() {
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
     const normalizedDirectMessages = Object.values(directMessages)
-    console.log("normDMS on line 22    ", normalizedDirectMessages)
 
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([...normalizedDirectMessages])
@@ -41,6 +40,7 @@ function DirectMessage() {
             "recipient_id": parseInt(partnerId),
             "created_at": new Date()
         })
+
     }
 
     useEffect(() => {
@@ -49,8 +49,13 @@ function DirectMessage() {
 
 
     useEffect(() => {
-        socket = io()
+        socket = io("/direct") //specify a namespace
+        // console.log(socket.id)
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+        socket.emit("join", {
+            username: user.username,
+            room: parseInt(user.id),
+        })
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
             let normMsgs = Object.values(msgs)

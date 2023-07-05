@@ -8,30 +8,61 @@ import { useDispatch } from "react-redux";
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import Modal from "../modal";
+import { thunkGetLiveChats } from "../../store/channels";
 
-function Message({ message, setThread, socket, partnerId }) {
+function Message({ message, setThread, socket, partnerId, channelId, isLiveChat }) {
   const dispatch = useDispatch();
   const [updating, setUpdating] = useState(false);
   const [update, setUpdate] = useState(message.message);
   const { ref, isVisible, setIsVisible } = useOutsideClick();
-  console.log(message)
+  const user = useSelector(state => state.session.user)
+
   const convertTime = () => {
     const date = new Date(message.created_at);
     return format(new Date(date), "p");
   };
 
   function editDM(){
-    console.log("the edited DM is  ---     ", update)
-    console.log("the id of the edited DM is  ---  ", message.id)
-    socket.emit("update_chat", { id: message.id, message: update });
-    dispatch(thunkGetDirectMessages(parseInt(partnerId)));
+    if(isLiveChat)
+    {
+      socket.emit("update_live_chat", {
+        id: parseInt(message.id),
+        message: update,
+        channel_id: parseInt(channelId)
+      });
+      dispatch(thunkGetLiveChats(parseInt(partnerId)));
+    }
+    else
+    {
+      socket.emit("update_chat", {
+        id: parseInt(message.id),
+        message: update,
+        sender_id: parseInt(user.id),
+        recipient_id: parseInt(partnerId)
+      });
+      dispatch(thunkGetDirectMessages(parseInt(partnerId)));
+    }
     //message.message is the content of the paragraph below
     message.message = update
     setUpdating(false)
   }
 
   function deleteDM(){
-    socket.emit("delete_chat", { "id": message.id})
+    if(isLiveChat)
+    {
+      socket.emit("delete_live_chat", {
+        id: parseInt(message.id),
+        channel_id: parseInt(channelId)
+      })
+    }
+    else
+    {
+      socket.emit("delete_chat", {
+        id: parseInt(message.id),
+        sender_id: parseInt(user.id),
+        recipient_id: parseInt(partnerId)
+      })
+    }
   }
 
   return (
@@ -57,6 +88,8 @@ function Message({ message, setThread, socket, partnerId }) {
         <div className="message--name_time">
           <p className="message--sender_name message_feed--user">
             {message.sender}
+            {/* {message.sender_to_channel} */}
+            {/* needs to be adjusted for live_chats, gives typerror */}
           </p>
           <span className="message--time">{convertTime()}</span>
         </div>
