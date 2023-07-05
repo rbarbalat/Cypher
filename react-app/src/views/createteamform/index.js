@@ -1,45 +1,77 @@
-import React, { useState } from 'react'
-import { Switch, Route, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { thunkCreateTeam } from '../../store/teams';
-import StepOne from './stepone'
-import StepTwo from './steptwo'
-import StepThree from './stepthree'
-import StepFour from './stepfour'
-import './createteamform.css'
+import React, { useState } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { thunkCreateTeam } from "../../store/teams";
+import StepOne from "./stepone";
+import StepTwo from "./steptwo";
+import StepThree from "./stepthree";
+import StepFour from "./stepfour";
+import "./createteamform.css";
+import Input from "../../components/inputs/input"
 
 function CreateTeamForm() {
-    const [ name, setName ] = useState('')
-    const [ description, setDescription ] = useState('')
-    const [ image, setImage ] = useState('');
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const handleStep = (num) => {
-        history.push(`/create-team/new/${num}`)
+  const handleStep = (num) => {
+    history.push(`/create-team/new/${num}`);
+  };
+
+  const handleCreateTeam = async (e) => {
+    e.preventDefault()
+    const formData = { name, description}
+    formData.append("image", image)
+    const newTeam = formData;
+    const data = await dispatch(thunkCreateTeam(newTeam));
+    if (data.error) {
+      console.log(data.error);
+    } else {
+      history.push(`/dashboard`);
     }
+  };
 
-    const handleCreateTeam = async () => {
-        const newTeam = {name, description, image}
-        const data = await dispatch(thunkCreateTeam(newTeam))
-        if (data.error) {
-            console.log(data.error)
-        } else {
-            history.push(`/dashboard`)
-        }
-    }
-
-    return (
-        <main id='create_team_form--wrapper'>
-            <div className='create_team_form--navigation'>
-            </div>
-            <div className='create_team_form--main'>
-                <div className='create_team_form--aside'>
-                    <header className='create_team_form--header'>
-                        <span>{name}</span>
-                    </header>
-                </div>
-                <div className='create_team_form--step'>
+  return (
+    <main id="create_team_form--wrapper">
+      <div className="create_team_form--navigation"></div>
+      <div className="create_team_form--main">
+        <div className="create_team_form--aside">
+          <header className="create_team_form--header">
+            <span>{name}</span>
+          </header>
+        </div>
+        <form
+          action="/posts/new"
+          method="POST"
+          encType="multipart/form-data"
+        >
+          <Input
+            placeholder="Ex: Acme Marketing or Acme"
+            value={name}
+            setValue={(x) => setName(x.target.value)}
+            name="name"
+            error={undefined}
+            disabled={false}
+          />
+          <Input
+            placeholder="Ex: Q4 budget, autumn campaign"
+            value={description}
+            setValue={(x) => setDescription(x.target.value)}
+            name="description"
+            error={undefined}
+            disabled={false}
+          />
+         <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          <button onClick={() => handleCreateTeam()}
+            className="create_form_step--next">Finish</button>
+        </form>
+        {/* <div className='create_team_form--step'>
                     <Switch>
                         <Route exact path="/create-team/new/1" >
                             <StepOne handleStep={handleStep} name={name} setName={setName}/>
@@ -54,10 +86,10 @@ function CreateTeamForm() {
                             <StepFour handleCreateTeam={handleCreateTeam} handleStep={handleStep} name={name} />
                         </Route>
                     </Switch>
-                </div>
-            </div>
-        </main>
-    )
+                </div> */}
+      </div>
+    </main>
+  );
 }
 
-export default CreateTeamForm
+export default CreateTeamForm;
