@@ -21,6 +21,7 @@ function CreateTeamForm() {
   };
 
   const handleCreateTeam = async (e) => {
+    console.log("inside create team")
     e.preventDefault()
     const formData = new FormData()
     formData.append("name", name)
@@ -28,11 +29,12 @@ function CreateTeamForm() {
     formData.append("image", image)
     const newTeam = formData;
     const data = await dispatch(thunkCreateTeam(newTeam));
-    if (data.error) {
-      console.log(data.error);
-    } else {
-      history.push(`/dashboard`);
-    }
+    // if (data.error) {
+    //   console.log(data.error);
+    // } else {
+    //   history.push(`/dashboard`);
+    // }
+    if(data) history.push("/dashboard")
   };
 
   return (
@@ -47,6 +49,7 @@ function CreateTeamForm() {
         <form
           // action="/api/teams/"
           // method="POST"
+          onSubmit={handleCreateTeam}
           encType="multipart/form-data"
         >
           <Input
@@ -70,8 +73,7 @@ function CreateTeamForm() {
               accept="image/*"
               onChange={(e) => setImage(e.target.files[0])}
             />
-          <button onClick={() => handleCreateTeam()}
-            className="create_form_step--next">Finish</button>
+          <button className="create_form_step--next">Finish</button>
         </form>
         {/* <div className='create_team_form--step'>
                     <Switch>
@@ -88,7 +90,7 @@ function CreateTeamForm() {
                             <StepFour handleCreateTeam={handleCreateTeam} handleStep={handleStep} name={name} />
                         </Route>
                     </Switch>
-                </div> */}
+          </div> */}
       </div>
     </main>
   );

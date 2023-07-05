@@ -4,6 +4,7 @@ from flask_login import current_user
 from app.forms import team_form
 from app.forms.channel_form import ChannelForm
 from sqlalchemy import or_
+from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
 team_routes = Blueprint("teams", __name__)
 
@@ -102,7 +103,7 @@ def get_members_for_team(id):
   team = Team.query.get(id)
   #DO WE NEED TO ADD USER'S EMAIL?
   users = [{
-    "id":membership.user.id,
+    "id":membership.user_id,
     "username":membership.user.username
       } for membership in team.users]
   return users
@@ -112,20 +113,37 @@ def get_members_for_team(id):
 def create_team():
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
+
   #weird syntax was jonathan testing something
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
+
   if form.validate_on_submit():
+    image = form.data["image"]
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+    print("PRINTING UPLOAD PRINTNIG UPLOAD PRINTING UPLOAD")
+    print(upload["url"], "this is the upload")
+    print("this is the request" , request.data)
+    # print("this is the req body ", request.data)
+    #upload is a dicitonary with a key of url or a key of errors
+    if "url" not in upload:
+      return {"error": "failed b/c of problem with the image file"}
+
     team = Team()
-    form.populate_obj(team)
+    # form.populate_obj(team)
+    team.name = form.data["name"]
+    team.description = form.data["description"]
+    team.image = upload["url"]
+
     db.session.add(team)
     db.session.add(TeamMembership(user=current_user, team=team, status="owner"))
     db.session.commit()
     return {
-      "id":team.id,
-      "name":team.name,
-      "description":team.description,
-      "image":team.image
+      "id": team.id,
+      "name": team.name,
+      "description": team.description,
+      "image": team.image
     }
   return {"errors": form.errors}
 
@@ -137,15 +155,28 @@ def delete_team(id):
   team = Team.query.get(id)
   if not team:
     return {"error": "Team does not exist"}
-  for team_membership in current_user.teams:
-    if team_membership.team_id == team.id:
-      if team_membership.status == "owner":
-          db.session.delete(team)
-          db.session.commit()
-          return {"message" : "team deleted :)"}
-      else:
-        return {"error" : "not authorized"}
-  return {"error" : "not authorized"}
+
+  authorized = current_user.id in [tm.user_id for tm in team.users if tm.status == "owner"]
+  if not authorized:
+    return {"error": "not authorized"}
+
+  file_delete = remove_file_from_s3(team.image)
+  if file_delete is True:
+    db.session.delete(team)
+    db.session.commit()
+    return {"message": "team deleted"}
+  else:
+    return {"error": "team not deleted for now b/c of problem deleting image file"}
+
+  # for team_membership in current_user.teams:
+  #   if team_membership.team_id == team.id:
+  #     if team_membership.status == "owner":
+  #         db.session.delete(team)
+  #         db.session.commit()
+  #         return {"message" : "team deleted :)"}
+  #     else:
+  #       return {"error" : "not authorized"}
+  # return {"error" : "not authorized"}
 
 
 #CREATE A CHANNEL FOR A TEAM (ID)
@@ -230,7 +261,7 @@ def delete_member_from_team(team_id, mem_id):
      db.session.commit()
      return {"message": "successfully deleted"}
   #an owner or admin deletes a user
-  elif current_user.id in [ team_mem.user.id for team_mem in
+  elif current_user.id in [ team_mem.user_id for team_mem in
                            TeamMembership.query.filter(TeamMembership.status != "member").filter(TeamMembership.team_id == team_id).all() ]:
     db.session.delete(tm)
     db.session.commit()
