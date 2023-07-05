@@ -1,28 +1,33 @@
 import React from 'react'
 import './thread.css';
 import { FaTimes } from 'react-icons/fa';
-import MessageTextArea from '../MessageTextBox';
-import ThreadFeed from './threadfeed';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import ThreadUser from './threadUser';
+import ThreadReplies from './threadReplies';
+import { thunkclearThread } from '../../store/thread';
 
-function Thread({close}) {
-    const messages = Object.values(useSelector(state => state.messages.directMessages))
+function Thread() {
+    const thread = useSelector(state => state.thread.current)
+    const dispatch = useDispatch()
+
+    const handleClearThread = () => {
+        dispatch(thunkclearThread())
+    }
+
     return (
     <aside id='thread--wrapper'>
         <header className='thread--header'>
-            <h1>Title</h1>
+            <h1>{thread.type === 'user' ? thread.username : 'Channel Name'}</h1>
             <div
-                onClick={close}
+                onClick={handleClearThread}
                 className='thread--close_wrapper'>
                 <FaTimes className='thread--close'/>
             </div>
         </header>
-        <ThreadFeed messages={messages}/>
-        <MessageTextArea
-            value={'none'}
-            setValue={(e) => console.log(e.target.value)}
-            action={null}
-        />
+        { thread.type === 'user' ?
+        <ThreadUser thread={thread} /> :
+        <ThreadReplies thread={thread}/>
+        }
     </aside>
   )
 }

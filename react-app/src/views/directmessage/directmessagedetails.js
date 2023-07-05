@@ -1,10 +1,18 @@
 import React from 'react'
 import { FaRegClock, FaTimes } from 'react-icons/fa'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
+import { thunkGetUserThread } from '../../store/thread'
 
 const DirectMessageDetails = React.forwardRef((props, ref) => {
     const { setIsVisible } = props;
     const partner = useSelector(state => state.messages.currentPartner)
+    const dispatch = useDispatch();
+
+    const handleUserThread = () => {
+        dispatch(thunkGetUserThread(partner.id))
+        setIsVisible(false)
+    }
+
     return (
         <div ref={ref} className='direct_message_details--wrapper'>
             <div onClick={() => setIsVisible(false)}
@@ -26,7 +34,7 @@ const DirectMessageDetails = React.forwardRef((props, ref) => {
                         <FaRegClock/>
                         <span>Current Time</span>
                     </div>
-                    <p className='direct_message_details--link'>View Full Profile</p>
+                    <p onClick={handleUserThread} className='direct_message_details--link'>View Full Profile</p>
                 </div>
                 <span className='direct_message_details--channel_id'>Channel ID: {`channel Id`}</span>
             </div>

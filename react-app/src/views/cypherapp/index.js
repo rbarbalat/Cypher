@@ -12,7 +12,8 @@ import Thread from '../../components/thread'
 function CypherApp() {
     const [ loading, setLoading ] = useState(true)
     const sessionUser = useSelector((state) => state.session.user);
-    const team = useSelector(state => state.teams.singleTeam)
+    const team = useSelector(state => state.teams.singleTeam);
+    const thread = useSelector(state => state.thread.current)
     const { teamId } = useParams();
     const dispatch = useDispatch();
 
@@ -43,10 +44,10 @@ function CypherApp() {
                     <NewMessage/>
                 </Route>
             </Switch>
-            {/* { thread.state ?
-            <Thread close={() => setThread({state: false})}/> :
+            {Object.keys(thread).length ?
+            <Thread/> :
             null
-            } */}
+            }
         </main>
         </>
     )

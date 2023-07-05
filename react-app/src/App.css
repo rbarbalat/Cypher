@@ -21,3 +21,12 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.basic--link {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.basic--link:hover {
+  text-decoration: underline;
+}

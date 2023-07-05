@@ -9,6 +9,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import Modal from "../modal";
 import { thunkGetLiveChats } from "../../store/channels";
+import { thunkGetUserThread } from "../../store/thread";
 
 function Message({ message, setThread, socket, partnerId, channelId, isLiveChat }) {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
     const date = new Date(message.created_at);
     return format(new Date(date), "p");
   };
+
+  const handleUserThread = (id) => {
+    dispatch(thunkGetUserThread(id))
+  }
 
   function editDM(){
     if(isLiveChat)
@@ -82,15 +87,11 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
       null
     }
     <div className="message--wrapper">
-      {/* <div onClick={() => setEdit()}>Changes text to message</div> */}
-
       <div className="message--sender_image"></div>
       <div className="message--details_wrapper">
         <div className="message--name_time">
-          <p className="message--sender_name message_feed--user">
+          <p onClick={() => handleUserThread(message.sender_id)} className="message--sender_name message_feed--user basic--link">
             {message.sender}
-            {/* {message.sender_to_channel} */}
-            {/* needs to be adjusted for live_chats, gives typerror */}
           </p>
           <span className="message--time">{convertTime()}</span>
         </div>

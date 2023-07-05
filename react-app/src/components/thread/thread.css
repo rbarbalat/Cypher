@@ -17,6 +17,7 @@
     padding: 0 15px;
     height: 60px;
     border-bottom: 1px solid var(--border);
+    text-transform: capitalize;
 }
 
 .thread--header h1 {
@@ -37,6 +38,29 @@
 
 .thread--close_wrapper:hover {
     background-color: var(--light-hover);
+}
+
+.user_thread--wrapper {
+    padding: 30px;
+}
+
+.thread_user--image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: var(--border);
+    border-radius: 10px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 150px;
+}
+
+.user_thread--username {
+    text-transform: capitalize;
+    font-weight: 600;
 }
 
 #thread_feed--wrapper {

@@ -3,11 +3,12 @@ import Message from "../message";
 import TimeStamp from "../message/timestamp";
 import { format, isSameDay } from "date-fns";
 import "./directmessagefeed.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { thunkGetUserThread } from "../../store/thread";
 
 function DirectMessageFeed({ messages, socket, partnerId }) {
-  console.log(messages, 'skdjfsdkfjsdkfjksdjfksdjkfsjdkfjsdsf');
+  const dispatch = useDispatch();
   let start;
   start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
   let end;
@@ -16,6 +17,10 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
       ? new Date(messages[messages.length - 1].created_at)
       : new Date();
   const dates = [];
+
+  const handleUserThread = (id) => {
+    dispatch(thunkGetUserThread(id))
+  }
 
   const { pathname } = useLocation();
   const recipientId = pathname.split("/")[4];
@@ -41,14 +46,14 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
         <div className="message_feed--introduction--recipient">
           <div className="message_feed--introduction--image"></div>
           <div className="message_feed--introduction--information">
-            <p className="message_feed--user">{partner}</p>
+            <p onClick={() => handleUserThread(partnerId)} className="message_feed--user basic--link">{partner}</p>
             <p>Status</p>
           </div>
         </div>
         <p className="message_feed--introduction--greeting">
           This conversation is just between{" "}
           <span className="message_feed--user">@{partner}</span> and you. Check
-          out their profile to learn more about them. <span>View Profile</span>
+          out their profile to learn more about them. <span onClick={() => handleUserThread(partnerId)} className="basic--link">View Profile</span>
         </p>
       </div>
       {dates.map((date) => {
