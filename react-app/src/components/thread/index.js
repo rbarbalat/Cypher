@@ -24,7 +24,7 @@ function Thread() {
                 <FaTimes className='thread--close'/>
             </div>
         </header>
-        { thread.type === 'user' ?
+        {thread.type === 'user' ?
         <ThreadUser thread={thread} /> :
         <ThreadReplies thread={thread}/>
         }

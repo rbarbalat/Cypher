@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Message from "../message";
 import TimeStamp from "../message/timestamp";
 import { format, isSameDay } from "date-fns";
@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { thunkGetUserThread } from "../../store/thread";
 
-function DirectMessageFeed({ messages, socket, partnerId }) {
+const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
+  const { messages, socket, partnerId } = props;
   const dispatch = useDispatch();
   let start;
   start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
@@ -21,6 +22,12 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
   const handleUserThread = (id) => {
     dispatch(thunkGetUserThread(id))
   }
+
+  const handleBottomScroll = () => {
+      ref.current.scroll({
+      top: ref.current.scrollHeight,
+      behavior: 'smooth'
+  })}
 
   const { pathname } = useLocation();
   const recipientId = pathname.split("/")[4];
@@ -41,7 +48,7 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
   console.log(messages)
   if(messages.length == 0) return <div>loading</div>
   return (
-    <section id="message_feed--wrapper">
+    <section ref={ref} id="message_feed--wrapper">
       <div className="message_feed--introduction">
         <div className="message_feed--introduction--recipient">
           <div className="message_feed--introduction--image"></div>
@@ -55,6 +62,9 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
           <span className="message_feed--user">@{partner}</span> and you. Check
           out their profile to learn more about them. <span onClick={() => handleUserThread(partnerId)} className="basic--link">View Profile</span>
         </p>
+        <button onClick={handleBottomScroll}>
+          View Most Recent Message
+        </button>
       </div>
       {dates.map((date) => {
         return (
@@ -74,7 +84,7 @@ function DirectMessageFeed({ messages, socket, partnerId }) {
         );
       })}
     </section>
-  );
-}
+  )
+})
 
 export default DirectMessageFeed;

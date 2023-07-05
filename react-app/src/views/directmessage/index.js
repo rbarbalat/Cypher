@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef } from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useLocation } from 'react-router-dom';
 import DirectMessageRecipient from './directmessagerecipient';
@@ -20,7 +20,7 @@ function DirectMessage() {
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
     const normalizedDirectMessages = Object.values(directMessages)
-
+    const messageRef = useRef(null)
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([...normalizedDirectMessages])
 
@@ -40,6 +40,10 @@ function DirectMessage() {
             "recipient_id": parseInt(partnerId),
             "created_at": new Date()
         })
+        messageRef.current.scroll({
+        top: messageRef.current.scrollHeight,
+        behavior: 'smooth'
+});
 
     }
 
@@ -93,7 +97,7 @@ function DirectMessage() {
                     </div>
                 </header>
                 {/* { messages && */}
-                <DirectMessageFeed messages={messages} socket={socket} partnerId={partnerId}/>
+                <DirectMessageFeed ref={messageRef} messages={messages} socket={socket} partnerId={partnerId}/>
                 {/* } */}
                 <MessageTextArea
                     value={chatInput}
