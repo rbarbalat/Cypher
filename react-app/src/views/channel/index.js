@@ -89,7 +89,7 @@ const fakeMembers = [
 ]
 
 let socket;
-function Channel({setThread}) {
+function Channel({setThread}){
     const { channelId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const channel = fakeChannels.find(channel => channel.id == channelId)
@@ -97,39 +97,54 @@ function Channel({setThread}) {
     const liveChats = useSelector(state => state.channels.liveChats)
     const normalizedLiveChats = Object.values(liveChats)
 
+    const user = useSelector(state => state.session.user)
+
     const [messages, setMessages] = useState([...normalizedLiveChats])
     const dispatch = useDispatch()
 
+    const [chatInput, setChatInput] = useState("")
+
+    const handleContent = () => {
+        console.log(chatInput)
+        console.log(socket)
+        socket.emit("live_chat", {
+            "message": chatInput,
+            "sender_id": parseInt(user.id),
+            "channel_id": parseInt(channelId),
+        })
+        console.log("hello world from handlecontent")
+    }
+
     useEffect(() => {
+        console.log("yoohoooooo")
         setMessages([...normalizedLiveChats])
     }, [liveChats, dispatch])
 
 
     useEffect(() => {
-        console.log("entered teh use effect")
-        socket = io()
-        console.log("the socket ----  ", socket)
+        socket = io("/channel"); //specify a namespace
         dispatch(thunkGetLiveChats(parseInt(channelId)))
+        socket.emit("join", {
+            room: `Channel ${channelId}`
+        })
         socket.on("live_chat", async (chat) => {
             let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
-            let normChats = Object.values(chats)
-            setMessages([...normChats])
+            console.log(chats)
+            setMessages([...chats])
         })
-        socket.on("update_live_chats", async (chat) => {
+        socket.on("update_live_chat", async (chat) => {
             let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
-            let normChats = Object.values(chats)
-            setMessages([...normChats])
+            setMessages([...chats])
         })
         socket.on("delete_live_chat", async (chat) => {
             let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
-            let normChats = Object.values(chats)
-            setMessages([...normChats])
+            setMessages([...chats])
         })
         return (() => {
           socket.disconnect()
         })
     }, [channelId, dispatch]);
-
+    console.log("line 145 --------    ", messages)
     return (
         <main className='views--wrapper'>
         <header className='views--header--wrapper'>
@@ -145,11 +160,11 @@ function Channel({setThread}) {
             </div>
         </header>
         {` Channel Message Feed`}
-        <LiveChatFeed messages={messages}></LiveChatFeed>
+        <LiveChatFeed messages={messages} channelId={channelId} socket={socket}></LiveChatFeed>
         <MessageTextArea
-            value={''}
-            setValue={(e) => console.log(e.target.value)}
-            action={null}
+            value={chatInput}
+            setValue={(e) => setChatInput(e.target.value)}
+            action={handleContent}
         />
         {
             isVisible ?
@@ -162,7 +177,7 @@ function Channel({setThread}) {
             </Modal> :
             null
         }
-</main>
+    </main>
     )
 }
 

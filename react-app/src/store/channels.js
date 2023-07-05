@@ -90,6 +90,7 @@ export const thunkGetLiveChats = (id) => async dispatch => {
             return data.errors
         }
         dispatch(actionGetLiveChats(data))
+        return data;
     }
 }
 
@@ -114,6 +115,7 @@ const channels = (state = initialState, action) => {
         case CREATE_CHANNEL: {
             const newState = { ...state }
             newState.allChannels = { ...newState.allChannels, [action.payload.id]: action.payload }
+            newState.singleChannel = action.payload
             return newState;
         }
         case GET_LIVE_CHATS: {
@@ -122,9 +124,9 @@ const channels = (state = initialState, action) => {
             return newState
         }
         case DELETE_CHANNEL: {
-            const newState = {...state}
-            delete newState[action.payload];
-            return newState;
+            const newAllChannels = {...state.allChannels}
+            delete newAllChannels[action.payload];
+            return {...state, allChannels: newAllChannels, singleChannel: {}}
         }
         default:
             return state

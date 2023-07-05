@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 import './livechatfeed.css'
 
 
-function LiveChatFeed({messages}) {
+function LiveChatFeed({messages, channelId, socket}) {
     const [ loading, setLoading ] = useState(true)
     // const start = new Date(messages[0].created_at);
     // const end = new Date(messages[messages.length - 1].created_at)
@@ -33,7 +33,9 @@ function LiveChatFeed({messages}) {
         return isSameDay(new Date(message.created_at), new Date(specificDate))
         })
     }
-
+    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+      dates.push(format(date, "P"));
+    }
     return (
         <section id='message_feed--wrapper'>
         <div className='message_feed--introduction'>
@@ -46,7 +48,7 @@ function LiveChatFeed({messages}) {
             </div>
             <p className='message_feed--introduction--greeting' >This conversation is just between <span className='message_feed--user'>partner used to behere</span> and you. Check out their profile to learn more about them. <span>View Profile</span></p>
         </div>
-        {/* {
+        {
           dates.map(date => {
             return (
               <>
@@ -56,7 +58,7 @@ function LiveChatFeed({messages}) {
                   {
                     messages.filter(message => isSameDay(new Date(message.created_at), new Date(date))).map(message => {
                       return (
-                        <Message type='channel' message={message}/>
+                        <Message type='channel' message={message} isLiveChat={true} channelId={channelId} socket={socket}/>
                       )
                     })
                   }
@@ -66,7 +68,7 @@ function LiveChatFeed({messages}) {
               </>
             )
           })
-        } */}
+        }
     </section>
     )
 }

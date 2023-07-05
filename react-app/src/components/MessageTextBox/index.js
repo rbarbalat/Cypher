@@ -1,6 +1,7 @@
 import React from 'react'
 import './messagetextbox.css'
 import { FaPaperPlane } from 'react-icons/fa'
+import { useState } from "react";
 
 function MessageTextArea({setValue, value, action}) {
   return (
@@ -12,7 +13,6 @@ function MessageTextArea({setValue, value, action}) {
                 <span>Send</span><FaPaperPlane/>
             </button>
         </div>
-
     </div>
   )
 }
