@@ -1,10 +1,10 @@
 from app.models import db, LiveChat, environment, SCHEMA
 from sqlalchemy.sql import text
 from random import choice
-
+from faker import Faker
 def seed_live_chats(users, channels):
     lc_list = []
-    for i in range(0, 50):
+    for i in range(0, 30):
         lc = LiveChat(
             sender_to_channel=choice(users),
             channel= channels[i // 5],
