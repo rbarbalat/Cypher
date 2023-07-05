@@ -100,9 +100,8 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
             {
             updating ?
               <textarea className="message--update--input" type="text" value={update} onChange={(e) => setUpdate(e.target.value)}></textarea> :
-              <div>
+              <div className="message--contents">
                 <p className="message--message">{message.message}</p>
-
               </div>
             }
             {
@@ -115,8 +114,9 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
               null
             }
           </div>
+          { user.id === message.sender_id ?
           <div className={`message--actions ${updating ? 'show--actions' : ''}`}>
-            <button className="message--action--btn message--edit" onClick={updating ? () => setUpdating(false) : () => setUpdating(true)}>
+              <button className="message--action--btn message--edit" onClick={updating ? () => setUpdating(false) : () => setUpdating(true)}>
               {
               updating ?
               <>
@@ -126,14 +126,15 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
               <FaEdit/>
               </>
               }
-            </button>
+              </button>
             <span>|</span>
             <button className="message--action--btn message--delete" onClick={() => setIsVisible(true)}>
               <>
               <FaTrashAlt/>
               </>
             </button>
-          </div>
+          </div> :
+          null}
         </div>
 
 

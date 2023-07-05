@@ -11,6 +11,7 @@
     --shadow: #0000001a;
     --content: 1110px;
     --red: #ff1313;
+
   }
 
   * {
@@ -20,6 +21,10 @@
 
   body, html {
     margin: 0;
+    width: 100dvw;
+    height: 100dvh;
+    width: 100dw;
+    height: 100dh;
   }
 
   .link {

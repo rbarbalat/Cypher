@@ -42,6 +42,9 @@
    color: var(--body);
    font-weight: 300;
    margin: 0;
+   width: 100%;
+   word-wrap: break-word;
+   word-break: break-all;
 }
 
 
@@ -91,6 +94,18 @@
    padding: 0 2.5px;
    font-size: 12px;
    font-weight: 600;
+}
+
+.view--bottom {
+   background-color: white;
+   border: 1px solid var(--border);
+   padding: 10px 15px;
+   border-radius: 5px;
+   cursor: pointer;
+   font-weight: 600;
+   display: flex;
+   align-items: center;
+   gap: 5px;
 }
 
 .message--actions {

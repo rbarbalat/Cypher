@@ -16,7 +16,6 @@ import MessageTextArea from '../../components/MessageTextBox';
 let socket;
 
 function DirectMessage() {
-    // const [loading, setLoading] = useState(true)
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
     const normalizedDirectMessages = Object.values(directMessages)
@@ -41,10 +40,10 @@ function DirectMessage() {
             "created_at": new Date()
         })
         messageRef.current.scroll({
-        top: messageRef.current.scrollHeight,
-        behavior: 'smooth'
-});
-
+            top: messageRef.current.scrollHeight,
+            behavior: 'smooth'
+        });
+        setChatInput('')
     }
 
     useEffect(() => {

@@ -6,6 +6,7 @@ import "./directmessagefeed.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { thunkGetUserThread } from "../../store/thread";
+import { FaArrowDown } from "react-icons/fa";
 
 const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
   const { messages, socket, partnerId } = props;
@@ -62,8 +63,9 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
           <span className="message_feed--user">@{partner}</span> and you. Check
           out their profile to learn more about them. <span onClick={() => handleUserThread(partnerId)} className="basic--link">View Profile</span>
         </p>
-        <button onClick={handleBottomScroll}>
-          View Most Recent Message
+        <button className="view--bottom" onClick={handleBottomScroll}>
+          <span>Most Recent</span>
+          <FaArrowDown/>
         </button>
       </div>
       {dates.map((date) => {
