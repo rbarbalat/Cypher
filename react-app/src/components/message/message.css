@@ -5,10 +5,15 @@
    width: 100%;
    display: flex;
    gap: 10px;
+   position: relative;
 }
 
 .message--wrapper:hover {
    background-color: #f8f8f8;
+}
+
+.message--wrapper:hover .message--actions {
+   display: flex;
 }
 
 .message--sender_image {
@@ -38,6 +43,7 @@
    font-weight: 300;
    margin: 0;
 }
+
 
 .message--replies {
    width: 60%;
@@ -85,4 +91,132 @@
    padding: 0 2.5px;
    font-size: 12px;
    font-weight: 600;
+}
+
+.message--actions {
+   display: none;
+   padding: 0 5px;
+   align-items: center;
+   position: absolute;
+   right: 15px;
+   top: -15px;
+   border: 1px solid var(--border);
+   background-color: white;
+   border-radius: 30px;
+   color: var(--body)
+}
+
+.message--action--btn {
+   /* padding: 5px 10px; */
+   height: 30px;
+   aspect-ratio: 1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 5px;
+   background-color: transparent;
+   cursor: pointer;
+   color: var(--body);
+   bordeR: none;
+}
+
+.message--details_wrapper {
+   width: 100%;
+}
+
+.message--message--wrapper {
+   display: flex;
+   align-items: flex-start;
+   width: 100%;
+   justify-content: space-between;
+   gap: 20px;
+}
+
+.message--message--contents {
+   flex: 1;
+   position: relative;
+}
+
+.message--delete:hover {
+   color: var(--red);
+}
+
+.message--edit:hover {
+   color: var(--color-hover);
+}
+
+.message--update--input {
+   width: 100%;
+   height: 75px;
+   font-size: 16px;
+   color: var(--body);
+   resize: none;
+   padding: 10px;
+   border: 1px solid var(--border);
+   border-radius: 5px;
+   margin-top: 10px;
+}
+
+.message--update--input:focus {
+   outline: transparent;
+   border: 1px solid var(--active-border)
+}
+
+.message--confirm {
+   border: 1px solid var(--border);
+   border-radius: 5px;
+   padding: 5px 10px;
+   margin-top: 10px;
+}
+
+.active--confirm {
+   background-color: green;
+   color: white;
+}
+
+.show--actions {
+   display: flex;
+}
+
+.message--delete--modal {
+   background-color: white;
+   border: 1px solid var(--border);
+   padding: 30px;
+   border-radius: 10px;
+   text-align: center;
+}
+
+.message--delete--modal--message {
+   margin: 0 0 15px 0;
+   line-height: 1.6;
+}
+
+.message--delete--modal--actions {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: 10px;
+}
+
+.message--delete--modal--action {
+   padding: 10px 20px;
+   border: 1px solid var(--body);
+   border-radius: 5px;
+   background-color: white;
+   cursor: pointer;
+}
+
+.modal--cancel:hover {
+   background-color: var(--light-hover);
+}
+
+.modal--delete {
+   color: var(--red);
+   border: 1px solid var(--red);
+}
+
+.modal--delete:hover {
+   background-color: var(--red);
+   color: white;
 }
