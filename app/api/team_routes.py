@@ -98,6 +98,31 @@ def get_team_channels(id):
     channel_list[i]["users"] = user_key_values[i]
   return channel_list
 
+@team_routes.route("/<int:id>/channels/user")
+def get_team_channel_user(id):
+  if not current_user.is_authenticated:
+    return {"error" : "go get logged in"}
+
+  team = Team.query.get(id)
+  if team is None:
+    return {"error": "Team not found"}
+
+  x = set([cm.channel for cm in current_user.channels])
+  channel_list = list(set(team.channels).intersection(x))
+
+  user_key_values = []
+  for channel in channel_list:
+    user_key_values.append([ {**cm.user.to_dict(), "status": cm.status } for cm in channel.users])
+  channel_list = [{
+    "id": channel.id,
+    "name": channel.name,
+    "private": channel.private
+    } for channel in channel_list ]
+
+  for i in range(len(channel_list)):
+    channel_list[i]["users"] = user_key_values[i]
+  return channel_list
+
 #GET ALL MEMBERS OF A TEAM
 @team_routes.route('/<int:id>/members')
 def get_members_for_team(id):
@@ -280,3 +305,18 @@ def delete_member_from_team(team_id, mem_id):
 # # GET MEMBERSHIP OF USER
 # @team_routes.route('/<int:id>/member')
 # def get_member_user(id):
+
+
+#team_id, current_user
+"""
+we have the team getting it from Team.query
+we have the user
+
+we have user.channels = x
+we have team.channels = y
+
+common_channels = x.intersection(y)
+
+
+
+"""
