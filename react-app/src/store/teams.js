@@ -85,8 +85,8 @@ export const thunkGetEveryTeam = () => async dispatch => {
 export const thunkCreateTeam = (team) => async dispatch => {
     const res = await fetch(`/api/teams/`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(team)
+        // headers: { "Content-Type": "application/json" },
+        body: team
     })
     if (res.ok) {
         const data = await res.json()

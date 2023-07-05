@@ -12,7 +12,7 @@ import Input from "../../components/inputs/input"
 function CreateTeamForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -22,7 +22,9 @@ function CreateTeamForm() {
 
   const handleCreateTeam = async (e) => {
     e.preventDefault()
-    const formData = { name, description}
+    const formData = new FormData()
+    formData.append("name", name)
+    formData.append("description", description)
     formData.append("image", image)
     const newTeam = formData;
     const data = await dispatch(thunkCreateTeam(newTeam));
@@ -43,8 +45,8 @@ function CreateTeamForm() {
           </header>
         </div>
         <form
-          action="/posts/new"
-          method="POST"
+          // action="/api/teams/"
+          // method="POST"
           encType="multipart/form-data"
         >
           <Input
