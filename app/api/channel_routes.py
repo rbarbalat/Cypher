@@ -17,7 +17,7 @@ def get_channels():
     if len(channels) == 0:
         return []
 
-    list_of_list_of_users = [ [cm.user.to_dict() for cm in channel.users] for channel in channels ]
+    list_of_list_of_users = [ [ { **cm.user.to_dict(), "status": cm.status } for cm in channel.users] for channel in channels ]
 
     new_channels = [{
     "id": channel.id,
@@ -44,7 +44,7 @@ def get_channel_by_id(id):
     if channel is None:
         return {"error": "Channel not found"}
 
-    users = [cm.user.to_dict() for cm in channel.users]
+    users = [ { **cm.user.to_dict(), "status": cm.status } for cm in channel.users]
     numMembers = len(users)
     return {
         'id': channel.id,
@@ -64,7 +64,8 @@ def get_members_for_channel(id):
     channel = Channel.query.get(id)
     users = [{
         "id":membership.user.id,
-        "username":membership.user.username
+        "username":membership.user.username,
+        "status": membership.status
               } for membership in channel.users]
     return users
 
@@ -139,6 +140,7 @@ def delete_member_from_channel(chan_id, mem_id):
   if cm.status == "owner" and cm.user_id != current_user.id:
      return {"error": "unauthorized"}
 
+  #THIS CASE NEEDS TO BE CLARIFIED, PICKING A NEW OWNER?
   #owner deletes himself and a new owner is randomly chosen
   if cm.status == "owner" and cm.user_id == current_user.id:
      db.session.delete(cm)

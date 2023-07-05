@@ -84,13 +84,18 @@ def get_team_channels(id):
   team = Team.query.get(id)
   if team is None:
     return {"error": "Team not found"}
+  user_key_values = []
   for channel in team.channels:
     channel_list.append(channel)
+    user_key_values.append([ {**cm.user.to_dict(), "status": cm.status } for cm in channel.users])
   channel_list = [{
     "id": channel.id,
     "name": channel.name,
     "private": channel.private
-    } for channel in channel_list]
+    } for channel in channel_list ]
+
+  for i in range(len(channel_list)):
+    channel_list[i]["users"] = user_key_values[i]
   return channel_list
 
 #GET ALL MEMBERS OF A TEAM
