@@ -5,6 +5,8 @@ const CREATE_TEAM = '/teams/CREATE_TEAM'
 const GET_EVERY_TEAM = '/teams/GET_EVERY_TEAM'
 const CLEAR_TEAM = '/teams/CLEAR_TEAM'
 const DELETE_TEAM = '/teams/DELETE_TEAM'
+const GET_ALL_MEMBERS = '/teams/GET_ALL_MEMBERS'
+
 // ACTIONS
 const actionGetTeams = (teams) => ({
     type: GET_TEAMS,
@@ -32,6 +34,11 @@ const actionClearTeam = () => ({
 const actionDeleteTeam = (teamId) => ({
     type: DELETE_TEAM,
     payload: teamId
+})
+
+const actionGetAllMembers = (members) => ({
+    type: GET_ALL_MEMBERS,
+    payload: members
 })
 
 // THUNKS
@@ -132,8 +139,23 @@ export const deleteTeam = (id) => async dispatch => {
     }
 }
 
+export const thunkGetAllMembers = (id) => async dispatch => {
+    const res = await fetch(`/api/teams/${id}/members`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionGetAllMembers(data))
+        return data
+    }
+}
+
 // REDUCER
-const initialState = { allTeams: {}, singleTeam: {}, everyTeam: {} }
+const initialState = { allTeams: {}, singleTeam: {}, everyTeam: {}, allMembers: {} }
 
 const teams = (state = initialState, action) => {
     switch(action.type) {
@@ -167,6 +189,11 @@ const teams = (state = initialState, action) => {
             const newEveryTeam = {...state.everyTeam}
             delete newEveryTeam[action.payload]
             return {everyTeam:newEveryTeam, allTeams:newAllTeams, singleTeam: {}}
+        }
+        case GET_ALL_MEMBERS: {
+            const newState = {...state, allMembers: {}}
+            action.payload.forEach(member => newState.allMembers[member.id] = member)
+            return newState
         }
         default:
             return state

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
 import DirectMessageItem from './directmessageitem'
 import DirectMessageLabel from './directmessagelabel'
@@ -6,9 +7,10 @@ import { useSelector } from 'react-redux'
 
 function AsideDirectMessages() {
     const [ expanded, setExpanded ] = useState(true)
+    const team = useSelector(state => state.teams.singleTeam)
     const directPartners = useSelector(state => state.messages.partners);
     const normalizedDirectPartners = Object.values(directPartners)
-
+    const history = useHistory()
 
     return (
         <div className='aside_dropdown--wrapper'>
@@ -33,7 +35,7 @@ function AsideDirectMessages() {
                     )
                 })}
                 <li>
-                    <div className='aside_dropdown--add_wrapper'>
+                    <div  onClick={() => history.push(`/team/${team.id}/new-message`)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>

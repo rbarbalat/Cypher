@@ -1,15 +1,20 @@
 @import url('../../index.css');
 
 .message_textarea--wrapper {
-    border: 1px solid var(--border);
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    width: calc(100% - 40px);
+    bottom: 0px;
+    left: 0px;
+    padding: 0 20px 20px 20px;
+    width: 100%;
+    background-color: white;
+}
+
+.message_textarea--container {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    width: 100%;
+    border: 1px solid var(--border);
 }
 
 

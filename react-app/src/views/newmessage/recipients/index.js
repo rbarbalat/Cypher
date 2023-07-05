@@ -1,54 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import DataLoading from '../../../components/loading/DataLoading'
 import './recipients.css'
 import RecipientItem from './recipientItem'
 import RecipientListItem from './recipientlistitem'
+import { useSelector, useDispatch } from 'react-redux'
+import { thunkGetAllMembers } from '../../../store/teams'
 
-const members = [
-    {
-        name: 'John Smith'
-    },
-    {
-        name: 'Alice Wonderland'
-    },
-    {
-        name: 'Philip Cartwright'
-    }
-]
 
-function Recipients() {
-    const [recipients, setRecipients ] = useState([])
+function Recipients({recipient, setRecipient}) {
+    const [ loading, setLoading] = useState(true)
+    const dispatch = useDispatch()
+    const team = useSelector(state => state.teams.singleTeam)
+    const data = useSelector(state => state.teams.allMembers);
+    const [recipients, setRecipients] = useState([])
     const [query, setQuery] = useState('')
-    let filteredMembers = members.filter(member => !recipients.some(recipient => recipient.name === member.name));
 
+    let filteredMembers = recipients
     if (query) {
-        filteredMembers = filteredMembers.filter(member => member.name.toLowerCase().includes(query.toLowerCase()));
+        filteredMembers = filteredMembers.filter(member => member.username.toLowerCase().includes(query.toLowerCase()));
     }
 
-    const handleSelectRecipients = (recipient) => {
-        const newState = [...recipients, recipient];
-        setRecipients(newState)
-    }
+    console.log(recipients, filteredMembers)
 
-    const handleRemoveRecipients = (selectedRecipient) => {
-        const newState = recipients.filter(recipient => recipient.name !== selectedRecipient.name);
-        setRecipients(newState)
-    }
+    useEffect(() => {
+        dispatch(thunkGetAllMembers(team.id))
+        .then((data) => setRecipients([...Object.values(data)]))
+        .then(() => setLoading(false))
+    }, [dispatch])
 
+    if (loading || !team || !data) return <DataLoading></DataLoading>
 
     return (
         <div className='recipients--wrapper'>
             <div className='recipients--list'>
             <span>To:</span>
-            {
-                recipients.map(recipient => (
-                    <RecipientItem
-                        handleRemoveRecipients={handleRemoveRecipients}
-                        data={recipient}
-                    />
-                ))
+            { recipient ?
+                <RecipientItem
+                    handleRemoveRecipients={() => setRecipient(undefined)}
+                    member={recipient}
+                /> :
+                null
             }
+
             {
-                recipients.length ?
+                recipient ?
                 null :
                 <input
                     className='recipients--input'
@@ -60,13 +55,13 @@ function Recipients() {
 
             </div>
             {
-                query.length && filteredMembers.length ?
+                !recipient && query.length && filteredMembers.length ?
                 <ul className='recipients--members_list'>
                 {
                     filteredMembers.map(member => (
                         <RecipientListItem
                             data={member}
-                            handleSelectRecipients={handleSelectRecipients}
+                            handleSelectRecipients={() => setRecipient(member)}
                         />
                     ))
                 }

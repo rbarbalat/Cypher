@@ -6,6 +6,7 @@ import { useState } from "react";
 function MessageTextArea({setValue, value, action}) {
   return (
     <div className='message_textarea--wrapper'>
+    <div className='message_textarea--container'>
         <textarea className='message_textarea--input' value={value} onChange={setValue}>
         </textarea>
         <div className='message_textarea--actions'>
@@ -13,6 +14,7 @@ function MessageTextArea({setValue, value, action}) {
                 <span>Send</span><FaPaperPlane/>
             </button>
         </div>
+    </div>
     </div>
   )
 }
