@@ -63,6 +63,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         recipient_id: parseInt(partnerId)
       })
     }
+    setIsVisible(false)
   }
 
   return (
@@ -118,11 +119,9 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
               {
               updating ?
               <>
-              {/* <span>Cancel</span> */}
               <FaTimes/>
               </> :
               <>
-              {/* <span>Edit</span> */}
               <FaEdit/>
               </>
               }
@@ -130,7 +129,6 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
             <span>|</span>
             <button className="message--action--btn message--delete" onClick={() => setIsVisible(true)}>
               <>
-              {/* <span>Delete</span> */}
               <FaTrashAlt/>
               </>
             </button>

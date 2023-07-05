@@ -11,6 +11,7 @@ import './App.css';
 import CreateTeam from "./views/createteam";
 import CreateTeamForm from "./views/createteamform";
 import { thunkGetEveryTeam } from "./store/teams";
+import NewMessage from "./views/newmessage";
 
 function App() {
   const dispatch = useDispatch();

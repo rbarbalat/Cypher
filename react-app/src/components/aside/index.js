@@ -27,7 +27,7 @@ function Aside() {
         <aside id='aside--wrapper'>
             <header className='aside--header'>
                 <AsideTeamName team={team}/>
-                <button onClick={() => history.push('/new-message')} className='aside--new_message'>
+                <button onClick={() => history.push(`/team/${team.id}/new-message`)} className='aside--new_message'>
                     <FaEdit className='aside--new_message_icon' />
                 </button>
             </header>

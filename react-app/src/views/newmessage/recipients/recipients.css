@@ -17,8 +17,10 @@
 }
 
 .recipients--input {
-    border: none;
+    border: 1px solid var(--border);
     font-family: 'Outfit';
+    padding: 5px;
+    border-radius: 5px;
     font-size: 18px;
 
 }
@@ -65,10 +67,13 @@
 .recipient_item--image span {
     font-weight: 600;
     color: white;
+    text-transform: capitalize;
+
 }
 
 .recipient_item--name {
     margin-right: 10px;
+    text-transform: capitalize;
 }
 .recipient_item--close_wrapper {
     cursor: pointer;
@@ -113,8 +118,10 @@
 .recipient_list_item--image span {
     font-weight: 600;
     color: white;
+    text-transform: capitalize;
 }
 
 .recipient_list_item--name {
     font-weight: 600;
+    text-transform: capitalize;
 }

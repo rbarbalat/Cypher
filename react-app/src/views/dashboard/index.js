@@ -21,7 +21,8 @@ function Dashboard() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const teamsNotJoined = normalizedEveryTeam.filter(team => !normalizedEveryTeam.some(tm => tm.id === team.id));
+    const teamsNotJoined = normalizedEveryTeam.filter(team => !normalizedTeams.some(tm => tm.id === team.id));
+
     let filteredTeams = teamsNotJoined;
     if (teamQuery !== '') {
         filteredTeams = filteredTeams.filter(team => team.name.toLowerCase().includes(teamQuery.toLowerCase()))

@@ -63,6 +63,18 @@ export const thunkCreateDirectMessage = (id, message) => async dispatch => {
             return data.errors
         }
         dispatch(actionCreateDirectMessage(data))
+        // return data
+    }
+    const res2 = await fetch("/api/messages/", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res2.ok) {
+        const data = await res2.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionGetPartners(data))
     }
 }
 
