@@ -30,7 +30,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         message: update,
         channel_id: parseInt(channelId)
       });
-      dispatch(thunkGetLiveChats(parseInt(partnerId)));
+      dispatch(thunkGetLiveChats(parseInt(channelId)));
     }
     else
     {
@@ -54,6 +54,8 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         id: parseInt(message.id),
         channel_id: parseInt(channelId)
       })
+      //Consistency issues without thunk
+      dispatch(thunkGetLiveChats(parseInt(channelId)));
     }
     else
     {
@@ -62,6 +64,8 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         sender_id: parseInt(user.id),
         recipient_id: parseInt(partnerId)
       })
+      //Consistency issues without thunk
+      dispatch(thunkGetDirectMessages(parseInt(partnerId)));
     }
     setIsVisible(false)
   }

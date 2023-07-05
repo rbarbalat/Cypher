@@ -53,7 +53,7 @@ def on_join(data):
 
 @socketio.on("chat", namespace="/direct")
 def handle_direct_messages(data):
-    if data != "User connected!":
+    if len(data["message"]) <= 2000 and len(data["message"]) > 0:
         dm = DirectMessage(
             sender_id = data["sender_id"],
             recipient_id = data["recipient_id"],
@@ -63,22 +63,23 @@ def handle_direct_messages(data):
         db.session.add(dm)
         db.session.commit()
     # send_direct_messages(data["recipient_id"])
-    emit("chat", data, room=[data["sender_id"], data["recipient_id"]])
+        emit("chat", data, room=[data["sender_id"], data["recipient_id"]])
     # emit(to = user with a session id)
 
 #Update Chat
 @socketio.on("update_chat", namespace="/direct")
 def update_direct_message(data):
-    id = data["id"]
-    message = data["message"]
-    print("printing message inside backend---", message)
-    uc = DirectMessage.query.get(id)
-    uc.message = message
+    if len(data["message"]) <= 2000 and len(data["message"]) > 0:
+        id = data["id"]
+        message = data["message"]
+        print("printing message inside backend---", message)
+        uc = DirectMessage.query.get(id)
+        uc.message = message
     #probably don't need to add this to the database
     # db.session.add(uc)
-    db.session.commit()
-    print(uc.message)
-    emit("update_chat", data, room=[data["sender_id"], data["recipient_id"]])
+        db.session.commit()
+        print(uc.message)
+        emit("update_chat", data, room=[data["sender_id"], data["recipient_id"]])
 
 #Delete Chat
 @socketio.on("delete_chat", namespace="/direct")
@@ -91,7 +92,7 @@ def delete_direct_message(data):
 
 @socketio.on("live_chat", namespace="/channel")
 def handle_live_chat(data):
-    if data != "User connected!":
+    if len(data["message"]) <= 2000 and len(data["message"]) > 0:
         print("95.5 in socket.python")
         lc = LiveChat(
             sender_id = data["sender_id"],
@@ -102,19 +103,22 @@ def handle_live_chat(data):
         db.session.add(lc)
         db.session.commit()
     # send_direct_messages(data["recipient_id"])
-    emit("live_chat", data, room=f'Channel {data["channel_id"]}')
+        emit("live_chat", data, room=f'Channel {data["channel_id"]}')
 
 #Update Live chat
 @socketio.on("update_live_chat", namespace = "/channel")
 def update_live_chat(data):
-    id = data["id"]
-    message = data["message"]
-    print("printing message inside backend---", message)
-    lc = LiveChat.query.get(id)
-    lc.message = message
-    db.session.commit()
-    print(lc.message)
-    emit("update_live_chat", data, room=f'Channel {data["channel_id"]}')
+    print(len(data["message"]), 'LOOK HERE!!!!!!!!!')
+    if len(data["message"]) <= 2000 and len(data["message"]) > 0:
+
+        id = data["id"]
+        message = data["message"]
+        print("printing message inside backend---", message)
+        lc = LiveChat.query.get(id)
+        lc.message = message
+        db.session.commit()
+        print(lc.message)
+        emit("update_live_chat", data, room=f'Channel {data["channel_id"]}')
 
 #Delete Live chat
 @socketio.on("delete_live_chat", namespace = "/channel")
