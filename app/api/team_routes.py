@@ -171,7 +171,10 @@ def delete_team(id):
     db.session.commit()
     return {"message": "team deleted"}
   else:
-    return {"error": "team not deleted for now b/c of problem deleting image file"}
+    #
+    db.session.delete(team)
+    db.session.commit()
+    return {"message": "team deleted but error on image deletion"}
 
   # for team_membership in current_user.teams:
   #   if team_membership.team_id == team.id:
