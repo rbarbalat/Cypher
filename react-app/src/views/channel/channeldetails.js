@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { FaHashtag, FaLock, FaSearch, FaTimes, FaUserPlus } from 'react-icons/fa'
 import RecipientListItem from '../newmessage/recipients/recipientlistitem';
+import { deleteChannel } from '../../store/channels';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 const members = [
     {
         name: 'John Smith'
@@ -18,9 +21,14 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const { data, setIsVisible } = props;
     const [ tab, setTab ] = useState('about');
     const [ memberQuery, setMemberQuery ] = useState('')
+    const dispatch = useDispatch()
     let filteredMembers = members;
     if (memberQuery) {
         filteredMembers = filteredMembers.filter(member => member.name.toLowerCase().includes(memberQuery.toLowerCase()));
+    }
+    const {channelId} = useParams()
+    const handleDelete = () => {
+        dispatch(deleteChannel(channelId))
     }
 
     return (
@@ -66,6 +74,9 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                         </div>
                         <div className='channel_details--about_item'>
                             <p className='leave'>Leave Channel</p>
+                        </div>
+                        <div onClick={handleDelete}>
+                            <p>Delete Channel</p>
                         </div>
                     </div>
                     <span className='channel_details--channel_id'>Channel ID: {`channel Id`}</span>

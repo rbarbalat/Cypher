@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
-from app.models import DirectMessage, db, LiveChat
+from app.models import DirectMessage, db, LiveChat, LiveReplies
 from datetime import datetime
 import os
 from app.api.direct_mes_routes import send_direct_messages, edit_direct_message
@@ -122,5 +122,38 @@ def delete_live_chat(data):
     id = data["id"]
     deleted_chat = LiveChat.query.get(id)
     db.session.delete(deleted_chat)
+    db.session.commit()
+    emit("delete_live_chat", data, room=f'Channel {data["channel_id"]}')
+
+@socketio.on("live_reply", namespace="/channel")
+def handle_live_chat(data):
+
+    lc = LiveReplies(
+        sender_id = data["sender_id"],
+        live_chat_id = data["live_chat_id"],
+        message = data["message"],
+    )
+    db.session.add(lc)
+    db.session.commit()
+    # send_direct_messages(data["recipient_id"])
+    emit("live_chat", data, room=f'Channel {data["channel_id"]}')
+
+#Update Live chat
+@socketio.on("update_live_reply", namespace = "/channel")
+def update_live_chat(data):
+    id = data["id"]
+    message = data["message"]
+    print("printing message inside backend---", message)
+    lr = LiveReplies.query.get(id)
+    lr.message = message
+    db.session.commit()
+    emit("update_live_chat", data, room=f'Channel {data["channel_id"]}')
+
+#Delete Live chat
+@socketio.on("delete_live_reply", namespace = "/channel")
+def delete_live_chat(data):
+    id = data["id"]
+    deleted_reply = LiveReplies.query.get(id)
+    db.session.delete(deleted_reply)
     db.session.commit()
     emit("delete_live_chat", data, room=f'Channel {data["channel_id"]}')
