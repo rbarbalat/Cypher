@@ -47,7 +47,7 @@ function Channel(){
         });
     }
 
-    // console.log(channel)
+    console.log("channel line 50      ", channel)
 
     useEffect(() => {
         dispatch(thunkGetChannel(channelId))
@@ -83,7 +83,8 @@ function Channel(){
         })
     }, [channelId, dispatch]);
 
-    if (loading || !channel) return <DataLoading></DataLoading>
+    // if (loading || !channel) return <DataLoading></DataLoading>
+    if (loading || !channel.id) return <DataLoading></DataLoading>
     return (
         <main className='views--wrapper'>
         <header className='views--header--wrapper'>
@@ -92,10 +93,10 @@ function Channel(){
                     setIsVisible={setIsVisible}
                     data={channel}
                 />
-                {/* <ChannelMembers
+                <ChannelMembers
                     setIsVisible={setIsVisible}
-                    data={channel}
-                /> */}
+                    members={channel.users}
+                />
             </div>
         </header>
         <LiveChatFeed setIsVisible={setIsVisible} ref={messageRef} messages={messages} channel={channel} socket={socket}></LiveChatFeed>

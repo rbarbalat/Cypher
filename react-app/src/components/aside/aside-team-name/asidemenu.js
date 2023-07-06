@@ -22,6 +22,16 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
         history.push('/dashboard')
     }
 
+    const deleteTeamMembership = async () => {
+        //fetch w/o thunk b/c redirected to dashboard where other get all teams thunk called anyway
+        //and then if you go to diff pages corresponding thunks will be called
+        await fetch(`/api/teams/${teamId}/member/${userId}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+        history.push("/dashboard")
+    }
+
     const isOwner = (status === "owner")
     return (
         <div ref={ref} className='aside_team--details'>
@@ -34,10 +44,20 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
             <div onClick={() => handleTeamSignOut()} className='aside_team--links_section'>
                 <p>Sign out of {team.name}</p>
             </div>
-            {isOwner &&
+            {/* {isOwner &&
             <div onClick={() => handleTeamDelete()} className='aside_team--links_section'>
                 <p>Delete Team</p>
-            </div>}
+            </div>} */}
+            {
+            isOwner ?
+            <div onClick={() => handleTeamDelete()} className='aside_team--links_section'>
+                <p>Delete Team</p>
+            </div>
+            :
+            <div className='aside_team--links_section' onClick={deleteTeamMembership}>
+                <p>Leave the Team</p>
+            </div>
+            }
         </div>
     )
 })

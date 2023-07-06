@@ -286,42 +286,38 @@ def delete_member_from_team(team_id, mem_id):
 
   #owner deletes himself and a new owner is randomly chosen
   if tm.status == "owner" and tm.user_id == current_user.id:
+     roll_delete_team_to_channels(team_id, mem_id)
      db.session.delete(tm)
      db.session.commit()
      return {"message": "successfully deleted"}
 
     #regular user deletes himself
   if tm.user.id == current_user.id:
+     roll_delete_team_to_channels(team_id, mem_id)
      db.session.delete(tm)
      db.session.commit()
      return {"message": "successfully deleted"}
   #an owner or admin deletes a user
   elif current_user.id in [ team_mem.user_id for team_mem in
                            TeamMembership.query.filter(TeamMembership.status != "member").filter(TeamMembership.team_id == team_id).all() ]:
+    roll_delete_team_to_channels(team_id, mem_id)
     db.session.delete(tm)
     db.session.commit()
     return {"message": "successfully deleted"}
 
   return {"error": "Unauthorized"}
 
-# # GET MEMBERSHIP OF USER
-# @team_routes.route('/<int:id>/member')
-# def get_member_user(id):
-
-
-#team_id, current_user
-"""
-we have the team getting it from Team.query
-we have the user
-
-we have user.channels = x
-we have team.channels = y
-
-common_channels = x.intersection(y)
+def roll_delete_team_to_channels(team_id, user_id):
+  team = Team.query.get(team_id)
+  channels = team.channels
+  for channel in channels:
+    cm = ChannelMembership.query.filter(ChannelMembership.user_id == user_id).filter(ChannelMembership.channel_id == channel.id).first()
+    if cm:
+      db.session.delete(cm)
+  db.session.commit()
 
 
 
-"""
 
 #this is an alternative to  get_team_channel_user specifically
 #used by the delete member from channel route

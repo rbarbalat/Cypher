@@ -6,18 +6,8 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from "react-redux"
 import {useHistory} from "react-router-dom"
-const members = [
-    {
-        name: 'John Smith'
-    },
-    {
-        name: 'Alice Wonderland'
-    },
-    {
-        name: 'Philip Cartwright'
-    },
-
-]
+import ChannelMemberItem from './channelmemberitem';
+import { thunkGetUserThread } from '../../store/thread';
 
 const ChannelDetails = React.forwardRef((props, ref) => {
     const { channel, team, setIsVisible } = props;
@@ -25,9 +15,10 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const [ memberQuery, setMemberQuery ] = useState('')
     const dispatch = useDispatch()
     const history = useHistory()
-    let filteredMembers = members;
+    const users = channel.users
+    let filteredMembers = users;
     if (memberQuery) {
-        filteredMembers = filteredMembers.filter(member => member.name.toLowerCase().includes(memberQuery.toLowerCase()));
+        filteredMembers = filteredMembers.filter(member => member.username.toLowerCase().includes(memberQuery.toLowerCase()));
     }
     const {channelId} = useParams()
     const handleDelete = () => {
@@ -36,8 +27,8 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const user = useSelector(state => state.session.user)
     const deleteMember = () => {
         console.log("inside deleteMember")
-        dispatch(thunkDeleteUserFromChannel(channelId, user.id))
         history.push(`/team/${team.id}`)
+        dispatch(thunkDeleteUserFromChannel(channelId, user.id))
     }
     const owner = channel.users.find(user => user.status === "owner")
     const isOwner = owner.id === user.id;
@@ -49,6 +40,12 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const isAuthorized = isOwner || isAuthorizedByTeam;
     console.log("auth from team", isAuthorizedByTeam)
     console.log(isAuthorized, "isAuthorized")
+
+    const handleUserThread = (id) => {
+        dispatch(thunkGetUserThread(id))
+        setIsVisible(false)
+    }
+
 
     return (
         <div ref={ref} className='channel_details--wrapper'>
@@ -91,13 +88,18 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                             <p>Created by</p>
                             <p>{`Channel organizer`}</p>
                         </div>
+                        {
+                            !isOwner ?
                         <div className='channel_details--about_item' onClick={deleteMember}>
                             <p className='leave'>Leave Channel</p>
                         </div>
+                            :
+                            null
+                        }
                         {
                             isAuthorized ?
-                        <div onClick={handleDelete}>
-                            <p>Delete Channel</p>
+                        <div className='channel_details--about_item' onClick={handleDelete}>
+                            <p className="leave">Delete Channel</p>
                         </div>
                             :
                             null
@@ -123,10 +125,15 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                         </li>
                         { filteredMembers.length ?
                             filteredMembers.map(member => (
-                                <RecipientListItem
-                                    data={member}
-                                    handleSelectRecipients={() => console.log(member)}
+                                <ChannelMemberItem
+                                    member={member}
+                                    handleSelectRecipients={() => handleUserThread(member.id)}
+                                    isOwner={isOwner}
+                                    isAuthorizedByTeam={isAuthorizedByTeam}
+                                    channel = {channel}
+                                    team = {team}
                                 />
+
                             ))
                         :
                         <li className='channel_details--no_members'>

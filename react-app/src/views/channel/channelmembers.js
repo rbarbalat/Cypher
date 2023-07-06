@@ -1,14 +1,14 @@
 import React from 'react'
 
-function ChannelMembers({data, setIsVisible}) {
+function ChannelMembers({members, setIsVisible}) {
   return (
     <div onClick={() => setIsVisible(true)} className='channel_members--wrapper'>
         <div className='channel_members--span'>
-            {data.slice(0,3).map(member => (
+            {members?.slice(0,3).map(member => (
                 <div className='channel_members--member'></div>
             ))}
         </div>
-        <span className='channel_members--count'>{data.length}</span>
+        <span className='channel_members--count'>{members.length}</span>
     </div>
   )
 }
