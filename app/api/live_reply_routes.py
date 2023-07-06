@@ -5,6 +5,7 @@ from app.forms.live_reply_form import LiveReplyForm
 
 live_reply_routes = Blueprint('live_replies', __name__)
 
+#Delete replies
 @live_reply_routes.route('/<int:id>/delete')
 def delete_reply(id):
   if not current_user.is_authenticated:

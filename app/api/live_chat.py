@@ -37,6 +37,8 @@ def edit_chat(id):
   if not current_user.is_authenticated:
     return {"error": "go get logged in"}
   chat = LiveChat.query.get(id)
+  if not chat:
+    return {"error": "chat couldn't be found"}
   if chat.sender_id != current_user.id:
     return {"error" : "not authorized"}
   form = LiveChatForm()
