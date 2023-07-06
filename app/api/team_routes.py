@@ -344,3 +344,4 @@ def get_team_channel_user_for_delete(id, user_id):
   for i in range(len(channel_list)):
     channel_list[i]["users"] = user_key_values[i]
   return channel_list
+

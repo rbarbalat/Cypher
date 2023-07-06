@@ -5,10 +5,16 @@ const GET_CHANNEL = '/channel/GET_CHANNEL'
 const GET_LIVE_CHATS = '/channel/GET_LIVE_CHATS'
 const DELETE_CHANNEL = "/channel/DELETE_CHANNEL"
 const DELETE_MEMBER = "/channel/DELETE_MEMBER"
+const GET_CHANNELS_USER = '/channels/GET_CHANNELS_USER'
+
 
 // ACTIONS
 const actionGetChannels = (channels) => ({
     type: GET_CHANNELS,
+    payload: channels
+})
+const actionGetChannelsUser = (channels) => ({
+    type: GET_CHANNELS_USER,
     payload: channels
 })
 
@@ -65,7 +71,7 @@ export const thunkGetChannelsByUser = (id) => async dispatch => {
         if (data.errors) {
             return data.errors
         }
-        dispatch(actionGetChannels(data))
+        dispatch(actionGetChannelsUser(data))
     }
 }
 
@@ -144,14 +150,32 @@ export const thunkGetLiveChats = (id) => async dispatch => {
     }
 }
 
-
+export const thunkJoinChannel = (id) => async dispatch => {
+    const res = await fetch(`/api/channels/${id}/members`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        // dispatch(actionJoinChannel(data))
+        return data
+    }
+}
 // REDUCER
 
-const initialState = { allChannels: {}, singleChannel: {}, liveChats: {} }
+const initialState = { allChannels: {}, singleChannel: {}, liveChats: {}, everyChannel: {}}
 
 const channels = (state = initialState, action) => {
     switch(action.type) {
         case GET_CHANNELS: {
+            const newState = {...state, everyChannel: {} }
+            action.payload.forEach(channel => newState.everyChannel[channel.id] = channel)
+            return newState
+        }
+        case GET_CHANNELS_USER: {
             const newState = {...state, allChannels: {} }
             action.payload.forEach(channel => newState.allChannels[channel.id] = channel)
             return newState
