@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef } from 'react'
 import Message from '../message'
 import TimeStamp from '../message/timestamp'
 import { format, isSameDay } from 'date-fns';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import './livechatfeed.css'
+import { FaArrowDown } from 'react-icons/fa';
+import { thunkGetUserThread } from '../../store/thread';
 
 
-function LiveChatFeed({messages, channelId, socket}) {
+const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
+  const {messages, channel, socket, setIsVisible} = props
     const [ loading, setLoading ] = useState(true)
     // const start = new Date(messages[0].created_at);
     // const end = new Date(messages[messages.length - 1].created_at)
@@ -20,7 +23,7 @@ function LiveChatFeed({messages, channelId, socket}) {
         ? new Date(messages[messages.length - 1].created_at)
         : new Date();
     const dates = [];
-
+    const dispatch = useDispatch()
     const { pathname } = useLocation()
     const recipientId = pathname.split('/')[4]
     // const partner = useSelector(state => state.messages.partners[recipientId].partner)
@@ -33,20 +36,34 @@ function LiveChatFeed({messages, channelId, socket}) {
         return isSameDay(new Date(message.created_at), new Date(specificDate))
         })
     }
+
+    const handleBottomScroll = () => {
+      ref.current.scroll({
+      top: ref.current.scrollHeight,
+      behavior: 'smooth'
+    })}
+
+    const handleUserThread = (id) => {
+      dispatch(thunkGetUserThread(id))
+    }
+
     for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
       dates.push(format(date, "P"));
     }
     return (
-        <section id='message_feed--wrapper'>
+        <section ref={ref} id='message_feed--wrapper'>
         <div className='message_feed--introduction'>
             <div className='message_feed--introduction--recipient'>
                 <div className='message_feed--introduction--image'></div>
                 <div className='message_feed--introduction--information'>
-                    <p className='message_feed--user'>{'Channel Name'}</p>
-                    <p>{`Channel Owner`} created this {`private or public`} channel on {`formatted created date`}. This is the very beginning of the {`Channel Name`} channel.</p>
+                    <p className='message_feed--user'>{channel.name}</p>
                 </div>
             </div>
-            <p className='message_feed--introduction--greeting' >This conversation is just between <span className='message_feed--user'>partner used to behere</span> and you. Check out their profile to learn more about them. <span>View Profile</span></p>
+            <p className='message_feed--introduction--greeting' ><span onClick={() => handleUserThread(channel.users[0].id)} className='formal basic--link'>{channel.users[0].username}</span> created this {channel.private ? 'private' : 'public'} channel on {`formatted created date`}. This is the very beginning of the <span onClick={() => setIsVisible(true)} className='basic--link'>{channel.name}</span> channel.</p>
+            <button className="view--bottom" onClick={handleBottomScroll}>
+              <span>Most Recent</span>
+              <FaArrowDown/>
+            </button>
         </div>
         {
           dates.map(date => {
@@ -58,7 +75,7 @@ function LiveChatFeed({messages, channelId, socket}) {
                   {
                     messages.filter(message => isSameDay(new Date(message.created_at), new Date(date))).map(message => {
                       return (
-                        <Message type='channel' message={message} isLiveChat={true} channelId={channelId} socket={socket}/>
+                        <Message type='channel' message={message} isLiveChat={true} channelId={channel.id} socket={socket}/>
                       )
                     })
                   }
@@ -71,6 +88,6 @@ function LiveChatFeed({messages, channelId, socket}) {
         }
     </section>
     )
-}
+})
 
 export default LiveChatFeed

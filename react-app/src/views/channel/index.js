@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import useOutsideClick from '../../hooks/useOutsideClick';
+import DataLoading from '../../components/loading/DataLoading'
 import { useParams } from 'react-router-dom';
 import MessageTextArea from '../../components/MessageTextBox';
 import ChannelTeam from './channelteam';
@@ -9,98 +10,25 @@ import Modal from '../../components/modal';
 import '../views.css';
 import './channel.css';
 import { io } from "socket.io-client"
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import { thunkGetLiveChats } from '../../store/channels';
+import { thunkGetChannel } from '../../store/channels';
 import LiveChatFeed from '../../components/livechatfeed';
-import { useDispatch } from 'react-redux';
-// const messages = [
-//     {
-//         sender: 'Sender 1',
-//         date: '01/01/2023',
-//         time: '1:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-//         replies: [1,2,3]
-//     },
-//     {
-//         sender: 'Sender 2',
-//         date: '01/01/2023',
-//         time: '3:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-//         replies: [1,2,3]
-//     },
-//     {
-//         sender: 'Sender 3',
-//         date: '01/02/2023',
-//         time: '12:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-//         replies: [1,2,3]
-//     },
-//     {
-//         sender: 'Sender 4',
-//         date: '01/03/2023',
-//         time: '11:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-//         replies: [1,2,3]
-//     },
-//     {
-//         sender: 'Sender 5',
-//         date: '01/03/2023',
-//         time: '15:00',
-//         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-//         replies: [1,2,3]
-//     },
-//   ]
 
-const fakeChannels = [
-    {
-        id: 1,
-        type: 'channel',
-        private: true,
-        name: 'Something or Other Name'
-    },
-    {
-        id: 2,
-        type: 'channel',
-        private: false,
-        name: 'Project groups - Final'
-    },
-    {
-        id: 3,
-        type: 'channel',
-        private: false,
-        name: 'general'
-    },
-    {
-        id: 4,
-        type: 'channel',
-        private: true,
-        name: 'Channel 4'
-    },
-    {
-        id: 5,
-        type: 'channel',
-        private: false,
-        name: 'help-requests'
-    },
-]
-
-const fakeMembers = [
-    1,2,3,4,5
-]
 
 let socket;
-function Channel({setThread}){
+function Channel(){
+    const [ loading, setLoading ] = useState(false)
     const { channelId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
-    const channel = fakeChannels.find(channel => channel.id == channelId)
-
+    const channel = useSelector(state => state.channels.singleChannel)
+    const messageRef = useRef(null)
     const liveChats = useSelector(state => state.channels.liveChats)
     const normalizedLiveChats = Object.values(liveChats)
-
+    const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
 
     const [messages, setMessages] = useState([...normalizedLiveChats])
-    const dispatch = useDispatch()
 
     const [chatInput, setChatInput] = useState("")
 
@@ -112,8 +40,17 @@ function Channel({setThread}){
             "sender_id": parseInt(user.id),
             "channel_id": parseInt(channelId),
         })
-        console.log("hello world from handlecontent")
+        messageRef.current.scroll({
+            top: messageRef.current.scrollHeight,
+            behavior: 'smooth'
+        });
     }
+
+    console.log(channel)
+
+    useEffect(() => {
+        dispatch(thunkGetChannel(channelId))
+    }, [dispatch, channelId])
 
     useEffect(() => {
         console.log("yoohoooooo")
@@ -144,7 +81,8 @@ function Channel({setThread}){
           socket.disconnect()
         })
     }, [channelId, dispatch]);
-    console.log("line 145 --------    ", messages)
+
+    if (loading || !channel) return <DataLoading></DataLoading>
     return (
         <main className='views--wrapper'>
         <header className='views--header--wrapper'>
@@ -153,14 +91,13 @@ function Channel({setThread}){
                     setIsVisible={setIsVisible}
                     data={channel}
                 />
-                <ChannelMembers
+                {/* <ChannelMembers
                     setIsVisible={setIsVisible}
-                    data={fakeMembers}
-                />
+                    data={channel}
+                /> */}
             </div>
         </header>
-        {` Channel Message Feed`}
-        <LiveChatFeed messages={messages} channelId={channelId} socket={socket}></LiveChatFeed>
+        <LiveChatFeed setIsVisible={setIsVisible} ref={messageRef} messages={messages} channel={channel} socket={socket}></LiveChatFeed>
         <MessageTextArea
             value={chatInput}
             setValue={(e) => setChatInput(e.target.value)}

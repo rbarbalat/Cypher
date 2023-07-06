@@ -36,6 +36,10 @@
     text-decoration: underline;
   }
 
+  .formal {
+    text-transform: capitalize;
+  }
+
   /* width */
   ::-webkit-scrollbar {
     width: 5px;

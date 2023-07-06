@@ -48,6 +48,20 @@ export const thunkGetChannels = (id) => async dispatch => {
     }
 }
 
+export const thunkGetChannel = (id) => async dispatch => {
+    const res = await fetch(`/api/channels/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionGetChannel(data))
+    }
+}
+
 export const thunkCreateChannel = (id, channel) => async dispatch => {
     const res = await fetch(`/api/teams/${id}/channels`, {
         method: "POST",
@@ -103,7 +117,6 @@ const channels = (state = initialState, action) => {
     switch(action.type) {
         case GET_CHANNELS: {
             const newState = {...state, allChannels: {} }
-            console.log("action.payload inside teh reducer    ", action.payload)
             action.payload.forEach(channel => newState.allChannels[channel.id] = channel)
             return newState
         }
