@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     dispatch(authenticate())
     .then(() => setIsLoaded(true))
-    .then(() => dispatch(thunkGetEveryTeam()));
+    .then(() => dispatch(thunkGetEveryTeam())).catch(error => error);
   }, [dispatch]);
   const sessionUser = useSelector((state) => state.session.user);
 
