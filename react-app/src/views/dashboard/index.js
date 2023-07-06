@@ -84,7 +84,7 @@ function Dashboard() {
                             {filteredTeams.length > 0 ? filteredTeams.map(team => (
                                 <div key={team.id} onClick={() => handleJoinTeam(team.id)} className='dashboard--team'>
                                     <div className='dashboard--team--info'>
-                                        <div className='dashboard--team--info_image'></div>
+                                        <div className='dashboard--team--info_image' style={{backgroundImage: `url(${team.image})`}}></div>
                                         <div>
                                             <p>{team.name}</p>
                                             <div className='dashboard_team_members--wrapper'>
@@ -122,7 +122,7 @@ function Dashboard() {
                         {normalizedTeams.map(team => (
                             <div key={team.id}  onClick={() => handleGoToTeam(team.id)} className='dashboard--team'>
                                 <div className='dashboard--team--info'>
-                                    <div className='dashboard--team--info_image'></div>
+                                    <div className='dashboard--team--info_image' style={{backgroundImage: `url(${team.image})`}}></div>
                                     <div>
                                         <p>{team.name}</p>
                                         <div className='dashboard_team_members--wrapper'>

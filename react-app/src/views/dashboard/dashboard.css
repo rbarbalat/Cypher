@@ -132,6 +132,9 @@
     aspect-ratio: 1;
     background-color: var(--border);
     border-radius: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .dashboard--team--arrow {

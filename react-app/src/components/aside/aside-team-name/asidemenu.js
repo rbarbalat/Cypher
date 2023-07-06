@@ -26,7 +26,7 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
     return (
         <div ref={ref} className='aside_team--details'>
             <div className='aside_team--header'>
-                <div className='aside_team--image'></div>
+                <div className='aside_team--image' style={{backgroundImage: `url(${team.image})`}}></div>
                 <div className='aside_team--information'>
                     <p>{team.name}</p>
                 </div>
