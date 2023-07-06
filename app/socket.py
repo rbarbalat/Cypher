@@ -125,8 +125,9 @@ def delete_live_chat(data):
     db.session.commit()
     emit("delete_live_chat", data, room=f'Channel {data["channel_id"]}')
 
+#Send live reply
 @socketio.on("live_reply", namespace="/channel")
-def handle_live_chat(data):
+def handle_live_reply(data):
 
     lc = LiveReplies(
         sender_id = data["sender_id"],
@@ -138,9 +139,9 @@ def handle_live_chat(data):
     # send_direct_messages(data["recipient_id"])
     emit("live_chat", data, room=f'Channel {data["channel_id"]}')
 
-#Update Live chat
+#Update Live reply
 @socketio.on("update_live_reply", namespace = "/channel")
-def update_live_chat(data):
+def update_live_reply(data):
     id = data["id"]
     message = data["message"]
     print("printing message inside backend---", message)
@@ -149,9 +150,9 @@ def update_live_chat(data):
     db.session.commit()
     emit("update_live_chat", data, room=f'Channel {data["channel_id"]}')
 
-#Delete Live chat
+#Delete Live reply
 @socketio.on("delete_live_reply", namespace = "/channel")
-def delete_live_chat(data):
+def delete_live_reply(data):
     id = data["id"]
     deleted_reply = LiveReplies.query.get(id)
     db.session.delete(deleted_reply)
