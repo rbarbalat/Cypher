@@ -5,7 +5,7 @@ import AsideDirectMessages from './aside-direct-messages';
 import AsideTeamName from './aside-team-name';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetChannels } from '../../store/channels';
+import { thunkGetChannels, thunkGetChannelsByUser } from '../../store/channels';
 import { thunkGetPartners } from '../../store/messages';
 import './aside.css';
 
@@ -16,7 +16,7 @@ function Aside() {
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(thunkGetChannels(team.id))
+        dispatch(thunkGetChannelsByUser(team.id))
         .then(() => dispatch(thunkGetPartners()))
         .then(() => setLoading(false))
     })

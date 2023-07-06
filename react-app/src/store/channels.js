@@ -48,6 +48,21 @@ export const thunkGetChannels = (id) => async dispatch => {
     }
 }
 
+// get channels by user
+export const thunkGetChannelsByUser = (id) => async dispatch => {
+    const res = await fetch(`/api/teams/${id}/channels/user`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionGetChannels(data))
+    }
+}
+
 export const thunkGetChannel = (id) => async dispatch => {
     const res = await fetch(`/api/channels/${id}`, {
         method: "GET",

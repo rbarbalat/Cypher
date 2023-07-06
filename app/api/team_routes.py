@@ -11,8 +11,9 @@ team_routes = Blueprint("teams", __name__)
 #GET ALL TEAMS
 @team_routes.route("/")
 def get_teams():
-  if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+  #commented out b/c sometimes get Teams is called when no user is logged in
+  # if not current_user.is_authenticated:
+  #   return {"error" : "go get logged in"}
   teams = Team.query.all()
   if len(teams) == 0:
     return []
@@ -98,6 +99,7 @@ def get_team_channels(id):
     channel_list[i]["users"] = user_key_values[i]
   return channel_list
 
+#get channels of currente user by Team id
 @team_routes.route("/<int:id>/channels/user")
 def get_team_channel_user(id):
   if not current_user.is_authenticated:
