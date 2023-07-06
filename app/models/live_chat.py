@@ -22,5 +22,6 @@ class LiveChat(db.Model):
     return {
       "id": self.id,
       "message": self.message,
-      "created_at": self.created_at
+      "created_at": self.created_at,
+      "sender_id": self.sender_id
     }

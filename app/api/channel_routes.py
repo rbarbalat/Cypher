@@ -171,7 +171,7 @@ def get_all_chats_by_channel(id):
     return {"error": "channel not found"}
   chats = LiveChat.query.filter(LiveChat.channel_id == id).order_by(LiveChat.created_at).all()
   # return {"chats":[chat.to_dict_no_assoc() for chat in chats]}
-  return [chat.to_dict_no_assoc() for chat in chats]
+  return [ { **chat.to_dict_no_assoc(), "username": chat.sender_to_channel.username } for chat in chats]
 
 #POST chat
 @channel_routes.route('/<int:id>/chats', methods=['POST'])
