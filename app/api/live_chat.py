@@ -82,8 +82,10 @@ def send_live_reply(id):
     return {"error": "go get logged in"}
   chat = LiveChat.query.get(id)
   channel = chat.channel
+  team = channel.team
+  teamOwnerAdmin = current_user.id in [ tm.user_id for tm in team.users if tm.status in ["owner", "admin"] ]
   authorized = current_user.id in [ cm.user_id for cm in channel.users ]
-  if not authorized:
+  if not authorized and not teamOwnerAdmin:
     return {"error": "Not authorized to reply in this channel"}
   form = LiveReplyForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
