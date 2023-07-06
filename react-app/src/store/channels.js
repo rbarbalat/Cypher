@@ -4,6 +4,7 @@ const CREATE_CHANNEL = '/channels/CREATE_CHANNEL'
 const GET_CHANNEL = '/channel/GET_CHANNEL'
 const GET_LIVE_CHATS = '/channel/GET_LIVE_CHATS'
 const DELETE_CHANNEL = "/channel/DELETE_CHANNEL"
+const DELETE_MEMBER = "/channel/DELETE_MEMBER"
 
 // ACTIONS
 const actionGetChannels = (channels) => ({
@@ -29,6 +30,11 @@ const actionDeleteChannel = (channelId) => ({
 const actionGetLiveChats = (live_chats) => ({
     type: GET_LIVE_CHATS,
     payload: live_chats
+})
+
+const actionDeleteChannelMember = (channels) => ({
+    type: DELETE_MEMBER,
+    payload: channels
 })
 
 
@@ -89,6 +95,21 @@ export const thunkCreateChannel = (id, channel) => async dispatch => {
             return data.errors
         }
         dispatch(actionCreateChannel(data))
+        return data
+    }
+}
+
+export const thunkDeleteUserFromChannel = (chan_id, user_id) => async dispatch => {
+    const res = await fetch(`/api/channels/${chan_id}/member/${user_id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    if (res.ok) {
+        const data = await res.json()
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(actionDeleteChannelMember(data))
         return data
     }
 }
@@ -155,6 +176,11 @@ const channels = (state = initialState, action) => {
             const newAllChannels = {...state.allChannels}
             delete newAllChannels[action.payload];
             return {...state, allChannels: newAllChannels, singleChannel: {}}
+        }
+        case DELETE_MEMBER: {
+            const newState = {...state, singleChannel: {}, allChannels: {} }
+            action.payload.forEach(channel => newState.allChannels[channel.id] = channel)
+            return newState;
         }
         default:
             return state

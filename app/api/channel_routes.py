@@ -4,6 +4,8 @@ from flask_login import current_user
 from app.forms.channel_form import ChannelForm
 from sqlalchemy import or_
 from app.forms.live_chat_form import LiveChatForm
+from .team_routes import get_team_channel_user_for_delete
+
 channel_routes = Blueprint('channels', __name__)
 
 #GET ALL CHANNELS
@@ -103,11 +105,23 @@ def delete_channel(id):
     db.session.commit()
     return {"message" : "channel deleted :)"}
 
+#add member to channel
 @channel_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_channel(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
+  #need a check to make sure the user is a member of the team that the channel belongs to
   channel = Channel.query.get(id)
+  if not channel:
+     return {"error": "channel does not exist"}
+
+  #late addition
+  team = channel.team
+  userInTeam = current_user.id in [tm.user_id for tm in team.users]
+  if not userInTeam:
+     return {"error": "can't join a channel if you don't belong to the right team"}
+  #late addition
+
   team_id = channel.team.id
   isOwner = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(team_id == TeamMembership.team_id).first()
   isAlreadyMember = ChannelMembership.query.filter(ChannelMembership.user_id == current_user.id).filter(ChannelMembership.channel_id == id).first()
@@ -124,12 +138,15 @@ def add_member_to_channel(id):
   db.session.commit()
   return {"message":"added"}
 
-# DELETE
+# DELETE member of channel
 @channel_routes.route("/<int:chan_id>/member/<int:mem_id>")
 def delete_member_from_channel(chan_id, mem_id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}
   print("PRINTING CURRENT USER ----  ", current_user.id)
+
+  channel = Channel.query.get(chan_id)
+  team_id = channel.team.id
 
   #this is the cm to be deleted
   cm = ChannelMembership.query.filter(ChannelMembership.user_id == mem_id).filter(ChannelMembership.channel_id == chan_id).first()
@@ -143,21 +160,24 @@ def delete_member_from_channel(chan_id, mem_id):
   #THIS CASE NEEDS TO BE CLARIFIED, PICKING A NEW OWNER?
   #owner deletes himself and a new owner is randomly chosen
   if cm.status == "owner" and cm.user_id == current_user.id:
-     db.session.delete(cm)
-     db.session.commit()
-     return {"message": "successfully deleted"}
+    #  db.session.delete(cm)
+    #  db.session.commit()
+    #  return {"message": "successfully deleted"}
+    return {"error": "channel owner can't delete his own membership"}
 
     #regular user deletes himself
   if cm.user.id == current_user.id:
      db.session.delete(cm)
      db.session.commit()
-     return {"message": "successfully deleted"}
+    #  return {"message": "successfully deleted"}
+     return get_team_channel_user_for_delete(team_id, current_user.id)
   #an owner or admin deletes a user
   elif current_user.id in [ chan_men.user.id for chan_men in
                            ChannelMembership.query.filter(ChannelMembership.status != "member").filter(ChannelMembership.channel_id == chan_id).all() ]:
     db.session.delete(cm)
     db.session.commit()
-    return {"message": "successfully deleted"}
+    # return {"message": "successfully deleted"}
+    return get_team_channel_user_for_delete(team_id, current_user.id)
 
   return {"error": "Unauthorized"}
 

@@ -322,3 +322,29 @@ common_channels = x.intersection(y)
 
 
 """
+
+#this is an alternative to  get_team_channel_user specifically
+#used by the delete member from channel route
+@team_routes.route("/<int:id>/channels/user/<int:user_id>/delete")
+def get_team_channel_user_for_delete(id, user_id):
+
+  team = Team.query.get(id)
+  if team is None:
+    return {"error": "Team not found"}
+
+  user = User.query.get(user_id)
+  x = set([cm.channel for cm in user.channels])
+  channel_list = list(set(team.channels).intersection(x))
+
+  user_key_values = []
+  for channel in channel_list:
+    user_key_values.append([ {**cm.user.to_dict(), "status": cm.status } for cm in channel.users])
+  channel_list = [{
+    "id": channel.id,
+    "name": channel.name,
+    "private": channel.private
+    } for channel in channel_list ]
+
+  for i in range(len(channel_list)):
+    channel_list[i]["users"] = user_key_values[i]
+  return channel_list

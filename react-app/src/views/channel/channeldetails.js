@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { FaHashtag, FaLock, FaSearch, FaTimes, FaUserPlus } from 'react-icons/fa'
 import RecipientListItem from '../newmessage/recipients/recipientlistitem';
-import { deleteChannel } from '../../store/channels';
+import { deleteChannel, thunkDeleteUserFromChannel } from '../../store/channels';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from "react-redux"
+import {useHistory} from "react-router-dom"
 const members = [
     {
         name: 'John Smith'
@@ -23,6 +24,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const [ tab, setTab ] = useState('about');
     const [ memberQuery, setMemberQuery ] = useState('')
     const dispatch = useDispatch()
+    const history = useHistory()
     let filteredMembers = members;
     if (memberQuery) {
         filteredMembers = filteredMembers.filter(member => member.name.toLowerCase().includes(memberQuery.toLowerCase()));
@@ -32,6 +34,11 @@ const ChannelDetails = React.forwardRef((props, ref) => {
         dispatch(deleteChannel(channelId))
     }
     const user = useSelector(state => state.session.user)
+    const deleteMember = () => {
+        console.log("inside deleteMember")
+        dispatch(thunkDeleteUserFromChannel(channelId, user.id))
+        history.push(`/team/${team.id}`)
+    }
     const owner = channel.users.find(user => user.status === "owner")
     const isOwner = owner.id === user.id;
     console.log("isOwner    ", isOwner)
@@ -84,7 +91,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                             <p>Created by</p>
                             <p>{`Channel organizer`}</p>
                         </div>
-                        <div className='channel_details--about_item'>
+                        <div className='channel_details--about_item' onClick={deleteMember}>
                             <p className='leave'>Leave Channel</p>
                         </div>
                         {
