@@ -13,11 +13,17 @@ class LiveReplies(db.Model):
   message = db.Column(db.String(2000), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.now())
 
-  chat = db.relationship("LiveChat", back_populates="replies")
+  # working before adding extra association
+  # chat = db.relationship("LiveChat", back_populates="replies")
+
+  chat = db.relationship("LiveChat", back_populates ="replies")
+
+  sender_of_reply = db.relationship("User", back_populates="channel_replies")
 
   def to_dict_no_assoc(self):
     return {
       "id": self.id,
       "message": self.message,
+      "sender_id": self.sender_id,
       'created_at': self.created_at
     }

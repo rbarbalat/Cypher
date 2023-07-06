@@ -23,10 +23,10 @@ class User(db.Model, UserMixin):
     teams = db.relationship("TeamMembership", back_populates="user", cascade='all, delete-orphan')
 
 
-    # live_chat_user = db.relationship("LiveChat", back_populates="sender_to_channel", cascade='all, delete-orphan')
-    #flipped them
     channel_chats = db.relationship("LiveChat", back_populates="sender_to_channel", cascade='all, delete-orphan')
 
+    #new association
+    channel_replies = db.relationship("LiveReplies", back_populates="sender_of_reply", cascade="all, delete-orphan")
 
     sent_messages = db.relationship('DirectMessage', foreign_keys='DirectMessage.sender_id', back_populates='sender', cascade='all, delete-orphan')
     received_messages = db.relationship('DirectMessage', foreign_keys='DirectMessage.recipient_id', back_populates='recipient', cascade='all, delete-orphan')
