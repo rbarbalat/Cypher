@@ -30,6 +30,7 @@ eventlet = "==0.30.2"
 boto3 = "*"
 email-validator = "*"
 faker = "*"
+gevent = "*"
 
 [dev-packages]
 

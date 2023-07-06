@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
@@ -43,7 +46,8 @@ app.register_blueprint(live_reply_routes, url_prefix='/api/replies')
 db.init_app(app)
 Migrate(app, db)
 
-socketio.init_app(app)
+# socketio.init_app(app)
+socketio.init_app(app, async_mode='gevent')
 
 if __name__ == "__main__":
     socketio.run(app)
