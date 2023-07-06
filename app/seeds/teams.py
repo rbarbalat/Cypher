@@ -5,12 +5,12 @@ def seed_teams():
     t1 = Team(
         name="Team 1",
         description="Lorem ipsum color dit senum.",
-        image="https://urltoimage.png"
+        image="https://placehold.co/600x400/EEE/31343C"
     )
     t2 = Team(
         name="Team 2",
         description="Lorem ipsum color dit senum.",
-        image="https://urltoimage.png"
+        image="https://placehold.co/600x400/EEE/31343C"
     )
 
 
