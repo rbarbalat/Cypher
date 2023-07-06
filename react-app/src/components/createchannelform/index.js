@@ -34,7 +34,7 @@ function CreateChannelForm({ setCreateChannel }) {
             setErrors(data)
         }
         setCreateChannel(false)
-
+        history.push(`/team/${team.id}/channels/${data.id}`)
     }
 
     let filteredChannels = channelNotJoined
@@ -54,7 +54,8 @@ function CreateChannelForm({ setCreateChannel }) {
     }, [])
 
 
-    if (normalizedChannels.length === 0) return <DataLoading></DataLoading>
+    if (!channels) return <DataLoading></DataLoading>
+
     return (
         <div className='create_channel--wrapper'>
             <div onClick={() => setCreateChannel(false)}

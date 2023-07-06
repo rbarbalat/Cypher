@@ -23,6 +23,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const {channelId} = useParams()
     const handleDelete = () => {
         dispatch(deleteChannel(channelId))
+        .then(() => history.push(`/team/${team.id}`))
     }
     const user = useSelector(state => state.session.user)
     const deleteMember = () => {

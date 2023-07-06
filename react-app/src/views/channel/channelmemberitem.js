@@ -47,7 +47,16 @@ function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwn
         <div className='recipient_list_item--image'>
            <span>{member.username.charAt(0)}</span>
         </div>
-        <span className='recipient_list_item--name'>{member.username}</span>
+        <span className='recipient_list_item--name'>
+            {member.username}
+            <small style={{color: 'red'}}>
+                Chan Status: {member.status}
+            </small>
+            <span> &bull; </span>
+            <small style={{color: 'red'}}>
+            Team Status: {memberStatusInTeam}
+            </small>
+        </span>
         {
             displayDeleteButton ? <button onClick={(event) => deleteMember(event)}>Delete</button> : null
         }
