@@ -55,8 +55,8 @@ def get_team_by_id(id):
 #GET CURRENT USER'S TEAMS
 @team_routes.route("/currentuser")
 def get_user_teams():
-  if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+  # if not current_user.is_authenticated:
+  #   return {"error" : "go get logged in"}
   team_list=[]
   for membership in current_user.teams:
     team_list.append(membership.team)

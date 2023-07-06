@@ -11,6 +11,7 @@ import './App.css';
 import CreateTeam from "./views/createteam";
 import CreateTeamForm from "./views/createteamform";
 import { thunkGetEveryTeam } from "./store/teams";
+import ProtectedRoute from "./components/auth/ProtectedRoute"
 
 function App() {
   const dispatch = useDispatch();
@@ -42,18 +43,18 @@ function App() {
             <Route exact path='/sign-up'>
               <SignUp />
             </Route>
-            <Route exact path='/dashboard'>
+            <ProtectedRoute exact path='/dashboard'>
               <Dashboard/>
-            </Route>
-            <Route path='/create-team/new'>
+            </ProtectedRoute>
+            <ProtectedRoute path='/create-team/new'>
               <CreateTeamForm/>
-            </Route>
-            <Route exact path='/create-team'>
+            </ProtectedRoute>
+            <ProtectedRoute exact path='/create-team'>
               <CreateTeam/>
-            </Route>
-            <Route path='/team/:teamId'>
+            </ProtectedRoute>
+            <ProtectedRoute path='/team/:teamId'>
               <CypherApp/>
-            </Route>
+            </ProtectedRoute>
         </Switch>
       </div>
 
