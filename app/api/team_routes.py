@@ -238,7 +238,8 @@ def create_channel(id):
       "name":channel.name,
       "description":channel.description,
       "private":channel.private,
-      "team_id":channel.team_id
+      "team_id":channel.team_id,
+      "users": [{**current_user.to_dict(), "status": "owner"}]
     }
   return {"errors": form.errors}
 
@@ -344,4 +345,3 @@ def get_team_channel_user_for_delete(id, user_id):
   for i in range(len(channel_list)):
     channel_list[i]["users"] = user_key_values[i]
   return channel_list
-
