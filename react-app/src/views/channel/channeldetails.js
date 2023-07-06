@@ -4,6 +4,7 @@ import RecipientListItem from '../newmessage/recipients/recipientlistitem';
 import { deleteChannel } from '../../store/channels';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useSelector } from "react-redux"
 const members = [
     {
         name: 'John Smith'
@@ -18,7 +19,7 @@ const members = [
 ]
 
 const ChannelDetails = React.forwardRef((props, ref) => {
-    const { data, setIsVisible } = props;
+    const { channel, team, setIsVisible } = props;
     const [ tab, setTab ] = useState('about');
     const [ memberQuery, setMemberQuery ] = useState('')
     const dispatch = useDispatch()
@@ -30,6 +31,17 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const handleDelete = () => {
         dispatch(deleteChannel(channelId))
     }
+    const user = useSelector(state => state.session.user)
+    const owner = channel.users.find(user => user.status === "owner")
+    const isOwner = owner.id === user.id;
+    console.log("isOwner    ", isOwner)
+
+    const authorizedTeam = team.users.filter(user => user.status === "owner" || user.status == "admin" );
+    let isAuthorizedByTeam = authorizedTeam.find(person => person.id == user.id)
+    isAuthorizedByTeam ? isAuthorizedByTeam = true : isAuthorizedByTeam = false
+    const isAuthorized = isOwner || isAuthorizedByTeam;
+    console.log("auth from team", isAuthorizedByTeam)
+    console.log(isAuthorized, "isAuthorized")
 
     return (
         <div ref={ref} className='channel_details--wrapper'>
@@ -39,12 +51,12 @@ const ChannelDetails = React.forwardRef((props, ref) => {
             </div>
             <header className='channel_details--header'>
                 <span className='channel_details--title'>
-                    {data.private ?
+                    {channel.private ?
                     <FaLock/>
                     :
                     <FaHashtag/>
                     }
-                    {data.name}
+                    {channel.name}
                 </span>
                 <div className='channel_details--tabs'>
                     <div
@@ -75,9 +87,14 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                         <div className='channel_details--about_item'>
                             <p className='leave'>Leave Channel</p>
                         </div>
+                        {
+                            isAuthorized ?
                         <div onClick={handleDelete}>
                             <p>Delete Channel</p>
                         </div>
+                            :
+                            null
+                        }
                     </div>
                     <span className='channel_details--channel_id'>Channel ID: {`channel Id`}</span>
                 </div> :

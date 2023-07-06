@@ -22,6 +22,7 @@ function Channel(){
     const { channelId } = useParams();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const channel = useSelector(state => state.channels.singleChannel)
+    const team = useSelector(state => state.teams.singleTeam)
     const messageRef = useRef(null)
     const liveChats = useSelector(state => state.channels.liveChats)
     const normalizedLiveChats = Object.values(liveChats)
@@ -46,7 +47,7 @@ function Channel(){
         });
     }
 
-    console.log(channel)
+    // console.log(channel)
 
     useEffect(() => {
         dispatch(thunkGetChannel(channelId))
@@ -108,7 +109,8 @@ function Channel(){
             <Modal>
                 <ChannelDetails
                     setIsVisible={setIsVisible}
-                    data={channel}
+                    channel={channel}
+                    team = {team}
                     ref={ref}
                 />
             </Modal> :
