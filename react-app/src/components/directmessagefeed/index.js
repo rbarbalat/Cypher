@@ -32,9 +32,18 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
 
   const { pathname } = useLocation();
   const recipientId = pathname.split("/")[4];
+  //if you send a first direct message to a new partner that is not in the store
+  //and the message fails length validation, line 38 gives a typeerror
+  //because the new partner isn't loaded into the store
+
   const partner = useSelector(
     (state) => state.messages.partners[recipientId].partner
   );
+
+  // const partner = useSelector((state) => {
+  //   const partnerData = state.messages.partners[recipientId];
+  //   return partnerData ? partnerData.partner : null;
+  // });
 
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, "P"));

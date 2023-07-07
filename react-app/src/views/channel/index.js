@@ -37,6 +37,7 @@ function Channel(){
         //console.log(chatInput)
         //console.log(socket)
         if(chatInput.trim().length === 0) return;
+        if(chatInput.trim().length > 500) return;
         socket.emit("live_chat", {
             "message": chatInput,
             "sender_id": parseInt(user.id),

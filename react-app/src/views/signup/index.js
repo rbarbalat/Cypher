@@ -28,6 +28,7 @@ function SignUp() {
           if (data) {
             setErrors(data)
           }
+          history.push("/dashboard")
       } else {
           setErrors({confirmPassword: 'Passwords should match'});
       }
