@@ -7,6 +7,8 @@ import Channel from '../channel'
 import DirectMessage from '../directmessage'
 import NewMessage from '../newmessage'
 import DataLoading from '../../components/loading/DataLoading';
+import Navigation from '../../components/navigation';
+import TeamHome from '../teamhome';
 import Thread from '../../components/thread'
 
 function CypherApp() {
@@ -30,7 +32,7 @@ function CypherApp() {
 
     return (
         <>
-        {/* <nav>Navigation</nav> */}
+        <Navigation/>
         <main id='main--wrapper'>
             <Aside/>
             <Switch>
@@ -42,6 +44,9 @@ function CypherApp() {
                 </Route>
                 <Route path={`/team/${teamId}/new-message`}>
                     <NewMessage/>
+                </Route>
+                <Route path={`/team/${teamId}`}>
+                    <TeamHome/>
                 </Route>
             </Switch>
             {Object.keys(thread).length ?
