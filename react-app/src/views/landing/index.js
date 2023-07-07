@@ -10,12 +10,15 @@ import {
   FaJsSquare,
 } from "react-icons/fa";
 import logo from "../../assets/cypher-white.svg";
-import omar_Elsahlah from "../../assets/omar_Elsahlah.jpeg"
-import chris_Eke from "../../assets/chris_Eke.jpeg"
-import roman_Barbalat from "../../assets/roman_Barbalat.jpeg"
-import jonathan_Carter from "../../assets/jonathan_Carter.jpeg"
-import { AiFillTwitterCircle, AiFillLinkedin, AiFillGithub } from "react-icons/ai";
-
+import omar_Elsahlah from "../../assets/omar_Elsahlah.jpeg";
+import chris_Eke from "../../assets/chris_Eke.jpeg";
+import roman_Barbalat from "../../assets/roman_Barbalat.jpeg";
+import jonathan_Carter from "../../assets/jonathan_Carter.jpeg";
+import {
+  AiFillTwitterCircle,
+  AiFillLinkedin,
+  AiFillGithub,
+} from "react-icons/ai";
 
 function Landing() {
   const history = useHistory();
@@ -81,9 +84,12 @@ function Landing() {
       <section className="landing_outro--wrapper">
         <div className="landing_outro--contents">
           <div className="landing_outro--boxes">
-          <div className="landing_outro--box">
+            <div className="landing_outro--box">
               <img src={jonathan_Carter} alt="Jonathan Carter" />
-              <p>Hi! My name is Jonathan, and I used to be a Galactic Emperor. I have a passion for backend development</p>
+              <p>
+                Hi! My name is Jonathan, and I used to be a Galactic Emperor. I
+                have a passion for backend development
+              </p>
               <div className="social-icons">
                 <a href="https://twitter.com/jonathan_carter">
                   <AiFillTwitterCircle className="social-icon" />
@@ -98,7 +104,10 @@ function Landing() {
             </div>
             <div className="landing_outro--box">
               <img src={omar_Elsahlah} alt="Omar Elsahlah" />
-              <p>Hi! My name is Omar, I used to be a Technical Recruiter. Excited to work as a Software Engineer!</p>
+              <p>
+                Hi! My name is Omar, I used to be a Technical Recruiter. Excited
+                to work as a Software Engineer!
+              </p>
               <div className="social-icons">
                 <a href="https://twitter.com/omar_elsahlah">
                   <AiFillTwitterCircle className="social-icon" />
@@ -113,7 +122,10 @@ function Landing() {
             </div>
             <div className="landing_outro--box">
               <img src={chris_Eke} alt="Chris Eke" />
-              <p>Hi! I am Chris, and I was a self taught developer then joined a/A to further my knowledge!</p>
+              <p>
+                Hi! I am Chris, and I was a self taught developer then joined
+                a/A to further my knowledge!
+              </p>
               <div className="social-icons">
                 <a href="https://twitter.com/chris_eke">
                   <AiFillTwitterCircle className="social-icon" />
@@ -128,7 +140,10 @@ function Landing() {
             </div>
             <div className="landing_outro--box">
               <img src={roman_Barbalat} alt="Roman Barbalat" />
-              <p>Hi! My name is Roman, I used to be a day trader. I am passionate about Software engineering!</p>
+              <p>
+                Hi! My name is Roman, I used to be a day trader. I'm passionate
+                about Software engineering!
+              </p>
               <div className="social-icons">
                 <a href="https://twitter.com/roman_barbalat">
                   <AiFillTwitterCircle className="social-icon" />
