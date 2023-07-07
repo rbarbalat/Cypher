@@ -1,7 +1,10 @@
 from app.models import db, DirectMessage, environment, SCHEMA
 # from app.models import db, direct_messages, environment, SCHEMA
 from sqlalchemy.sql import text
-from random import sample
+from random import sample, randint
+from faker import Faker
+
+fake = Faker()
 
 def seed_direct_messages(users):
     for i in range(0, 10):
@@ -9,7 +12,7 @@ def seed_direct_messages(users):
         dm = DirectMessage(
             sender=pair[0],
             recipient=pair[1],
-            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            message=fake.text(max_nb_chars=randint(300, 499))
         )
         db.session.add(dm)
     db.session.commit()
