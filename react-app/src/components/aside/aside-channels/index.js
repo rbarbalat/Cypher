@@ -9,6 +9,7 @@ import Modal from '../../modal';
 function AsideChannels() {
     const [ expanded, setExpanded ] = useState(true)
     const [ createChannel, setCreateChannel ] = useState(false)
+    const [ joinChannel, setJoinChannel ] = useState(false)
     const channels = useSelector(state => state.channels.allChannels)
     const normalizedChannels = Object.values(channels)
 
@@ -40,7 +41,15 @@ function AsideChannels() {
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>
-                        <span>Add channels</span>
+                        <span>Create a channel</span>
+                    </div>
+                </li>
+                <li>
+                    <div onClick={() => setJoinChannel(true)} className='aside_dropdown--add_wrapper'>
+                        <div className='aside_dropdown--add_item'>
+                            <FaPlus className='aside_dropdown--add_icon'/>
+                        </div>
+                        <span>Join a channel</span>
                     </div>
                 </li>
         </ul>
@@ -49,9 +58,9 @@ function AsideChannels() {
         }
     </div>
     {
-        createChannel ?
+        createChannel || joinChannel ?
         <Modal>
-           <CreateChannelForm setCreateChannel={setCreateChannel}/>
+           <CreateChannelForm setCreateChannel={setCreateChannel} setJoinChannel={setJoinChannel} joinChannel={joinChannel}/>
         </Modal> :
         null
     }

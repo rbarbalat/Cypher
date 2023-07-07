@@ -7,14 +7,16 @@ import TextArea from '../inputs/textarea'
 import './createchannelform.css';
 import DataLoading from '../../components/loading/DataLoading'
 import { useHistory } from 'react-router-dom'
-function CreateChannelForm({ setCreateChannel }) {
+function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ isPrivate, setIsPrivate ] = useState(false);
     const [ errors, setErrors ] = useState({});
     const dispatch = useDispatch();
     const team = useSelector(state => state.teams.singleTeam)
-    const [tab, setTab] = useState('create')
+
+    const [tab, setTab] = useState(joinChannel ? "join" : "create")
+
     const [query, setQuery] = useState('')
 
     const joinedChannels = useSelector(state => state.channels.allChannels)
@@ -63,6 +65,7 @@ function CreateChannelForm({ setCreateChannel }) {
             setErrors(data)
         }
         setCreateChannel(false)
+        setJoinChannel(false)
         history.push(`/team/${team.id}/channels/${data.id}`)
     }
 
@@ -76,6 +79,7 @@ function CreateChannelForm({ setCreateChannel }) {
         .then(() => dispatch(thunkGetChannelsByUser))
         .then(() => history.push(`/team/${team.id}/channels/${id}`))
         setCreateChannel(false)
+        setJoinChannel(false)
     }
 
     useEffect(() => {
@@ -87,7 +91,9 @@ function CreateChannelForm({ setCreateChannel }) {
 
     return (
         <div className='create_channel--wrapper'>
-            <div onClick={() => setCreateChannel(false)}
+            <div onClick={() => {
+                setCreateChannel(false)
+                setJoinChannel(false)}}
                 className='channel_details--close_wrapper'>
                 <FaTimes className='channel_details--close'/>
             </div>
