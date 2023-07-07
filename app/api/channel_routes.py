@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import Channel, db, ChannelMembership, TeamMembership, LiveChat
+from app.models import Channel, db, ChannelMembership, TeamMembership, LiveChat, User
 from flask_login import current_user
 from app.forms.channel_form import ChannelForm
 from sqlalchemy import or_
@@ -212,3 +212,41 @@ def send_live_chat(id):
     db.session.commit()
     return chat.to_dict_no_assoc()
   return {"errors": form.errors}
+
+
+#authorized member adds another user to a channel
+@channel_routes.route('/<int:id>/members/<int:user_id>', methods=['POST'])
+def auth_user_adds_member_to_channel(id, user_id):
+  if not current_user.is_authenticated:
+    return {"error" : "go get logged in"}
+
+  channel = Channel.query.get(id)
+  if not channel:
+     return {"error": "channel does not exist"}
+
+  userToAdd = User.query.get(user_id)
+  if not userToAdd:
+     return {"error": "user does not exist"}
+
+  alreadyInChannel = userToAdd.id in [cm.user_id for cm in channel.users]
+  if alreadyInChannel:
+     return {"error": "user already a member"}
+
+  team = channel.team
+  inRightTeam = userToAdd.id in [tm.user_id for tm in team.users]
+  if not inRightTeam:
+     return {"error": "user can't be added to the channel b/c not in the right team"}
+
+  currentIsChannelOwner = current_user.id in [ cm.user_id for cm in current_user.channels if cm.status == "owner"]
+
+  authTeamIds = [ tm.user_id for tm in team.users if tm.status in ["owner, admin"] ]
+  currentIsTeamAuthorized = current_user.id in authTeamIds
+
+  if not currentIsChannelOwner and not currentIsTeamAuthorized:
+     return {"error": "not authoried for this action"}
+
+  cm = ChannelMembership(channel=channel, user=userToAdd, status = "member")
+  db.session.add(cm)
+  db.session.commit()
+  print(cm)
+  return {"message": "member added"}

@@ -16,10 +16,16 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const users = channel.users
+    const teamUsers = useSelector(state => state.teams.singleTeam.users)
     let filteredMembers = users;
     if (memberQuery) {
         filteredMembers = filteredMembers.filter(member => member.username.toLowerCase().includes(memberQuery.toLowerCase()));
     }
+    const userIds = users.map(user => user.id)
+
+    const notInChannelUsers = teamUsers.filter(tu => !userIds.includes(tu.id) )
+    console.log(notInChannelUsers)
+
     const {channelId} = useParams()
     const handleDelete = () => {
         dispatch(deleteChannel(channelId))
@@ -74,6 +80,11 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                     className={`channel_details--tab ${tab === 'members' ? 'active--tab' : ''}`}>
                         Members (Num)
                     </div>
+                    <div
+                    onClick={() => setTab('add member')}
+                    className={`channel_details--tab ${tab === 'add member' ? 'active--tab' : ''}`}>
+                            Add Member
+                    </div>
                 </div>
             </header>
             {
@@ -108,6 +119,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                     </div>
                     <span className='channel_details--channel_id'>Channel ID: {`channel Id`}</span>
                 </div> :
+                tab === "members" ?
                 <div className='channel_details--contents members--section'>
                     <div className='channel_details--member_search'>
                         <FaSearch  className='channel_details--member_icon'/>
@@ -118,7 +130,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                         </input>
                     </div>
                     <ul className='channel_details--member_list'>
-                        <li className='recipient_list_item--wrapper'>
+                        <li className='recipient_list_item--wrapper' onClick={() => setTab("add member")}>
                             <div className='recipient_list_item--image'>
                                 <FaUserPlus className='add_icon'/>
                             </div>
@@ -143,9 +155,20 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                         }
                     </ul>
 
-
                 </div>
-            }
+                :
+                        <div>{
+                            notInChannelUsers.length
+                            ?
+                            notInChannelUsers.map(ele => (
+                                <div>{ele.username}</div>
+                            )
+                        )
+                            :
+                            null
+                        }
+                        </div>
+                }
         </div>
     )
 })

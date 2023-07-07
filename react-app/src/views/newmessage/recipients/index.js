@@ -55,7 +55,8 @@ function Recipients({recipient, setRecipient}) {
 
             </div>
             {
-                !recipient && query.length && filteredMembers.length ?
+                // !recipient && query.length && filteredMembers.length ?
+                !recipient && filteredMembers.length ?
                 <ul className='recipients--members_list'>
                 {
                     filteredMembers.map(member => (

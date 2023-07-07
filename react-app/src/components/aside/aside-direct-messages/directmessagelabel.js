@@ -9,6 +9,12 @@ function DirectMessageLabel() {
     const team = useSelector(state => state.teams.singleTeam)
     const history = useHistory()
 
+    function handleMessage()
+    {
+        history.push(`/team/${team.id}/new-message`)
+        setIsVisible(false)
+    }
+
     return (
         <div className='direct_message_label--wrapper'>
             <div className='direct_message_label--label' onClick={() => setIsVisible(true)}>
@@ -18,7 +24,7 @@ function DirectMessageLabel() {
             {
                 isVisible ?
                 <div ref={ref} className='direct_message_label--options'>
-                    <span  onClick={() => history.push(`/team/${team.id}/new-message`)} className='direct_message_label--option--wrapper'>
+                    <span  onClick={handleMessage} className='direct_message_label--option--wrapper'>
                         <p className='direct_message_label--option'>Create</p>
                         <FaChevronRight className='direct_message_label--option--icon'/>
                     </span>

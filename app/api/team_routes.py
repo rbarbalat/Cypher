@@ -43,9 +43,6 @@ def get_team_by_id(id):
   if team is None:
     return {"error": "Team not found"}
   users = [{**tm.user.to_dict(), "status": tm.status} for tm in team.users]
-  # statuses = [tm.status for tm in team.users]
-  # for i in range(len(users)):
-  #   users[i]["status"] = statuses[i]
   numMembers = len(users)
   return {"id": team.id, "name": team.name,
            "image": team.image, "description":team.description,
