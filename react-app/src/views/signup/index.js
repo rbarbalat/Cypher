@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { login } from "../../store/session";
 import { signUp } from "../../store/session";
 import Input from "../../components/inputs/input";
 import logo from '../../assets/cypher-logo.svg'
@@ -18,7 +19,7 @@ function SignUp() {
     const [errors, setErrors] = useState({});
 
     if (sessionUser) {
-        history.push('/')
+        history.push('/dashboard')
     }
 
     const handleSubmit = async (e) => {
@@ -32,6 +33,15 @@ function SignUp() {
       } else {
           setErrors({confirmPassword: 'Passwords should match'});
       }
+    };
+
+    const handleDemoUser= async (e) => {
+        e.preventDefault();
+        const data = await dispatch(login('demo@aa.io', 'password'));
+        if (data) {
+          setErrors(data);
+        }
+
     };
 
     return (
@@ -87,7 +97,7 @@ function SignUp() {
                     id="auth-sign-up"
                     className='btn'>Create your account
                 </button>
-                <button className="btn auth--demo">
+                <button onClick={handleDemoUser} type="button" className="btn auth--demo">
                             Sign in With Demo Account
                 </button>
             </form>
