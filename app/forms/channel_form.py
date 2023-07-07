@@ -3,8 +3,8 @@ from wtforms import StringField, BooleanField, SelectField, IntegerField
 from wtforms.validators import URL, DataRequired, Email, ValidationError, Length
 
 class ChannelForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired()])
-    description = StringField("description", validators=[DataRequired(), Length(max=2000)] )
+    name = StringField("name", validators=[DataRequired(), Length(min = 2, max = 20) ])
+    description = StringField("description", validators=[DataRequired(), Length(min = 10, max=1000)] )
     private = BooleanField("private")
     # team = IntegerField("team_id", validators=[DataRequired()])
     # team = SelectField("team", choices = [], validators = [DataRequired()])

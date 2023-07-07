@@ -28,6 +28,35 @@ function CreateChannelForm({ setCreateChannel }) {
 
     const history = useHistory()
     const handleCreateTeam = async () => {
+        /*
+        e.preventDefault(); //add e parameter/argument
+        const formData = new FormData()
+        formData.append("name", name)
+        formData.append("description", description)
+        formData.append("private", private)
+        const newChannel = formData;
+        const data = await dispatch(thunkCreateChannel(team.id, newChannel))
+        if (data.errors)
+        {
+            const keys = Object.keys(data.errors)
+            const vals = Object.values(data.errors)
+            const valErrors = {}
+            //each val is an array of length 1
+            for(let i = 0; i<keys.length; i++)
+            {
+                // console.log(keys[i] + "   " + vals[i][0])
+                valErrors[keys[i]] = vals[i][0]
+            }
+            setErrors(valErrors)
+            console.log("printing state variable errors object")
+            console.log(errors)
+            return;
+        } else {
+            setCreateChannel(false); //do we need this?
+            history.push(`/team/${team.id}/channels/${data.id}`)
+        }
+        */
+
         const newChannel = {name, description, private: isPrivate};
         const data = await dispatch(thunkCreateChannel(team.id, newChannel))
         if (data) {
@@ -73,7 +102,7 @@ function CreateChannelForm({ setCreateChannel }) {
                     <p onClick={() => setTab('create')}>Create New Channel</p>
                     <p onClick={() => setTab('join')}>Join Channel</p>
                 </header>
-                { tab=== 'create' ?
+                { tab === 'create' ?
                 <div className='create_channel--form'>
                     <Input
                         placeholder='Enter a name for the channel'

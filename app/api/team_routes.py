@@ -156,10 +156,6 @@ def create_team():
     image = form.data["image"]
     image.filename = get_unique_filename(image.filename)
     upload = upload_file_to_s3(image)
-    # print("PRINTING UPLOAD PRINTNIG UPLOAD PRINTING UPLOAD")
-    # print(upload["url"], "this is the upload")
-    # print("this is the request" , request.data)
-    # print("this is the req body ", request.data)
     #upload is a dicitonary with a key of url or a key of errors
     if "url" not in upload:
       return {"error": "failed b/c of problem with the image file"}

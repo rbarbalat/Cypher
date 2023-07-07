@@ -98,7 +98,7 @@ export const thunkCreateChannel = (id, channel) => async dispatch => {
     if (res.ok) {
         const data = await res.json()
         if (data.errors) {
-            return data.errors
+            return data
         }
         dispatch(actionCreateChannel(data))
         return data

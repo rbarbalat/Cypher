@@ -15,7 +15,7 @@ function CreateTeamForm() {
   const [image, setImage] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const handleStep = (num) => {
     history.push(`/create-team/new/${num}`);
