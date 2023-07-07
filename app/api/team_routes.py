@@ -222,9 +222,9 @@ def create_channel(id):
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   #DO WE WANT ONLY TEAM OWNNERS/ADMIN TO BE ABLE TO CREATE CHANNELS FOR A TEAM?
-  isOwnerOrAdmin = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(TeamMembership.team_id == id).first()
-  if not isOwnerOrAdmin:
-      return {"error" : "not authorized"}
+  # isOwnerOrAdmin = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(TeamMembership.team_id == id).first()
+  # if not isOwnerOrAdmin:
+  #     return {"error" : "not authorized"}
   if form.validate_on_submit():
     channel = Channel()
     form.populate_obj(channel)
