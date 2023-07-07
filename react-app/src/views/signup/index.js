@@ -97,9 +97,9 @@ function SignUp() {
                     id="auth-sign-up"
                     className='btn'>Create your account
                 </button>
-                <button onClick={handleDemoUser} type="button" className="btn auth--demo">
+                <div onClick={handleDemoUser} type="button" className="btn auth--demo">
                             Sign in With Demo Account
-                </button>
+                </div>
             </form>
             </div>
         </main>
