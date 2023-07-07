@@ -153,7 +153,7 @@ function Dashboard() {
                     </div>
                     <div className='dashboard--logout'>
                         <p>Not seeing your workspace?</p>
-                        <span className='link' onClick={(e) => handleLogout(e)}>Try a different email</span>
+                        <span className='link' onClick={(e) => handleLogout(e)}>Logout</span>
                     </div>
                 </div>
             </div>

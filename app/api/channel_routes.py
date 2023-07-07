@@ -147,7 +147,7 @@ def delete_member_from_channel(chan_id, mem_id):
 
   channel = Channel.query.get(chan_id)
   team_id = channel.team.id
-
+  team = channel.team
   #this is the cm to be deleted
   cm = ChannelMembership.query.filter(ChannelMembership.user_id == mem_id).filter(ChannelMembership.channel_id == chan_id).first()
   if not cm:
@@ -155,6 +155,7 @@ def delete_member_from_channel(chan_id, mem_id):
 
    # the user to be deleted is the owner but it is not the owner trying to delete himself
   if cm.status == "owner" and cm.user_id != current_user.id:
+     print("this if statement")
      return {"error": "unauthorized"}
 
   #THIS CASE NEEDS TO BE CLARIFIED, PICKING A NEW OWNER?
@@ -178,7 +179,10 @@ def delete_member_from_channel(chan_id, mem_id):
     db.session.commit()
     # return {"message": "successfully deleted"}
     return get_team_channel_user_for_delete(team_id, current_user.id)
-
+  elif current_user.id in [ tm.user_id for tm in team.users if tm.status in ['owner', 'admin']]:
+    db.session.delete(cm)
+    db.session.commit()
+    return get_team_channel_user_for_delete(team_id, current_user.id)
   return {"error": "Unauthorized"}
 
 #GET all chats for channel

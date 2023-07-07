@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaHashtag, FaLock, FaSearch, FaTimes, FaUserPlus } from 'react-icons/fa'
 import RecipientListItem from '../newmessage/recipients/recipientlistitem';
-import { deleteChannel, thunkDeleteUserFromChannel } from '../../store/channels';
+import { deleteChannel, thunkDeleteUserFromChannel, thunkGetChannel } from '../../store/channels';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from "react-redux"
@@ -53,7 +53,17 @@ const ChannelDetails = React.forwardRef((props, ref) => {
         setIsVisible(false)
     }
 
-
+    const handleJoin = async (id, user_id) => {
+        console.log(id, 'channelId', user_id, 'userId');
+        const res = await fetch(`/api/channels/${id}/members/${user_id}`, {
+            method: "POST"
+        })
+        if(res.ok){
+            const romansThing = await res.json;
+            console.log(romansThing);
+            dispatch(thunkGetChannel(id));
+        }
+    }
     return (
         <div ref={ref} className='channel_details--wrapper'>
             <div onClick={() => setIsVisible(false)}
@@ -161,7 +171,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                             notInChannelUsers.length
                             ?
                             notInChannelUsers.map(ele => (
-                                <div>{ele.username}</div>
+                                <div onClick={() => handleJoin(channelId, ele.id)}>{ele.username}</div>
                             )
                         )
                             :

@@ -237,10 +237,13 @@
 
 
 .dashboard--logout {
-    padding: 50px 0 100px 0;
+    /* padding: 50px 0 100px 0; */
     font-size: 15px;
-    text-align: center;
-    color: var(--body)
+    text-align: right;
+    color: var(--body);
+    position: absolute;
+    top: 30px;
+    right: 30px;
 }
 
 .dashboard--logout p {
