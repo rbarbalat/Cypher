@@ -1,0 +1,61 @@
+@import url('../../index.css');
+
+.navigation--wrapper {
+    height: 60px;
+    width: 100%;
+    background-color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.navigation--contents {
+    width: calc(100% - 300px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 30px;
+    color: white;
+}
+
+.navigation--image {
+    height: 40px;
+    aspect-ratio: 1;
+    background-color: var(--border);
+    border-radius: 5px;
+}
+
+.navigation--user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.navigation_menu--wrapper {
+    position: absolute;
+    background-color: white;
+    padding: 5px 0;
+    bottom: -100px;
+    right: 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+    width: 300px;
+    z-index: 250;
+}
+
+.navigation_menu--option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.navigation_menu--option:hover {
+    background-color: var(--color-hover);
+    color: white;
+}
