@@ -83,21 +83,19 @@ function Landing() {
       </section>
       <section className="landing_outro--wrapper">
         <div className="landing_outro--contents">
+      <h1 className="about_us">About Us:</h1>
           <div className="landing_outro--boxes">
             <div className="landing_outro--box">
               <img src={jonathan_Carter} alt="Jonathan Carter" />
               <p>
-                Hi! My name is Jonathan, and I used to be a Galactic Emperor. I
-                have a passion for backend development
+                Hi! My name is Jonathan, and I used work in sales. I have a new
+                found passion for backend development
               </p>
               <div className="social-icons">
-                <a href="https://twitter.com/jonathan_carter">
-                  <AiFillTwitterCircle className="social-icon" />
-                </a>
-                <a href="https://www.linkedin.com/in/jonathan-carter">
+                <a href="https://www.linkedin.com/in/jonathan-carter-12b600174/">
                   <AiFillLinkedin className="social-icon" />
                 </a>
-                <a href="https://github.com/jonathan-carter-dev">
+                <a href="https://github.com/JonathanSCarter">
                   <AiFillGithub className="social-icon" />
                 </a>
               </div>
@@ -109,13 +107,13 @@ function Landing() {
                 to work as a Software Engineer!
               </p>
               <div className="social-icons">
-                <a href="https://twitter.com/omar_elsahlah">
+                <a href="https://twitter.com/TallTechTitan">
                   <AiFillTwitterCircle className="social-icon" />
                 </a>
-                <a href="https://www.linkedin.com/in/omar-elsahlah">
+                <a href="https://www.linkedin.com/in/omarelsahlah">
                   <AiFillLinkedin className="social-icon" />
                 </a>
-                <a href="https://github.com/omar-elsahlah">
+                <a href="https://github.com/FullStackin">
                   <AiFillGithub className="social-icon" />
                 </a>
               </div>
@@ -127,13 +125,10 @@ function Landing() {
                 a/A to further my knowledge!
               </p>
               <div className="social-icons">
-                <a href="https://twitter.com/chris_eke">
-                  <AiFillTwitterCircle className="social-icon" />
-                </a>
-                <a href="https://www.linkedin.com/in/chris-eke">
+                <a href="https://www.linkedin.com/in/iamchriseke/">
                   <AiFillLinkedin className="social-icon" />
                 </a>
-                <a href="https://github.com/chris-eke">
+                <a href="https://github.com/ChrisEkeDev">
                   <AiFillGithub className="social-icon" />
                 </a>
               </div>
@@ -141,17 +136,13 @@ function Landing() {
             <div className="landing_outro--box">
               <img src={roman_Barbalat} alt="Roman Barbalat" />
               <p>
-                Hi! My name is Roman, I used to be a day trader. I'm passionate
-                about Software engineering!
+                Hi! I am Roman, I was an options trader. Looking for Software engineering role!
               </p>
               <div className="social-icons">
-                <a href="https://twitter.com/roman_barbalat">
-                  <AiFillTwitterCircle className="social-icon" />
-                </a>
-                <a href="https://www.linkedin.com/in/roman-barbalat">
+                <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">
                   <AiFillLinkedin className="social-icon" />
                 </a>
-                <a href="https://github.com/roman-barbalat">
+                <a href="https://github.com/rbarbalat">
                   <AiFillGithub className="social-icon" />
                 </a>
               </div>
