@@ -228,14 +228,7 @@ def auth_user_adds_member_to_channel(id, user_id):
   if not userToAdd:
      return {"error": "user does not exist"}
 
-  alreadyInChannel = userToAdd.id in [cm.user_id for cm in channel.users]
-  if alreadyInChannel:
-     return {"error": "user already a member"}
-
   team = channel.team
-  inRightTeam = userToAdd.id in [tm.user_id for tm in team.users]
-  if not inRightTeam:
-     return {"error": "user can't be added to the channel b/c not in the right team"}
 
   currentIsChannelOwner = current_user.id in [ cm.user_id for cm in current_user.channels if cm.status == "owner"]
 
@@ -244,6 +237,14 @@ def auth_user_adds_member_to_channel(id, user_id):
 
   if not currentIsChannelOwner and not currentIsTeamAuthorized:
      return {"error": "not authoried for this action"}
+
+  alreadyInChannel = userToAdd.id in [cm.user_id for cm in channel.users]
+  if alreadyInChannel:
+     return {"error": "user already a member"}
+
+  inRightTeam = userToAdd.id in [tm.user_id for tm in team.users]
+  if not inRightTeam:
+     return {"error": "user can't be added to the channel b/c not in the right team"}
 
   cm = ChannelMembership(channel=channel, user=userToAdd, status = "member")
   db.session.add(cm)
