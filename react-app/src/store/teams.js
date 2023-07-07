@@ -95,13 +95,11 @@ export const thunkCreateTeam = (team) => async dispatch => {
         // headers: { "Content-Type": "application/json" },
         body: team
     })
-    console.log("inside create team thunk-------------------")
     if (res.ok) {
-        console.log("inside create team thunk ** RES - OK-------------------")
         const data = await res.json()
         if (data.errors) {
-            console.log("errors----------", data.errors)
-            return data.errors
+            // console.log("errors----------", data.errors)
+            return data
         }
         dispatch(actionCreateTeam(data))
         return data

@@ -15,13 +15,13 @@ function CreateTeamForm() {
   const [image, setImage] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
+  const [errors, setErrors] = useState([]);
 
   const handleStep = (num) => {
     history.push(`/create-team/new/${num}`);
   };
 
   const handleCreateTeam = async (e) => {
-    console.log("inside create team")
     e.preventDefault()
     const formData = new FormData()
     formData.append("name", name)
@@ -29,12 +29,23 @@ function CreateTeamForm() {
     formData.append("image", image)
     const newTeam = formData;
     const data = await dispatch(thunkCreateTeam(newTeam));
-    // if (data.error) {
-    //   console.log(data.error);
-    // } else {
-    //   history.push(`/dashboard`);
-    // }
-    if(data) history.push("/dashboard")
+    if (data.errors) {
+      const keys = Object.keys(data.errors)
+      const vals = Object.values(data.errors)
+      const valErrors = {}
+      //each val is an array of length 1
+      for(let i = 0; i<keys.length; i++)
+      {
+        // console.log(keys[i] + "   " + vals[i][0])
+        valErrors[keys[i]] = vals[i][0]
+      }
+      setErrors(valErrors)
+      console.log("printing state variable errors object")
+      console.log(errors)
+      return;
+    } else {
+      history.push(`/dashboard`);
+    }
   };
 
   return (
@@ -57,7 +68,7 @@ function CreateTeamForm() {
             value={name}
             setValue={(x) => setName(x.target.value)}
             name="name"
-            error={undefined}
+            error={errors.name}
             disabled={false}
           />
           <Input
@@ -65,14 +76,17 @@ function CreateTeamForm() {
             value={description}
             setValue={(x) => setDescription(x.target.value)}
             name="description"
-            error={undefined}
+            error={errors.description}
             disabled={false}
           />
          <input
               type="file"
               accept="image/*"
+              // error={errors.image}
               onChange={(e) => setImage(e.target.files[0])}
             />
+              {errors.image && <p style={{"color": "red"}}>{errors.image}</p>}
+
           <button className="create_form_step--next">Finish</button>
         </form>
         {/* <div className='create_team_form--step'>

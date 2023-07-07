@@ -6,7 +6,7 @@ from app.api.aws import ALLOWED_EXTENSIONS
 
 
 class TeamForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired()])
-    description = StringField("description", validators=[DataRequired(), Length(max=2000)] )
-    image = FileField("image", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
+    name = StringField("name", validators=[DataRequired(), Length(min=2, max=20)], )
+    description = StringField("description", validators=[DataRequired(), Length(min=10, max=1000)] )
+    image = FileField("image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     # image = URLField("image")

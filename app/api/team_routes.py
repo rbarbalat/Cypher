@@ -150,13 +150,15 @@ def create_team():
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
 
+  print(form.data["name"])
+  print(form.data["description"])
   if form.validate_on_submit():
     image = form.data["image"]
     image.filename = get_unique_filename(image.filename)
     upload = upload_file_to_s3(image)
-    print("PRINTING UPLOAD PRINTNIG UPLOAD PRINTING UPLOAD")
-    print(upload["url"], "this is the upload")
-    print("this is the request" , request.data)
+    # print("PRINTING UPLOAD PRINTNIG UPLOAD PRINTING UPLOAD")
+    # print(upload["url"], "this is the upload")
+    # print("this is the request" , request.data)
     # print("this is the req body ", request.data)
     #upload is a dicitonary with a key of url or a key of errors
     if "url" not in upload:
@@ -177,6 +179,7 @@ def create_team():
       "description": team.description,
       "image": team.image
     }
+  # print(form.errors)
   return {"errors": form.errors}
 
 #DELETE A TEAM
