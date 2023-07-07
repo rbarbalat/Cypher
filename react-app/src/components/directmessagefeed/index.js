@@ -21,14 +21,15 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
   const dates = [];
 
   const handleUserThread = (id) => {
-    dispatch(thunkGetUserThread(id))
-  }
+    dispatch(thunkGetUserThread(id));
+  };
 
   const handleBottomScroll = () => {
-      ref.current.scroll({
+    ref.current.scroll({
       top: ref.current.scrollHeight,
-      behavior: 'smooth'
-  })}
+      behavior: "smooth",
+    });
+  };
 
   const { pathname } = useLocation();
   const recipientId = pathname.split("/")[4];
@@ -40,11 +41,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     (state) => state.messages.partners[recipientId].partner
   );
 
-  // const partner = useSelector((state) => {
-  //   const partnerData = state.messages.partners[recipientId];
-  //   return partnerData ? partnerData.partner : null;
-  // });
-
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, "P"));
   }
@@ -54,27 +50,38 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
       return isSameDay(new Date(message.created_at), new Date(specificDate));
     });
   };
-  console.log("inside the direct message feed")
-  console.log(messages)
-  if(messages.length == 0) return <div>loading</div>
+  console.log("inside the direct message feed");
+  console.log(messages);
+  if (messages.length == 0) return <div>loading</div>;
   return (
     <section ref={ref} id="message_feed--wrapper">
       <div className="message_feed--introduction">
         <div className="message_feed--introduction--recipient">
           <div className="message_feed--introduction--image"></div>
           <div className="message_feed--introduction--information">
-            <p onClick={() => handleUserThread(partnerId)} className="message_feed--user basic--link">{partner}</p>
+            <p
+              onClick={() => handleUserThread(partnerId)}
+              className="message_feed--user basic--link"
+            >
+              {partner}
+            </p>
             <p>Status</p>
           </div>
         </div>
         <p className="message_feed--introduction--greeting">
           This conversation is just between{" "}
           <span className="message_feed--user">@{partner}</span> and you. Check
-          out their profile to learn more about them. <span onClick={() => handleUserThread(partnerId)} className="basic--link">View Profile</span>
+          out their profile to learn more about them.{" "}
+          <span
+            onClick={() => handleUserThread(partnerId)}
+            className="basic--link"
+          >
+            View Profile
+          </span>
         </p>
         <button className="view--bottom" onClick={handleBottomScroll}>
           <span>Most Recent</span>
-          <FaArrowDown/>
+          <FaArrowDown />
         </button>
       </div>
       {dates.map((date) => {
@@ -87,7 +94,14 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
                     isSameDay(new Date(message.created_at), new Date(date))
                   )
                   .map((message) => {
-                    return <Message type="direct" message={message} socket={socket} partnerId={partnerId}/>;
+                    return (
+                      <Message
+                        type="direct"
+                        message={message}
+                        socket={socket}
+                        partnerId={partnerId}
+                      />
+                    );
                   })}
               </TimeStamp>
             ) : null}
@@ -95,7 +109,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
         );
       })}
     </section>
-  )
-})
+  );
+});
 
 export default DirectMessageFeed;
