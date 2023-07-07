@@ -34,8 +34,9 @@ function Channel(){
     const [chatInput, setChatInput] = useState("")
 
     const handleContent = () => {
-        console.log(chatInput)
-        console.log(socket)
+        //console.log(chatInput)
+        //console.log(socket)
+        if(chatInput.trim().length === 0) return;
         socket.emit("live_chat", {
             "message": chatInput,
             "sender_id": parseInt(user.id),
@@ -45,6 +46,7 @@ function Channel(){
             top: messageRef.current.scrollHeight,
             behavior: 'smooth'
         });
+        setChatInput("")
     }
 
     console.log("channel line 50      ", channel)

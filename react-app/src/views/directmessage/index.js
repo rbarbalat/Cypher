@@ -32,6 +32,7 @@ function DirectMessage() {
     const dispatch = useDispatch()
 
     const handleContent = () => {
+        if(chatInput.trim().length === 0) return;
         socket.emit("chat", {
             "user": user.username,
             "message": chatInput,

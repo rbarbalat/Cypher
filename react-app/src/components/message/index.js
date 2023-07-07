@@ -93,7 +93,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
       <div className="message--details_wrapper">
         <div className="message--name_time">
           <p onClick={() => handleUserThread(message.sender_id)} className="message--sender_name message_feed--user basic--link">
-            {message.sender}
+            {isLiveChat ? message.username : message.sender}
           </p>
           <span className="message--time">{convertTime()}</span>
         </div>
