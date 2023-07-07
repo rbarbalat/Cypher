@@ -37,13 +37,8 @@
     gap: 8px;
     padding: 5px 5px;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-.channel_label--label:hover {
-    background-color: var(--dark-hover);
-
-}
 
 .channel_label--label:hover .channel_label--icon {
     opacity: 1;

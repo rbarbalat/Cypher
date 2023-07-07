@@ -44,6 +44,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const authorizedTeam = team.users.filter(user => user.status === "owner" || user.status == "admin" );
     let isAuthorizedByTeam = authorizedTeam.find(person => person.id == user.id)
     isAuthorizedByTeam ? isAuthorizedByTeam = true : isAuthorizedByTeam = false
+    const onlyTeamAuthorized = isAuthorizedByTeam
     const isAuthorized = isOwner || isAuthorizedByTeam;
     console.log("auth from team", isAuthorizedByTeam)
     console.log(isAuthorized, "isAuthorized")
@@ -90,11 +91,16 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                     className={`channel_details--tab ${tab === 'members' ? 'active--tab' : ''}`}>
                         Members (Num)
                     </div>
-                    <div
-                    onClick={() => setTab('add member')}
-                    className={`channel_details--tab ${tab === 'add member' ? 'active--tab' : ''}`}>
-                            Add Member
-                    </div>
+                    {
+                      isAuthorized ?
+                        <div
+                            onClick={() => setTab('add member')}
+                            className={`channel_details--tab ${tab === 'add member' ? 'active--tab' : ''}`}>
+                                    Add Member
+                        </div> :
+                        null
+                    }
+
                 </div>
             </header>
             {
@@ -102,13 +108,12 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                 <div className='channel_details--contents about--section'>
                     <div className='channel_details--about_container'>
                         <div className='channel_details--about_item'>
-                            <span className='channel_details--about_item-link'>Edit</span>
                             <p>Description</p>
-                            <p>{`Channel description`}</p>
+                            <p>{channel.description}</p>
                         </div>
                         <div className='channel_details--about_item'>
                             <p>Created by</p>
-                            <p>{`Channel organizer`}</p>
+                            <p className='owner--name'>{owner.username}</p>
                         </div>
                         {
                             !isOwner ?
@@ -127,7 +132,6 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                             null
                         }
                     </div>
-                    <span className='channel_details--channel_id'>Channel ID: {`channel Id`}</span>
                 </div> :
                 tab === "members" ?
                 <div className='channel_details--contents members--section'>
@@ -140,12 +144,17 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                         </input>
                     </div>
                     <ul className='channel_details--member_list'>
-                        <li className='recipient_list_item--wrapper' onClick={() => setTab("add member")}>
-                            <div className='recipient_list_item--image'>
-                                <FaUserPlus className='add_icon'/>
-                            </div>
-                            <span className='recipient_list_item--name'>Add Member</span>
-                        </li>
+                        {
+                            isAuthorized ?
+                            <li className='recipient_list_item--wrapper' onClick={() => setTab("add member")}>
+                                <div className='recipient_list_item--image'>
+                                    <FaUserPlus className='add_icon'/>
+                                </div>
+                                <span className='recipient_list_item--name'>Add Member</span>
+                            </li> :
+                            null
+                        }
+
                         { filteredMembers.length ?
                             filteredMembers.map(member => (
                                 <ChannelMemberItem
@@ -153,6 +162,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                                     handleSelectRecipients={() => handleUserThread(member.id)}
                                     isOwner={isOwner}
                                     isAuthorizedByTeam={isAuthorizedByTeam}
+                                    onlyTeamAuthorized={onlyTeamAuthorized}
                                     channel = {channel}
                                     team = {team}
                                 />

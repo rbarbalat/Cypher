@@ -25,6 +25,7 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
 
     const normalizedChannels = Object.values(channels)
     const channelNotJoined = normalizedChannels.filter(channel => !normalizedJoinedChannels.some(cm => cm.id === channel.id))
+    const nonPrivateChannels = channelNotJoined.filter(channel => channel.private === false)
     // const teamsNotJoined = normalizedEveryTeam.filter(team => !normalizedTeams.some(tm => tm.id === team.id));
 
 
@@ -59,7 +60,7 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
         }
     }
 
-    let filteredChannels = channelNotJoined
+    let filteredChannels = nonPrivateChannels
     if (query.length > 0) {
         filteredChannels = filteredChannels.filter(channel => channel.name.toLowerCase().includes(query.toLowerCase()))
     }

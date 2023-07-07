@@ -124,4 +124,8 @@
 .recipient_list_item--name {
     font-weight: 600;
     text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }

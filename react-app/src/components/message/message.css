@@ -235,3 +235,12 @@
    background-color: var(--red);
    color: white;
 }
+
+.update_message--wrapper {
+   position: relative
+}
+
+.update_message--wrapper .message_textarea--count {
+   font-size: 12px;
+   padding: 0;
+}

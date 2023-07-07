@@ -34,7 +34,7 @@
 .message_textarea--actions {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 0 15px 15px 15px;
 }
 
@@ -53,4 +53,11 @@
 .active-btn {
     background-color: green;
     color: white;
+
+}
+
+.message_textarea--count {
+    font-size: 15px;
+    color: var(--body);
+    padding-left: 10px;
 }

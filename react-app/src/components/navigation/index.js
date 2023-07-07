@@ -10,6 +10,12 @@ import './navigation.css';
 
 function Navigation() {
     const user = useSelector(state => state.session.user)
+    const team = useSelector(state => state.teams.singleTeam)
+    const channel = useSelector(state => state.channels.singleChannel)
+    const isTeamOwner = team.users.filter(user => user.status === "owner");
+    let isAuthorizedByTeam = isTeamOwner.find(person => person.id == user.id)
+    const owner = channel.users.find(user => user.status === "owner")
+    const isOwner = owner.id === user.id;
     const dispatch = useDispatch();
     const history = useHistory();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
@@ -27,6 +33,7 @@ function Navigation() {
     return (
         <nav className='navigation--wrapper'>
             <div className='navigation--contents'>
+                { isTeamOwner ? <span>(You are the Owner of this Team)</span> : null}
                 <div onClick={() => setIsVisible(true)} className='navigation--user'>
                     <span>{user.username}</span>
                     <div className='navigation--image'></div>

@@ -13,7 +13,6 @@ function ChannelLabel() {
         <div className='channel_label--wrapper'>
             <div className='channel_label--label' >
             <span className='channel_label--text'>Channel</span>
-            <FaChevronDown className='channel_label--icon'/>
             </div>
             {/* {
                 createChannel || joinChannel ?

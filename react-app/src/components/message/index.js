@@ -101,14 +101,18 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
           <div className="message--message--contents">
             {
             updating ?
-              <textarea className="message--update--input" type="text" value={update} onChange={(e) => setUpdate(e.target.value)}></textarea> :
+            <div className="update_message--wrapper">
+              <span style={update.length > 500 ? {color: 'red'} : null} className="message_textarea--count">{ update.length <=500 ? `${500 - update.length} characters left` : 'Character Limit Reached'}</span>
+              <textarea className="message--update--input" type="text" value={update} onChange={(e) => setUpdate(e.target.value)}></textarea>
+            </div>
+               :
               <div className="message--contents">
                 <p className="message--message">{message.message}</p>
               </div>
             }
             {
               updating ?
-              <button disabled={!update.length} className={`message--action--btn message--confirm ${update.length ? 'active--confirm' : ''}`} onClick={editDM}>
+              <button disabled={!update.length || update.length > 500} className={`message--action--btn message--confirm ${update.length && update.length <= 500 ? 'active--confirm' : ''}`} onClick={editDM}>
                 <>Confirm</>
                 <FaCheck/>
               </button>

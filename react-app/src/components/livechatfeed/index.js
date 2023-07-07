@@ -12,6 +12,7 @@ import { thunkGetUserThread } from '../../store/thread';
 const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
   const {messages, channel, socket, setIsVisible} = props
     const [ loading, setLoading ] = useState(true)
+    const owner = channel.users.find(user => user.status === 'owner')
     // const start = new Date(messages[0].created_at);
     // const end = new Date(messages[messages.length - 1].created_at)
     // const dates = [];
@@ -59,7 +60,7 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
                     <p className='message_feed--user'>{channel.name}</p>
                 </div>
             </div>
-            {/* <p className='message_feed--introduction--greeting' ><span onClick={() => handleUserThread(channel.users[0].id)} className='formal basic--link'>{channel.users[0].username}</span> created this {channel.private ? 'private' : 'public'} channel on {`formatted created date`}. This is the very beginning of the <span onClick={() => setIsVisible(true)} className='basic--link'>{channel.name}</span> channel.</p> */}
+            <p className='message_feed--introduction--greeting' ><span onClick={() => handleUserThread(channel.users[0].id)} className='formal basic--link'>{owner.username}</span> created this {channel.private ? 'private' : 'public'} channel. This is the very beginning of the <span onClick={() => setIsVisible(true)} className='basic--link'>{channel.name}</span> channel.</p>
             <button className="view--bottom" onClick={handleBottomScroll}>
               <span>Most Recent</span>
               <FaArrowDown/>
