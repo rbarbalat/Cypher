@@ -54,18 +54,9 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
             return;
         } else {
             setCreateChannel(false); //do we need this?
+            setJoinChannel(false)
             history.push(`/team/${team.id}/channels/${data.id}`)
         }
-        */
-
-        const newChannel = {name, description, private: isPrivate};
-        const data = await dispatch(thunkCreateChannel(team.id, newChannel))
-        if (data) {
-            setErrors(data)
-        }
-        setCreateChannel(false)
-        setJoinChannel(false)
-        history.push(`/team/${team.id}/channels/${data.id}`)
     }
 
     let filteredChannels = channelNotJoined
