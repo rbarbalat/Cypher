@@ -30,18 +30,17 @@ function CreateTeamForm() {
     const newTeam = formData;
     const data = await dispatch(thunkCreateTeam(newTeam));
     if (data.errors) {
-      const keys = Object.keys(data.errors)
-      const vals = Object.values(data.errors)
-      const valErrors = {}
+      const keys = Object.keys(data.errors);
+      const vals = Object.values(data.errors);
+      const valErrors = {};
       //each val is an array of length 1
       for(let i = 0; i<keys.length; i++)
       {
-        // console.log(keys[i] + "   " + vals[i][0])
         valErrors[keys[i]] = vals[i][0]
       }
-      setErrors(valErrors)
-      console.log("printing state variable errors object")
-      console.log(errors)
+      setErrors(valErrors);
+      // console.log("printing state variable errors object");
+      // console.log(errors);
       return;
     } else {
       history.push(`/dashboard`);

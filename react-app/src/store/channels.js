@@ -92,8 +92,9 @@ export const thunkGetChannel = (id) => async dispatch => {
 export const thunkCreateChannel = (id, channel) => async dispatch => {
     const res = await fetch(`/api/teams/${id}/channels`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(channel)
+        // headers: { "Content-Type": "application/json" },
+        // body: JSON.stringify(channel)
+        body: channel
     })
     if (res.ok) {
         const data = await res.json()

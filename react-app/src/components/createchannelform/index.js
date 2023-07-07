@@ -27,13 +27,13 @@ function CreateChannelForm({ setCreateChannel }) {
 
 
     const history = useHistory()
-    const handleCreateTeam = async () => {
-        /*
+    const handleCreateChannel = async (e) => {
+
         e.preventDefault(); //add e parameter/argument
         const formData = new FormData()
         formData.append("name", name)
         formData.append("description", description)
-        formData.append("private", private)
+        formData.append("private", isPrivate)
         const newChannel = formData;
         const data = await dispatch(thunkCreateChannel(team.id, newChannel))
         if (data.errors)
@@ -44,7 +44,6 @@ function CreateChannelForm({ setCreateChannel }) {
             //each val is an array of length 1
             for(let i = 0; i<keys.length; i++)
             {
-                // console.log(keys[i] + "   " + vals[i][0])
                 valErrors[keys[i]] = vals[i][0]
             }
             setErrors(valErrors)
@@ -55,15 +54,6 @@ function CreateChannelForm({ setCreateChannel }) {
             setCreateChannel(false); //do we need this?
             history.push(`/team/${team.id}/channels/${data.id}`)
         }
-        */
-
-        const newChannel = {name, description, private: isPrivate};
-        const data = await dispatch(thunkCreateChannel(team.id, newChannel))
-        if (data) {
-            setErrors(data)
-        }
-        setCreateChannel(false)
-        history.push(`/team/${team.id}/channels/${data.id}`)
     }
 
     let filteredChannels = channelNotJoined
@@ -103,6 +93,7 @@ function CreateChannelForm({ setCreateChannel }) {
                     <p onClick={() => setTab('join')}>Join Channel</p>
                 </header>
                 { tab === 'create' ?
+                <form onSubmit={e => handleCreateChannel(e)}>
                 <div className='create_channel--form'>
                     <Input
                         placeholder='Enter a name for the channel'
@@ -130,12 +121,13 @@ function CreateChannelForm({ setCreateChannel }) {
                         <p className='form--label--label'>Is this a private channel?</p>
                     </label>
                     <button
-                        onClick={() =>  handleCreateTeam()}
                         disabled={!name.length || !description.length}
                         className='create_channel--button'>
                         Create Channel
                     </button>
-                </div> :
+
+                </div>
+                </form> :
                 <div>
                     <header>
                         <input value={query} onChange={(e)=>setQuery(e.target.value)}></input>
