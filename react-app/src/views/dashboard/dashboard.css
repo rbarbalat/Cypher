@@ -130,7 +130,7 @@
 .dashboard--team--info_image {
     height: 55px;
     aspect-ratio: 1;
-    background-color: var(--border);
+    /* background-color: var(--border); */
     border-radius: 5px;
     background-position: center;
     background-repeat: no-repeat;
