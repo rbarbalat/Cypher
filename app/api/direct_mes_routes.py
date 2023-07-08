@@ -75,7 +75,7 @@ def get_messages(id):
             "created_at": message.created_at,
             "partner": id,
             "partner_name": partner.username,
-            "image": partner.image
+            "image": partner.image if partner.image else None
         }for message in messages]
     return {"messages": messages, "user": partner.to_dict()}
 
