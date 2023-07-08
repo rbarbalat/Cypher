@@ -8,27 +8,16 @@ import { thunkGetAllMembers } from '../../../store/teams'
 
 
 function Recipients({recipient, setRecipient}) {
-    const [ loading, setLoading] = useState(true)
-    const dispatch = useDispatch()
     const team = useSelector(state => state.teams.singleTeam)
-    const data = useSelector(state => state.teams.allMembers);
-    const [recipients, setRecipients] = useState([])
+    const user = useSelector(state => state.session.user);
+    const data = team.users
     const [query, setQuery] = useState('')
+    const members = data.filter(member => member.id !== user.id)
 
-    let filteredMembers = recipients
+    let filteredMembers = members
     if (query) {
         filteredMembers = filteredMembers.filter(member => member.username.toLowerCase().includes(query.toLowerCase()));
     }
-
-    console.log(recipients, filteredMembers)
-
-    useEffect(() => {
-        dispatch(thunkGetAllMembers(team.id))
-        .then((data) => setRecipients([...Object.values(data)]))
-        .then(() => setLoading(false))
-    }, [dispatch])
-
-    if (loading || !team || !data) return <DataLoading></DataLoading>
 
     return (
         <div className='recipients--wrapper'>

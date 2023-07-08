@@ -5,7 +5,7 @@ function RecipientItem({member, handleRemoveRecipients}) {
   console.log(member)
   return (
     <div className='recipient_item--wrapper'>
-        <div className='recipient_item--image'>
+        <div className='recipient_item--image' style={{backgroundImage: `url(${member.image})`}}>
            { member.image ? null : <span>{member.username.charAt(0)}</span> }
         </div>
         <span className='recipient_item--name'>{member.username}</span>

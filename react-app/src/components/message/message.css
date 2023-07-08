@@ -21,6 +21,9 @@
    aspect-ratio: 1;
    border-radius: 5px;
    background-color: var(--border);
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
 }
 
 .message--name_time {

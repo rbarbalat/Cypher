@@ -41,6 +41,8 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     (state) => state.messages.partners[recipientId].partner
   );
 
+  const partnerImage = useSelector(state => state.messages.partners[recipientId].image)
+
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, "P"));
   }
@@ -57,7 +59,9 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     <section ref={ref} id="message_feed--wrapper">
       <div className="message_feed--introduction">
         <div className="message_feed--introduction--recipient">
-          <div className="message_feed--introduction--image"></div>
+          <div className="message_feed--introduction--image" style={{backgroundImage: `url(${partnerImage})`}}>
+            {partnerImage ? null : <span>{partner.charAt(0)}</span>}
+          </div>
           <div className="message_feed--introduction--information">
             <p
               onClick={() => handleUserThread(partnerId)}
