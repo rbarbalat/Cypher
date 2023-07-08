@@ -17,7 +17,7 @@ function Navigation() {
     //channel.users is undefined
     //line 21 causes a type error on on first login when clicking on any team b/c there is
     //no single channel yet
-    const TeamOwner = team.users.filter(user => user.status === "owner");
+    const TeamOwner = team.users.find(user => user.status === "owner");
     // let isAuthorizedByTeam = isTeamOwner.find(person => person.id == user.id)
     // const owner = channel.users.find(user => user.status === "owner")
     const isTeamOwner = TeamOwner.id === user.id;
