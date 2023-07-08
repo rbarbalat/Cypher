@@ -22,34 +22,26 @@ direct_mes_routes = Blueprint("messages", __name__)
 @direct_mes_routes.route("/")
 def get_direct_messages():
     if not current_user.is_authenticated:
-        return {"error": "go get logged in"}
+        return {"error": "go get logged in"}, 403
+
     sent_to_these_users = [ dm.recipient for dm in current_user.sent_messages]
     received_from_these_users = [dm.sender for dm in current_user.received_messages]
+
+    #spread both groups into a set to get unique partners
     dm_partners = {*sent_to_these_users, *received_from_these_users}
     return [ {"id": partner.id, "partner": partner.username }
             for partner in dm_partners ]
-    #below doesn't account for users who sent you a msg that you never responded to
-    # recipient_users = set()
-    # messages = DirectMessage.query.filter(
-    #     DirectMessage.sender_id.in_([current_user.id]),
-    #     ).order_by(DirectMessage.created_at).all()
-
-    # for message in messages:
-    #     recipient_users.add((message.recipient.username, message.recipient.id))
-    # return [
-    #     {"id": recipient[1], "recipient": recipient[0]} for recipient in recipient_users
-    # ]
 
 #GET ROUTE FOR GETTING A MESSAGE
 @direct_mes_routes.route("/<int:id>")
 def get_message(id):
     if not current_user.is_authenticated:
-        return {"error": "go get logged in"}
+        return {"error": "go get logged in"}, 403
     message = DirectMessage.query.get(id)
     if not message:
-        return {"error": "message not found"}
+        return {"error": "message not found"}, 404
     if message.sender_id != current_user.id and message.recipient_id !=current_user.id:
-        return {"error": "Not authorized to view this message"}
+        return {"error": "Not authorized to view this message"}, 403
     return {
             "id": message.id,
             "sender_id": message.sender.id,
@@ -62,7 +54,7 @@ def get_message(id):
 @direct_mes_routes.route("/partner/<int:id>")
 def get_messages(id):
     if not current_user.is_authenticated:
-        return {"error": "go get logged in"}
+        return {"error": "go get logged in"}, 403
     messages = DirectMessage.query.filter(
         or_(DirectMessage.sender_id == current_user.id, DirectMessage.sender_id == id)
     ).filter(
@@ -71,6 +63,8 @@ def get_messages(id):
             DirectMessage.recipient_id == id,
         )).order_by(DirectMessage.created_at).all()
     partner = User.query.get(id)
+    if partner is None:
+        return {"error": "partner does not exist"}, 404
     messages =  [{
             "id": message.id,
             "sender": message.sender.username,
@@ -88,7 +82,7 @@ def get_messages(id):
 def send_direct_messages(id):
     print("we are inside the send_direct_messages function")
     if not current_user.is_authenticated:
-        return {"error": "go get logged in"}
+        return {"error": "go get logged in"}, 403
     form = direct_mes_form.DirectMessageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
@@ -105,7 +99,7 @@ def send_direct_messages(id):
             "message": message.message,
             "created_at": message.created_at
         }
-    return {"errors": form.errors}
+    return {"errors": form.errors}, 400
 
 
 #EDIT MESSAGE
@@ -113,10 +107,10 @@ def send_direct_messages(id):
 @direct_mes_routes.route('/<int:id>/edit', methods=["POST"])
 def edit_direct_message(id):
     if not current_user.is_authenticated:
-        return {"error": "go get logged in"}
+        return {"error": "go get logged in"}, 403
     message = DirectMessage.query.get(id)
     if message.sender_id != current_user.id:
-        return {"error" : "not authorized"}
+        return {"error" : "not authorized"}, 403
     form = direct_mes_form.DirectMessageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
@@ -129,19 +123,19 @@ def edit_direct_message(id):
             "message": message.message,
             "created_at": message.created_at
         }
-    return {"errors": form.errors}
+    return {"errors": form.errors}, 400
 
 #DELETE MESSAGE
 
 @direct_mes_routes.route('/<int:id>/delete')
 def delete_direct_message(id):
     if not current_user.is_authenticated:
-        return {"error": "go get logged in"}
+        return {"error": "go get logged in"}, 403
     message = DirectMessage.query.get(id)
     if not message:
         return {"error": "message not found"}
     if message.sender_id != current_user.id:
-        return {"error" : "not authorized"}
+        return {"error" : "not authorized"}, 403
     db.session.delete(message)
     db.session.commit()
     return {"message" : "message deleted :)"}

@@ -9,21 +9,22 @@ const actionGetFeed = (feed) => ({
 
 // THUNK
 export const thunkGetFeed = (type, id) => async dispatch => {
-    let res
-    if (type === 'channel') {
-        res = await fetch(`/api/channels/${id}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
-        })
-    } else {
-        res = await fetch()
-    }
+    const res = await fetch(`/api/channels/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    //dispatch(actionGetFeed(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetFeed(data))
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 

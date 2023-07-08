@@ -51,12 +51,18 @@ export const thunkGetChannels = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionGetChannels(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetChannels(data))
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData;
     }
 }
 
@@ -66,12 +72,18 @@ export const thunkGetChannelsByUser = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    // dispatch(actionGetChannelsUser(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetChannelsUser(data))
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData;
     }
 }
 
@@ -80,12 +92,18 @@ export const thunkGetChannel = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionGetChannel(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetChannel(data))
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData;
     }
 }
 
@@ -96,13 +114,20 @@ export const thunkCreateChannel = (id, channel) => async dispatch => {
         // body: JSON.stringify(channel)
         body: channel
     })
+    //dispatch(actionCreateChannel(data))
+    console.log("normal response");
+    console.log(res);
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionCreateChannel(data))
-        return data
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData;
     }
 }
 
@@ -111,13 +136,18 @@ export const thunkDeleteUserFromChannel = (chan_id, user_id) => async dispatch =
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionDeleteChannelMember(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionDeleteChannelMember(data))
-        return data
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 
@@ -126,13 +156,18 @@ export const deleteChannel = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionDeleteChannel(id))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionDeleteChannel(id))
-        return data
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 
@@ -141,28 +176,40 @@ export const thunkGetLiveChats = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionGetLiveChats(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetLiveChats(data))
         return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 
+//THE DISPATCH WAS COMMENTED OUT HERE INVESTIGATE
 export const thunkJoinChannel = (id) => async dispatch => {
     const res = await fetch(`/api/channels/${id}/members`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }
     })
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
-        // dispatch(actionJoinChannel(data))
-        return data
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
+
+        //dispatch commented out b/c redirecting on join to to diff page that gets the data itself
+        //dispatch(actionJoinChannel(data))
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 // REDUCER

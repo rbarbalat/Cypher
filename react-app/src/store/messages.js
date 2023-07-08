@@ -26,12 +26,18 @@ export const thunkGetPartners = () => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionGetPartners(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetPartners(data))
+        return data;
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 
@@ -40,14 +46,20 @@ export const thunkGetDirectMessages = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     })
+    //dispatch(actionGetDirectMessagesWithPartner(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetDirectMessagesWithPartner(data))
-        //need return value inside useEffect for socket
+
+        //need to return value inside useEffect for socket
         return data.messages
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 
@@ -57,24 +69,35 @@ export const thunkCreateDirectMessage = (id, message) => async dispatch => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(message)
     })
+    //dispatch(actionCreateDirectMessage(data))
     if (res.ok) {
-        const data = await res.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionCreateDirectMessage(data))
-        // return data
+        //second fetch below, don't return
+    }else{
+        const errorData = await res.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
     const res2 = await fetch("/api/messages/", {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
+    //dispatch(actionGetPartners(data))
     if (res2.ok) {
-        const data = await res2.json()
-        if (data.errors) {
-            return data.errors
-        }
+        const data = await res2.json();
+        // console.log("good response")
+        // console.log(data)
         dispatch(actionGetPartners(data))
+        //no return
+    }else{
+        const errorData = await res2.json();
+        console.log("error response");
+        console.log(errorData);
+        return errorData
     }
 }
 
