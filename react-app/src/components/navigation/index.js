@@ -12,10 +12,15 @@ function Navigation() {
     const user = useSelector(state => state.session.user)
     const team = useSelector(state => state.teams.singleTeam)
     const channel = useSelector(state => state.channels.singleChannel)
-    const isTeamOwner = team.users.filter(user => user.status === "owner");
-    let isAuthorizedByTeam = isTeamOwner.find(person => person.id == user.id)
-    const owner = channel.users.find(user => user.status === "owner")
-    const isOwner = owner.id === user.id;
+    console.log("channel.users     ");
+    console.log(channel.users)
+    //channel.users is undefined
+    //line 21 causes a type error on on first login when clicking on any team b/c there is
+    //no single channel yet
+    const TeamOwner = team.users.filter(user => user.status === "owner");
+    // let isAuthorizedByTeam = isTeamOwner.find(person => person.id == user.id)
+    // const owner = channel.users.find(user => user.status === "owner")
+    const isTeamOwner = TeamOwner.id === user.id;
     const dispatch = useDispatch();
     const history = useHistory();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
