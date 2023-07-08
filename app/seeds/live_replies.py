@@ -7,15 +7,18 @@ fake = Faker()
 
 def seed_live_replies(users, live_chats):
     lr_list = []
-    for i in range(0, 30):
-        lr = LiveReplies(
-            sender_id=choice(users).id,
-            live_chat_id=choice(live_chats).id,
-            message=fake.text(max_nb_chars=randint(300, 499))
-        )
-        db.session.add(lr)
-        lr_list.append(lr)
-    db.session.commit()
+    # CAN'T DO THIS RANDOMLY B/C SENDER MIGHT REPLY
+    # TO A CHAT IN A CHANNEL HE IS NOT IN
+    # COMMENT OUT FOR NOW
+    # for i in range(0, 30):
+    #     lr = LiveReplies(
+    #         sender_id=choice(users).id,
+    #         live_chat_id=choice(live_chats).id,
+    #         message=fake.text(max_nb_chars=randint(300, 499))
+    #     )
+    #     db.session.add(lr)
+    #     lr_list.append(lr)
+    # db.session.commit()
     return lr_list
 
 def undo_live_replies():
