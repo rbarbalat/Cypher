@@ -24,10 +24,10 @@ live_chat_routes = Blueprint("chats", __name__)
 @live_chat_routes.route('/<int:id>')
 def get_chat(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   chat = LiveChat.query.get(id)
   if not chat:
-        return {"error": "chat not found"}
+        return {"error": "chat not found"}, 404
   return chat.to_dict_no_assoc()
 
 #EDIT chat by id
@@ -35,12 +35,12 @@ def get_chat(id):
 @live_chat_routes.route('/<int:id>', methods=['POST'])
 def edit_chat(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   chat = LiveChat.query.get(id)
   if not chat:
-    return {"error": "chat couldn't be found"}
+    return {"error": "chat couldn't be found"}, 404
   if chat.sender_id != current_user.id:
-    return {"error" : "not authorized"}
+    return {"error" : "not authorized"}, 403
   form = LiveChatForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   if form.validate_on_submit():
@@ -52,12 +52,12 @@ def edit_chat(id):
 @live_chat_routes.route('/<int:id>/delete')
 def delete_chat(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   chat = LiveChat.query.get(id)
   if not chat:
-    return {"error": "message not found"}
+    return {"error": "message not found"}, 404
   if chat.sender_id != current_user.id:
-    return {"error" : "not authorized"}
+    return {"error" : "not authorized"}, 403
   db.session.delete(chat)
   db.session.commit()
   return {"message" : "message deleted :)"}
@@ -67,11 +67,11 @@ def delete_chat(id):
 @live_chat_routes.route('/<int:id>/replies')
 def get_replies_to_chat(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
 
   chat = LiveChat.query.get(id)
   if not chat:
-        return {"error": "chat not found"}
+        return {"error": "chat not found"}, 404
 
   return [ { **reply.to_dict_no_assoc(), "username": reply.sender_of_reply.id }
       for reply in chat.replies]
@@ -81,14 +81,14 @@ def get_replies_to_chat(id):
 @live_chat_routes.route('/<int:id>/replies', methods=['POST'])
 def send_live_reply(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   chat = LiveChat.query.get(id)
   channel = chat.channel
   team = channel.team
   teamOwnerAdmin = current_user.id in [ tm.user_id for tm in team.users if tm.status in ["owner", "admin"] ]
   authorized = current_user.id in [ cm.user_id for cm in channel.users ]
   if not authorized and not teamOwnerAdmin:
-    return {"error": "Not authorized to reply in this channel"}
+    return {"error": "Not authorized to reply in this channel"}, 403
   form = LiveReplyForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   if form.validate_on_submit():
@@ -99,4 +99,4 @@ def send_live_reply(id):
     db.session.add(reply)
     db.session.commit()
     return reply.to_dict_no_assoc()
-  return {"errors": form.errors}
+  return {"errors": form.errors}, 400

@@ -12,7 +12,7 @@ channel_routes = Blueprint('channels', __name__)
 @channel_routes.route('/')
 def get_channels():
     if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}
+        return {"error" : "go get logged in"}, 403
     channels = Channel.query.all()
     # print("hello world")
     # print(channels)
@@ -41,10 +41,10 @@ def get_channels():
 @channel_routes.route('/<int:id>')
 def get_channel_by_id(id):
     if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}
+        return {"error" : "go get logged in"}, 403
     channel = Channel.query.get(id)
     if channel is None:
-        return {"error": "Channel not found"}
+        return {"error": "Channel not found"}, 404
 
     users = [ { **cm.user.to_dict(), "status": cm.status } for cm in channel.users]
     numMembers = len(users)
@@ -62,8 +62,10 @@ def get_channel_by_id(id):
 @channel_routes.route('/<int:id>/members')
 def get_members_for_channel(id):
     if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}
+        return {"error" : "go get logged in"}, 403
     channel = Channel.query.get(id)
+    if channel is None:
+      return {"error": "channel does not exist"}, 404
     users = [{
         "id":membership.user.id,
         "username":membership.user.username,
@@ -76,22 +78,19 @@ def get_members_for_channel(id):
 @channel_routes.route('/<int:id>/delete')
 def delete_channel(id):
     if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}
+        return {"error" : "go get logged in"}, 403
     channel = Channel.query.get(id)
     if channel is None:
-       return {"error": "channel not found"}
+       return {"error": "channel not found"}, 404
 
     team = channel.team
     #shouldn't happen but informative error in development, prevents keying into none
     if len(team.users) == 0:
-       return {"error": "the channel belongs to a team with no users including admins"}
+       return {"error": "the channel belongs to a team with no users including admins"}, 404
 
     #shouldn't happen but informatiave error in development, prevents keying into none
     if len(channel.users) == 0:
-       return {"error": "the channel has no users including no admin/owner"}
-
-    #replaced this query with something cleaner for now, keeping it as a reference
-    #is_authorized = ChannelMembership.query.filter(ChannelMembership.user_id == current_user.id).filter(or_(ChannelMembership.status == "admin", ChannelMembership.status == "owner")).filter(ChannelMembership.channel_id == id).first()
+       return {"error": "the channel has no users including no admin/owner"}, 404
 
     is_authorized_by_team = current_user.id in [tm.user_id for tm in team.users if tm.status in ["owner", "admin"]]
     is_authorized_by_channel = current_user.id in [cm.user_id for cm in channel.users if cm.status in ["owner", "admin"]]
@@ -100,7 +99,7 @@ def delete_channel(id):
      #can be authorized by being an owner/admin of the team or channel
 
     if not is_authorized:
-        return {"error" : "not authorized"}
+        return {"error" : "not authorized"}, 403
     db.session.delete(channel)
     db.session.commit()
     return {"message" : "channel deleted :)"}
@@ -109,26 +108,26 @@ def delete_channel(id):
 @channel_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_channel(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   #need a check to make sure the user is a member of the team that the channel belongs to
   channel = Channel.query.get(id)
   if not channel:
-     return {"error": "channel does not exist"}
+     return {"error": "channel does not exist"}, 404
 
   #late addition
   team = channel.team
   userInTeam = current_user.id in [tm.user_id for tm in team.users]
   if not userInTeam:
-     return {"error": "can't join a channel if you don't belong to the right team"}
+     return {"error": "can't join a channel if you don't belong to the right team"}, 404
   #late addition
 
   team_id = channel.team.id
   isOwner = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(team_id == TeamMembership.team_id).first()
   isAlreadyMember = ChannelMembership.query.filter(ChannelMembership.user_id == current_user.id).filter(ChannelMembership.channel_id == id).first()
   if channel.private and not isOwner:
-    return {"error" : "not authorized"}
+    return {"error" : "not authorized"}, 403
   if isAlreadyMember:
-      return {"error" : "you've already joined"}
+      return {"error" : "you've already joined"}, 500
   cm = ChannelMembership(
     user = current_user,
     channel = channel,
@@ -142,21 +141,22 @@ def add_member_to_channel(id):
 @channel_routes.route("/<int:chan_id>/member/<int:mem_id>")
 def delete_member_from_channel(chan_id, mem_id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
-  print("PRINTING CURRENT USER ----  ", current_user.id)
+    return {"error" : "go get logged in"}, 403
 
   channel = Channel.query.get(chan_id)
+  if channel is None:
+    return {"error": "channel does not exist"}, 404
   team_id = channel.team.id
   team = channel.team
   #this is the cm to be deleted
   cm = ChannelMembership.query.filter(ChannelMembership.user_id == mem_id).filter(ChannelMembership.channel_id == chan_id).first()
   if not cm:
-     return {"error": "no such user"}
+     return {"error": "no such user"}, 404
 
    # the user to be deleted is the owner but it is not the owner trying to delete himself
   if cm.status == "owner" and cm.user_id != current_user.id:
      print("this if statement")
-     return {"error": "unauthorized"}
+     return {"error": "unauthorized"}, 403
 
   #THIS CASE NEEDS TO BE CLARIFIED, PICKING A NEW OWNER?
   #owner deletes himself and a new owner is randomly chosen
@@ -164,7 +164,7 @@ def delete_member_from_channel(chan_id, mem_id):
     #  db.session.delete(cm)
     #  db.session.commit()
     #  return {"message": "successfully deleted"}
-    return {"error": "channel owner can't delete his own membership"}
+    return {"error": "channel owner can't delete his own membership"}, 403
 
     #regular user deletes himself
   if cm.user.id == current_user.id:
@@ -183,16 +183,16 @@ def delete_member_from_channel(chan_id, mem_id):
     db.session.delete(cm)
     db.session.commit()
     return get_team_channel_user_for_delete(team_id, current_user.id)
-  return {"error": "Unauthorized"}
+  return {"error": "Unauthorized"}, 403
 
 #GET all chats for channel
 @channel_routes.route('/<int:id>/chats')
 def get_all_chats_by_channel(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   channel = Channel.query.get(id)
   if not channel:
-    return {"error": "channel not found"}
+    return {"error": "channel not found"}, 404
   chats = LiveChat.query.filter(LiveChat.channel_id == id).order_by(LiveChat.created_at).all()
   # return {"chats":[chat.to_dict_no_assoc() for chat in chats]}
   return [ { **chat.to_dict_no_assoc(), "username": chat.sender_to_channel.username } for chat in chats]
@@ -201,10 +201,10 @@ def get_all_chats_by_channel(id):
 @channel_routes.route('/<int:id>/chats', methods=['POST'])
 def send_live_chat(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   channel_membership = ChannelMembership.query.filter_by(channel_id=id, user_id=current_user.id).first()
   if not channel_membership:
-    return {"error": "Not authorized to post in this channel"}
+    return {"error": "Not authorized to post in this channel"}, 403
   form = LiveChatForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   if form.validate_on_submit():
@@ -215,22 +215,23 @@ def send_live_chat(id):
     db.session.add(chat)
     db.session.commit()
     return chat.to_dict_no_assoc()
-  return {"errors": form.errors}
+  #ON FORMS errors instead of error key, keep for now?
+  return {"errors": form.errors}, 400
 
 
 #authorized member adds another user to a channel
 @channel_routes.route('/<int:id>/members/<int:user_id>', methods=['POST'])
 def auth_user_adds_member_to_channel(id, user_id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
 
   channel = Channel.query.get(id)
   if not channel:
-     return {"error": "channel does not exist"}
+     return {"error": "channel does not exist"}, 404
 
   userToAdd = User.query.get(user_id)
   if not userToAdd:
-     return {"error": "user does not exist"}
+     return {"error": "user does not exist"}, 404
 
   team = channel.team
 
@@ -240,15 +241,15 @@ def auth_user_adds_member_to_channel(id, user_id):
   currentIsTeamAuthorized = current_user.id in authTeamIds
 
   if not currentIsChannelOwner and not currentIsTeamAuthorized:
-     return {"error": "not authoried for this action"}
+     return {"error": "not authoried for this action"}, 403
 
   alreadyInChannel = userToAdd.id in [cm.user_id for cm in channel.users]
   if alreadyInChannel:
-     return {"error": "user already a member"}
+     return {"error": "user already a member"}, 404
 
   inRightTeam = userToAdd.id in [tm.user_id for tm in team.users]
   if not inRightTeam:
-     return {"error": "user can't be added to the channel b/c not in the right team"}
+     return {"error": "user can't be added to the channel b/c not in the right team"}, 404
 
   cm = ChannelMembership(channel=channel, user=userToAdd, status = "member")
   db.session.add(cm)

@@ -38,10 +38,10 @@ def get_teams():
 @team_routes.route("/<int:id>")
 def get_team_by_id(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   team = Team.query.get(id)
   if team is None:
-    return {"error": "Team not found"}
+    return {"error": "Team not found"}, 404
   users = [{**tm.user.to_dict(), "status": tm.status} for tm in team.users]
   numMembers = len(users)
   return {"id": team.id, "name": team.name,
@@ -53,7 +53,7 @@ def get_team_by_id(id):
 @team_routes.route("/currentuser")
 def get_user_teams():
   # if not current_user.is_authenticated:
-  #   return {"error" : "go get logged in"}
+  #   return {"error" : "go get logged in"}, 403
   team_list=[]
   for membership in current_user.teams:
     team_list.append(membership.team)
@@ -77,11 +77,11 @@ def get_user_teams():
 @team_routes.route("/<int:id>/channels")
 def get_team_channels(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   channel_list=[]
   team = Team.query.get(id)
   if team is None:
-    return {"error": "Team not found"}
+    return {"error": "Team not found"}, 404
   user_key_values = []
   for channel in team.channels:
     channel_list.append(channel)
@@ -100,11 +100,11 @@ def get_team_channels(id):
 @team_routes.route("/<int:id>/channels/user")
 def get_team_channel_user(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
 
   team = Team.query.get(id)
   if team is None:
-    return {"error": "Team not found"}
+    return {"error": "Team not found"}, 404
 
   x = set([cm.channel for cm in current_user.channels])
   channel_list = list(set(team.channels).intersection(x))
@@ -126,10 +126,12 @@ def get_team_channel_user(id):
 @team_routes.route('/<int:id>/members')
 def get_members_for_team(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
 
   #DO WE NEED TO PREVENT NON TEAM MEMBERS FROM HAVING ACCESS??
   team = Team.query.get(id)
+  if team is None:
+    return {"error": "Team not found"}, 404
   #DO WE NEED TO ADD USER'S EMAIL?
   users = [{
     "id":membership.user_id,
@@ -141,21 +143,22 @@ def get_members_for_team(id):
 @team_routes.route('/', methods=['POST'])
 def create_team():
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
 
   #weird syntax was jonathan testing something
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
 
-  print(form.data["name"])
-  print(form.data["description"])
+  # print(form.data["name"])
+  # print(form.data["description"])
   if form.validate_on_submit():
     image = form.data["image"]
     image.filename = get_unique_filename(image.filename)
     upload = upload_file_to_s3(image)
     #upload is a dicitonary with a key of url or a key of errors
     if "url" not in upload:
-      return {"error": "failed b/c of problem with the image file"}
+      return {"error": "failed b/c of problem with the image file"}, 400
+      #the key here is error but below is "errors", recheck this
 
     team = Team()
     # form.populate_obj(team)
@@ -172,21 +175,21 @@ def create_team():
       "description": team.description,
       "image": team.image
     }
-  # print(form.errors)
-  return {"errors": form.errors}
+  # RECHECK FRONT END, MIGHT NEED TO BE error not errors
+  return {"errors": form.errors}, 400
 
 #DELETE A TEAM
 @team_routes.route('/<int:id>/delete')
 def delete_team(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   team = Team.query.get(id)
   if not team:
-    return {"error": "Team does not exist"}
+    return {"error": "Team does not exist"}, 404
 
   authorized = current_user.id in [tm.user_id for tm in team.users if tm.status == "owner"]
   if not authorized:
-    return {"error": "not authorized"}
+    return {"error": "not authorized"}, 403
 
   file_delete = remove_file_from_s3(team.image)
   if file_delete is True:
@@ -194,20 +197,11 @@ def delete_team(id):
     db.session.commit()
     return {"message": "team deleted"}
   else:
-    #
+    #is this what we want?
     db.session.delete(team)
     db.session.commit()
     return {"message": "team deleted but error on image deletion"}
 
-  # for team_membership in current_user.teams:
-  #   if team_membership.team_id == team.id:
-  #     if team_membership.status == "owner":
-  #         db.session.delete(team)
-  #         db.session.commit()
-  #         return {"message" : "team deleted :)"}
-  #     else:
-  #       return {"error" : "not authorized"}
-  # return {"error" : "not authorized"}
 
 
 #CREATE A CHANNEL FOR A TEAM (ID)
@@ -237,23 +231,22 @@ def create_channel(id):
       "team_id":channel.team_id,
       "users": [{**current_user.to_dict(), "status": "owner"}]
     }
-  return {"errors": form.errors}
+  return {"errors": form.errors}, 400
 
 #ADD A MEMBER TO A TEAM (USER ADDS HIMSELF)
 @team_routes.route('/<int:id>/members', methods=['POST'])
 def add_member_to_team(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   team = Team.query.get(id)
   if team is None:
-    return {"error": "team does not exist"}
+    return {"error": "team does not exist"}, 404
   if len(team.users) == 0:
-    return {"error": "can't add yourself to a team with zero members"}
+    #DOUBLE CHECK THIS ERROR CODE
+    return {"error": "can't add yourself to a team with zero members"}, 500
   isAlreadyMember = current_user.id in [tm.user_id for tm in team.users]
-  #replaced with cleaner code
-  #isAlreadyMember = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(TeamMembership.team_id == id).first()
   if isAlreadyMember:
-    return {"error" : "you've already joined"}
+    return {"error" : "you've already joined"}, 500
   tm = TeamMembership(
     user = current_user,
     team = team,
@@ -269,17 +262,17 @@ def add_member_to_team(id):
 def delete_member_from_team(team_id, mem_id):
 
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   print("PRINTING CURRENT USER ----  ", current_user.id)
 
   #this is the tm to be deleted
   tm = TeamMembership.query.filter(TeamMembership.user_id == mem_id).filter(TeamMembership.team_id == team_id).first()
   if not tm:
-     return {"error": "no such user"}
+     return {"error": "no such user"}, 404
 
    # the user to be deleted is the owner but it is not the owner trying to delete himself
   if tm.status == "owner" and tm.user_id != current_user.id:
-     return {"error": "unauthorized"}
+     return {"error": "unauthorized"}, 403
 
   #owner deletes himself and a new owner is randomly chosen
   if tm.status == "owner" and tm.user_id == current_user.id:
@@ -302,10 +295,12 @@ def delete_member_from_team(team_id, mem_id):
     db.session.commit()
     return {"message": "successfully deleted"}
 
-  return {"error": "Unauthorized"}
+  return {"error": "Unauthorized"}, 403
 
 def roll_delete_team_to_channels(team_id, user_id):
   team = Team.query.get(team_id)
+  if team is None:
+    return {"error": "team does not exist"}, 404
   channels = team.channels
   for channel in channels:
     cm = ChannelMembership.query.filter(ChannelMembership.user_id == user_id).filter(ChannelMembership.channel_id == channel.id).first()
@@ -323,7 +318,7 @@ def get_team_channel_user_for_delete(id, user_id):
 
   team = Team.query.get(id)
   if team is None:
-    return {"error": "Team not found"}
+    return {"error": "Team not found"}, 404
 
   user = User.query.get(user_id)
   x = set([cm.channel for cm in user.channels])
