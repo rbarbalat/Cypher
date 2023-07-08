@@ -52,8 +52,11 @@ def add_image():
         if "url" not in upload:
             return {"error": "failed b/c of problem with the image file"}, 400
 
+        print("backend")
+        print(upload["url"])
         current_user.image = upload["url"]
         db.session.commit()
         return current_user.to_dict()
 
+    print({"errors": form.errors})
     return {"errors": form.errors}, 400

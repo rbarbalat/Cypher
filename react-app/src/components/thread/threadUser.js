@@ -19,19 +19,23 @@ function ThreadUser({thread}) {
     formData.append("image", image)
     const newImage = formData;
     //updates the image of the current_user
-    const data = await fetch(`/api/users/image`, {
+    const res = await fetch(`/api/users/image`, {
       method: 'POST',
       body: newImage
     })
-    console.log("response")
-    console.log(data)
-    console.log(thread)
-    if (data.errors) {
-      const valErrors = {}
-      valErrors.image = data.errors["image"]
+    if(res.ok)
+    {
+      const data = await res.json()
+      //NEED TO DISPATCH OTHER THUNKS THAT
+      //BECAUSE OTHER PARTS OF THE PAGE PULL IMAGE FROM DIFF PARTS OF THE STORE
+      await dispatch(thunkGetUserThread(thread.id))
+    }
+    else{
+      const data = await res.json()
+      const valErrors = {"image": data.errors.image[0]}
       setErrors(valErrors)
     }
-    await dispatch(thunkGetUserThread(thread.id))
+
   }
 
   return (
@@ -42,6 +46,7 @@ function ThreadUser({thread}) {
       <form onSubmit={handleUpdateImage} encType="multipart/form-data">
         <input type="file" accept="image/*" onChange={(e) => handleImage(e)}/>
         <button>Submit</button>
+        {errors.image && <p style={{"color": "red"}}>{errors.image}</p>}
       </form>
       <h2 className='user_thread--username'>{thread.username}</h2>
     </div>
