@@ -28,6 +28,8 @@ function Dashboard() {
         filteredTeams = filteredTeams.filter(team => team.name.toLowerCase().includes(teamQuery.toLowerCase()))
     }
 
+    console.log(normalizedEveryTeam)
+
 
 
 
