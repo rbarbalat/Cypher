@@ -28,6 +28,7 @@ def user(id):
 def all_users():
     if not current_user.is_authenticated:
         return {"error": "got get logged in"}, 403
-    #better structure for us, other route in auth might be use
+    #better structure for us, other route in auth might be used
+    #with that structure elsewhere
     users = User.query.all()
     return [user.to_dict() for user in users]
