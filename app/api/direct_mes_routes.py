@@ -29,7 +29,7 @@ def get_direct_messages():
 
     #spread both groups into a set to get unique partners
     dm_partners = {*sent_to_these_users, *received_from_these_users}
-    return [ {"id": partner.id, "partner": partner.username }
+    return [ {"id": partner.id, "partner": partner.username, "image": partner.image }
             for partner in dm_partners ]
 
 #GET ROUTE FOR GETTING A MESSAGE
@@ -47,7 +47,7 @@ def get_message(id):
             "sender_id": message.sender.id,
             "recipient_id": message.recipient.id,
             "message": message.message,
-            "created_at": message.created_at
+            "created_at": message.created_at,
         }
 
 # GET ALL MESSAGES BETWEEN 2 USERS
@@ -74,7 +74,8 @@ def get_messages(id):
             "message": message.message,
             "created_at": message.created_at,
             "partner": id,
-            "partner_name": partner.username
+            "partner_name": partner.username,
+            "image": partner.image
         }for message in messages]
     return {"messages": messages, "user": partner.to_dict()}
 
