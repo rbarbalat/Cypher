@@ -3,6 +3,10 @@
 
 .channel--wrapper {
     position: relative;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    text-overflow: ellipsis;
 }
 
 .channel--name {
@@ -25,6 +29,11 @@
 
 .channel--icon {
     font-size: 10px;
+}
+
+.channel--description {
+    font-size: 15px;
+    color: var(--body)
 }
 
 .channel_details--wrapper {

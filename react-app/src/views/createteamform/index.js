@@ -8,18 +8,23 @@ import StepThree from "./stepthree";
 import StepFour from "./stepfour";
 import "./createteamform.css";
 import Input from "../../components/inputs/input"
+import { FaArrowLeft } from "react-icons/fa";
 
 function CreateTeamForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(undefined);
+  const [imagePreview, setImagePreview ] = useState(undefined)
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
 
-  const handleStep = (num) => {
-    history.push(`/create-team/new/${num}`);
+  const handleImage = (e) => {
+    setImage(e.target.files[0])
+    setImagePreview(URL.createObjectURL(e.target.files[0]))
   };
+
+  console.log(image)
 
   const handleCreateTeam = async (e) => {
     e.preventDefault()
@@ -39,8 +44,6 @@ function CreateTeamForm() {
         valErrors[keys[i]] = vals[i][0]
       }
       setErrors(valErrors);
-      // console.log("printing state variable errors object");
-      // console.log(errors);
       return;
     } else {
       history.push(`/dashboard`);
@@ -49,27 +52,35 @@ function CreateTeamForm() {
 
   return (
     <main id="create_team_form--wrapper">
-      <div className="create_team_form--navigation"></div>
+      <div className="create_team_form--navigation">
+        <div className="create_team_form--back">
+          <FaArrowLeft/>
+          <span>Back to Dashboard</span>
+        </div>
+      </div>
       <div className="create_team_form--main">
         <div className="create_team_form--aside">
           <header className="create_team_form--header">
             <span>{name}</span>
           </header>
         </div>
-        <form
-          // action="/api/teams/"
-          // method="POST"
-          onSubmit={handleCreateTeam}
-          encType="multipart/form-data"
-        >
-          <Input
-            placeholder="Ex: Acme Marketing or Acme"
-            value={name}
-            setValue={(x) => setName(x.target.value)}
-            name="name"
-            error={errors.name}
-            disabled={false}
-          />
+        <div className="create_team_form--contents">
+          <h1>Create New Team ✨</h1>
+        <form onSubmit={handleCreateTeam} encType="multipart/form-data">
+          <div className="create_team_form--input">
+            <p><strong>What's the name of your team or organization?</strong><br/>
+            This will the name of your Cypher team -- choose something that your team will recognize.</p>
+            <Input
+              placeholder="Ex: Acme Marketing or Acme"
+              value={name}
+              setValue={(x) => setName(x.target.value)}
+              name="name"
+              error={errors.name}
+              disabled={false}
+            />
+          </div>
+          <div className="create_team_form--input">
+          <p><strong>Describe what your team is working on now.</strong><br/>This could be anything: a project, campaign, event, or the deal you’re trying to close.</p>
           <Input
             placeholder="Ex: Q4 budget, autumn campaign"
             value={description}
@@ -78,32 +89,26 @@ function CreateTeamForm() {
             error={errors.description}
             disabled={false}
           />
-         <input
-              type="file"
-              accept="image/*"
-              // error={errors.image}
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-              {errors.image && <p style={{"color": "red"}}>{errors.image}</p>}
+          </div>
+          <div className="create_team_form--image">
+          <label  className="create_team_form--image_label">Team Image</label>
+          {imagePreview ? <div className="create_team_form--preview" style={{backgroundImage: `url(${imagePreview})`}}></div> : null }
+          <div className="create_team_form--span">
+            <label  className="create_team_form--image_button" htmlFor="team-image">Upload Image</label>
+            { image ? <span>{image.name}</span> : <span>No file chosen</span>}
+            <input id="team-image" type="file" accept="image/*"
+                onChange={(e) => handleImage(e)}
+              />
+          </div>
+          {errors.image && <span  className="create_team_form--error">{errors.image}</span>}
+          </div>
 
+
+          <div className="create_team_form--actions">
           <button className="create_form_step--next">Finish</button>
+          </div>
         </form>
-        {/* <div className='create_team_form--step'>
-                    <Switch>
-                        <Route exact path="/create-team/new/1" >
-                            <StepOne handleStep={handleStep} name={name} setName={setName}/>
-                        </Route>
-                        <Route exact path="/create-team/new/2">
-                            <StepTwo handleStep={handleStep} description={description} setDescription={setDescription}/>
-                        </Route>
-                        <Route exact path="/create-team/new/3">
-                            <StepThree handleStep={handleStep} image={image} setImage={setImage} />
-                        </Route>
-                        <Route exact path="/create-team/new/4">
-                            <StepFour handleCreateTeam={handleCreateTeam} handleStep={handleStep} name={name} />
-                        </Route>
-                    </Switch>
-          </div> */}
+        </div>
       </div>
     </main>
   );

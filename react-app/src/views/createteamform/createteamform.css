@@ -12,6 +12,25 @@
     height: 60px;
     width: 100%;
     background-color: var(--blue);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.create_team_form--back {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: white;
+    gap: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.create_team_form--back:hover {
+    background-color: var(--dark-hover);
 }
 
 .create_team_form--main {
@@ -22,6 +41,72 @@
 .create_team_form--aside {
     background-color: var(--blue);
     width: 300px;
+
+}
+
+.create_team_form--contents {
+    padding: 30px;
+    width: 400px;
+}
+
+.create_team_form--input  {
+    margin-bottom: 30px;
+}
+
+.create_team_form--input p {
+    font-size: 15px;
+    color: var(--body);
+    margin-bottom: 5px;
+}
+
+.create_team_form--image {
+    display: flex;
+    flex-direction: column;
+    margin: 60px 0 60px 0;
+    position: relative;
+
+}
+
+#team-image {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+.create_team_form--preview {
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+    margin: 5px 0 20px 0;
+    border-radius: 5px;
+    height: 200px;
+    width: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.create_team_form--image_button {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    align-self: flex-start;
+    font-size: 13.33333px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.create_team_form--span {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.create_team_form--image_label {
+    font-size: 15px;
+    color: var(--body);
+    font-weight: 600;
+    margin-bottom: 5px;
+    position: absolute;
+    top: -25px;
 
 }
 

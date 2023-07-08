@@ -60,13 +60,13 @@ function CreateTeam() {
                     {normalizedTeams.map(team => (
                         <div key={team.id}  onClick={() => handleTeam(team.id)} className='dashboard--team'>
                             <div className='dashboard--team--info'>
-                                <div className='dashboard--team--info_image'></div>
+                                <div className='dashboard--team--info_image'  style={{backgroundImage: `url(${team.image})`}}></div>
                                 <div>
                                     <p>{team.name}</p>
                                     <div className='dashboard_team_members--wrapper'>
                                         <div className='dashboard_team_members--span'>
-                                            {[1,2,3,4,5].map(member => (
-                                                <div key={member} className='dashboard_team_members--member'></div>
+                                            {team.users.slice(0,5).map(member => (
+                                                <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'></div>
                                             ))}
                                         </div>
                                         <span className='dashboard_team_members--count'>{team.numMembers} members</span>

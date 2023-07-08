@@ -1,1 +1,54 @@
 @import url('../../index.css');
+
+.team_home--header {
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.team--description {
+    font-size: 15px;
+    color: var(--body)
+}
+
+.team_home--contents {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-hover);
+}
+
+.team_home--image {
+    height: 350px;
+    aspect-ratio: 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+}
+
+.team_home--data {
+    width: 500px;
+    text-align: center;
+}
+
+.team_home--name {
+    font-size: 30px;
+    margin-bottom: 0;
+}
+.team_home--description {
+    font-size: 22px;
+    color: var(--body);
+    margin: 5px 20px 30px 20px;
+}
+
+.team_home--member_count {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin: 20px 0;
+    background-color: white;
+}

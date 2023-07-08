@@ -10,6 +10,7 @@ function ChannelTeam({setIsVisible, data}) {
             <h1 className='channel--label'>{data.name}</h1>
             <FaChevronDown className='channel--icon'/>
         </div>
+        <span className='channel--description'>{data.description}</span>
     </div>
   )
 }
