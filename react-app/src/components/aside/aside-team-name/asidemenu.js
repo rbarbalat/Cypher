@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearTeam, deleteTeam } from '../../../store/teams';
 import { useParams } from 'react-router-dom';
+import { FaArrowRightFromBracket, FaTrashCan } from 'react-icons/fa6'
+import Modal from '../../modal';
 
 const AsideTeamMenu = React.forwardRef((props, ref) => {
+    const [ confirm, setConfirm ] = useState('')
     const dispatch = useDispatch();
     const history = useHistory();
     const { team } = props;
@@ -34,6 +37,30 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
 
     const isOwner = (status === "owner")
     return (
+        <>
+        {
+            confirm === 'leave' ?
+            <Modal>
+                <div className="aside_team--modal">
+                    <p className="aside_team--modal--message"><strong>Are you sure you want to leave this team?</strong></p>
+                    <div className="aside_team--modal--actions">
+                        <button onClick={() => setConfirm('')}className="aside_team--modal--action modal--cancel">Stay on Team</button>
+                        <button onClick={deleteTeamMembership} className="aside_team--modal--action  modal--delete">Leave Team</button>
+                    </div>
+                </div>
+            </Modal> :
+            confirm === 'delete' ?
+            <Modal>
+                <div className="aside_team--modal">
+                    <p className="aside_team--modal--message"><strong>Are you sure you want to delete this team?</strong><br/>This can't be undone.</p>
+                    <div className="aside_team--modal--actions">
+                        <button onClick={() => setConfirm('')}className="aside_team--modal--action modal--cancel">Cancel Delete</button>
+                        <button onClick={handleTeamDelete} className="aside_team--modal--action  modal--delete">Delete Team</button>
+                    </div>
+                </div>
+            </Modal> :
+            null
+        }
         <div ref={ref} className='aside_team--details'>
             <div className='aside_team--header'>
                 <div className='aside_team--image' style={{backgroundImage: `url(${team.image})`}}></div>
@@ -41,24 +68,25 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
                     <p>{team.name}</p>
                 </div>
             </div>
-            <div onClick={() => handleTeamSignOut()} className='aside_team--links_section'>
-                <p>Sign out of {team.name}</p>
+            <div className='aside_team--contents'>
+                <span onClick={() => handleTeamSignOut()} className='aside_team--links_section'>
+                    <span>Sign out of {team.name}</span>
+                </span>
+                {
+                isOwner ?
+                <span onClick={() => setConfirm('delete')} className='aside_team--links_section delete'>
+                    <FaTrashCan className='option--icon'/>
+                    <span>Delete Team</span>
+                </span>
+                :
+                <span className='aside_team--links_section' onClick={() => setConfirm('leave')}>
+                    <span>Leave the Team</span>
+                    <FaArrowRightFromBracket className='option--icon'/>
+                </span>
+                }
             </div>
-            {/* {isOwner &&
-            <div onClick={() => handleTeamDelete()} className='aside_team--links_section'>
-                <p>Delete Team</p>
-            </div>} */}
-            {
-            isOwner ?
-            <div onClick={() => handleTeamDelete()} className='aside_team--links_section'>
-                <p>Delete Team</p>
-            </div>
-            :
-            <div className='aside_team--links_section' onClick={deleteTeamMembership}>
-                <p>Leave the Team</p>
-            </div>
-            }
         </div>
+        </>
     )
 })
 

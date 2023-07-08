@@ -39,7 +39,7 @@ function AsideDirectMessages() {
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>
-                        <span>Add coworkers</span>
+                        <span>Create Direct Message</span>
                     </div>
                 </li>
             </ul>

@@ -1,36 +1,16 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom/';
-import { FaChevronDown, FaChevronRight } from 'react-icons/fa'
-import useOutsideClick from '../../../hooks/useOutsideClick';
 import { useSelector } from 'react-redux';
 
 function DirectMessageLabel() {
-    const { ref, isVisible, setIsVisible } = useOutsideClick();
     const team = useSelector(state => state.teams.singleTeam)
     const history = useHistory()
 
-    function handleMessage()
-    {
-        history.push(`/team/${team.id}/new-message`)
-        setIsVisible(false)
-    }
-
     return (
         <div className='direct_message_label--wrapper'>
-            <div className='direct_message_label--label' onClick={() => setIsVisible(true)}>
-            <span className='direct_message_label--text'>Direct message</span>
-            <FaChevronDown className='direct_message_label--icon'/>
+            <div className='direct_message_label--label'>
+            <span className='direct_message_label--text'>Direct messages</span>
             </div>
-            {
-                isVisible ?
-                <div ref={ref} className='direct_message_label--options'>
-                    <span  onClick={handleMessage} className='direct_message_label--option--wrapper'>
-                        <p className='direct_message_label--option'>Create</p>
-                        <FaChevronRight className='direct_message_label--option--icon'/>
-                    </span>
-                </div> :
-                null
-            }
         </div>
     )
 }

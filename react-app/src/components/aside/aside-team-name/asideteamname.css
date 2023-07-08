@@ -7,7 +7,7 @@
 .aside_team--name {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
@@ -23,7 +23,7 @@
 }
 
 .aside_team--icon {
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .aside_team--details {
@@ -34,7 +34,7 @@
     border: 1px solid var(--border);
     position: absolute;
     left: 20px;
-    top: 35px;
+    top: 40px;
     z-index: 125;
 }
 
@@ -61,28 +61,77 @@
     color: var(--body);
     font-size: 15px;
 }
-
-.aside_team--information p:first-of-type {
-    margin: 0;
-    color: black;
-    font-weight: 600;
+.aside_team--contents {
+    padding: 5px 0;
 }
 
-.aside_team--links_section p {
-    margin: 0;
-    font-size: 15px;
-    color: var(--body);
-    font-weight: 300;
-    padding: 5px 20px;
+.aside_team--links_section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
     cursor: pointer;
+    color: var(--body);
+    font-size: 15px;
 }
 
-.aside_team--links_section p:hover {
+.delete {
+    color: var(--red)
+}
+
+.option--icon {
+    font-size: 12px;
+}
+
+.aside_team--links_section:hover {
     background-color: var(--color-hover);
     color: white;
 }
 
-.aside_team--links_section {
-    padding: 10px 0;
+.aside_team--modal {
+    background-color: white;
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+ }
 
-}
+ .aside_team--modal--message {
+    margin: 0 0 15px 0;
+    line-height: 1.6;
+    color: var(--body);
+ }
+
+ .aside_team--modal--message strong {
+    color: black;
+ }
+
+ .aside_team--modal--actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+ }
+
+ .aside_team--modal--action {
+    padding: 10px 20px;
+    border: 1px solid var(--body);
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+ }
+
+ .modal--cancel:hover {
+    background-color: var(--light-hover);
+ }
+
+ .modal--delete {
+    color: var(--red);
+    border: 1px solid var(--red);
+ }
+
+ .modal--delete:hover {
+    background-color: var(--red);
+    color: white;
+ }

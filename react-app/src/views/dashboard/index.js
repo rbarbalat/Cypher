@@ -91,8 +91,8 @@ function Dashboard() {
                                             <p>{team.name}</p>
                                             <div className='dashboard_team_members--wrapper'>
                                                 <div className='dashboard_team_members--span'>
-                                                    {[1,2,3,4,5].map(member => (
-                                                        <div key={member} className='dashboard_team_members--member'></div>
+                                                    {team.users.slice(0,5).map(member => (
+                                                        <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'></div>
                                                     ))}
                                                 </div>
                                                 <span className='dashboard_team_members--count'>{team.numMembers} members</span>
@@ -129,8 +129,8 @@ function Dashboard() {
                                         <p>{team.name}</p>
                                         <div className='dashboard_team_members--wrapper'>
                                             <div className='dashboard_team_members--span'>
-                                                {[1,2,3,4,5].map(member => (
-                                                    <div key={member} className='dashboard_team_members--member'></div>
+                                                {team.users.slice(0,5).map(member => (
+                                                    <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'></div>
                                                 ))}
                                             </div>
                                             <span className='dashboard_team_members--count'>{team.numMembers} members</span>

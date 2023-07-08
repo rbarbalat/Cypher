@@ -23,6 +23,9 @@
     aspect-ratio: 1;
     border-radius: 5px;
     background-color: var(--border);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .direct_message_item--icon {
@@ -53,13 +56,8 @@
     gap: 8px;
     padding: 5px 5px;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-.direct_message_label--label:hover {
-    background-color: var(--dark-hover);
-
-}
 
 .direct_message_label--label:hover .direct_message_label--icon {
     opacity: 1;

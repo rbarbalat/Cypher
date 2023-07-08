@@ -177,16 +177,26 @@ const ChannelDetails = React.forwardRef((props, ref) => {
 
                 </div>
                 :
-                        <div>{
-                            notInChannelUsers.length
-                            ?
-                            notInChannelUsers.map(ele => (
-                                <div onClick={() => handleJoin(channelId, ele.id)}>{ele.username}</div>
-                            )
-                        )
-                            :
-                            null
-                        }
+                        <div>
+                            <ul className='channel_details--member_list'>
+                                {notInChannelUsers.length ?
+                                    notInChannelUsers.map(member => (
+                                        <ChannelMemberItem
+                                            member={member}
+                                            handleSelectRecipients={() => handleJoin(channelId, member.id)}
+                                            isOwner={isOwner}
+                                            isAuthorizedByTeam={isAuthorizedByTeam}
+                                            onlyTeamAuthorized={onlyTeamAuthorized}
+                                            channel = {channel}
+                                            team = {team}
+                                        />
+                                    ))
+                                    :
+                                    <li className='channel_details--no_members'>
+                                        <p>No members available</p>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                 }
         </div>
