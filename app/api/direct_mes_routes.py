@@ -133,7 +133,7 @@ def delete_direct_message(id):
         return {"error": "go get logged in"}, 403
     message = DirectMessage.query.get(id)
     if not message:
-        return {"error": "message not found"}
+        return {"error": "message not found"}, 404
     if message.sender_id != current_user.id:
         return {"error" : "not authorized"}, 403
     db.session.delete(message)
