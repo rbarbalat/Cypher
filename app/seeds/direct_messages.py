@@ -7,7 +7,7 @@ from faker import Faker
 fake = Faker()
 
 def seed_direct_messages(users):
-    for i in range(0, 10):
+    for i in range(0, 40):
         pair = sample(users, 2)
         dm = DirectMessage(
             sender=pair[0],
