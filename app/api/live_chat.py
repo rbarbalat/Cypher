@@ -47,7 +47,7 @@ def edit_chat(id):
     chat.message = form.data['message']
     db.session.commit()
     return chat.to_dict_no_assoc()
-  return {"errors": form.errors}
+  return {"errors": form.errors}, 400
 
 @live_chat_routes.route('/<int:id>/delete')
 def delete_chat(id):

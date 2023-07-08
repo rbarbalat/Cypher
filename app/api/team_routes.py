@@ -208,7 +208,7 @@ def delete_team(id):
 @team_routes.route('/<int:id>/channels', methods=['POST'])
 def create_channel(id):
   if not current_user.is_authenticated:
-    return {"error" : "go get logged in"}
+    return {"error" : "go get logged in"}, 403
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   #DO WE WANT ONLY TEAM OWNNERS/ADMIN TO BE ABLE TO CREATE CHANNELS FOR A TEAM?
@@ -263,7 +263,7 @@ def delete_member_from_team(team_id, mem_id):
 
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
-  print("PRINTING CURRENT USER ----  ", current_user.id)
+  #print("PRINTING CURRENT USER ----  ", current_user.id)
 
   #this is the tm to be deleted
   tm = TeamMembership.query.filter(TeamMembership.user_id == mem_id).filter(TeamMembership.team_id == team_id).first()

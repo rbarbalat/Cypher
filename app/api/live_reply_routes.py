@@ -9,12 +9,12 @@ live_reply_routes = Blueprint('live_replies', __name__)
 @live_reply_routes.route('/<int:id>/delete')
 def delete_reply(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
   reply = LiveReplies.query.get(id)
   if not reply:
-    return {"error": "message not found"}
+    return {"error": "message not found"}, 404
   if reply.sender_id != current_user.id:
-    return {"error" : "not authorized"}
+    return {"error" : "not authorized"}, 403
   db.session.delete(reply)
   db.session.commit()
   return {"message" : "message deleted :)"}
@@ -23,14 +23,14 @@ def delete_reply(id):
 @live_reply_routes.route('/<int:id>', methods=['POST'])
 def edit_reply(id):
   if not current_user.is_authenticated:
-    return {"error": "go get logged in"}
+    return {"error": "go get logged in"}, 403
 
   reply = LiveReplies.query.get(id)
   if not reply:
-    return {"error": "the reply couldn't be found"}
+    return {"error": "the reply couldn't be found"}, 404
 
   if reply.sender_id != current_user.id:
-    return {"error" : "not authorized"}
+    return {"error" : "not authorized"}, 403
 
   form = LiveReplyForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
@@ -40,4 +40,4 @@ def edit_reply(id):
     db.session.commit()
     return reply.to_dict_no_assoc()
 
-  return {"errors": form.errors}
+  return {"errors": form.errors}, 400
