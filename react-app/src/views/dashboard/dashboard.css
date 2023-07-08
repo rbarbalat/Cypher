@@ -130,7 +130,6 @@
 .dashboard--team--info_image {
     height: 55px;
     aspect-ratio: 1;
-    /* background-color: var(--border); */
     border-radius: 5px;
     background-position: center;
     background-repeat: no-repeat;
@@ -163,6 +162,9 @@
     aspect-ratio: 1;
     border-radius: 5px;
     background-color: var(--border);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     border: 2px solid white;
 }
 

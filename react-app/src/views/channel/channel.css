@@ -133,6 +133,10 @@
     font-weight: 600;
 }
 
+.channel_details--about_item--value {
+    color: var(--body)
+}
+
 .channel_details--about_item:first-of-type {
     border-radius: 10px 10px 0 0;
 }
@@ -203,17 +207,24 @@
     font-weight: 300;
     border: 1px solid var(--border);
     padding: 10px 10px 10px 35px;
-    outline: 4px solid #e4fffb;
 }
 
 .channel_details--member_input:focus {
-    outline: 4px solid #e4fffb;
+    outline: transparent;
+    border: 1px solid var(--active-border)
 }
 
 .channel_details--member_list {
     margin: 20px 0;
     padding: 75px 0 0 0;
     border-radius: 0 0 10px 10px;
+}
+
+.channel_details--member_list_add-member {
+    margin: 0;
+    padding: 20px 0;
+    border-radius: 0 0 10px 10px;
+    background-color: white;
 }
 
 .channel_details--no_members {
@@ -244,6 +255,9 @@
     aspect-ratio: 1;
     border-radius: 5px;
     background-color: var(--border);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     border: 2px solid white;
 }
 
@@ -269,4 +283,35 @@
     display: block;
     margin-right: 5px;
     font-weight: 500;
+}
+
+.recipient_list_item--span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recipient_list_item--owner {
+    padding: 5px 15px;
+    background-color: var(--light-hover);
+    color: var(--body);
+    display: block;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.recipient_list_item--button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.recipient_list_item--button:hover {
+    color: var(--red);
+    border: 1px solid var(--red)
 }

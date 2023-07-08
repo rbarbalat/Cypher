@@ -31,7 +31,7 @@ function CypherApp() {
     if (loading || !team) return <DataLoading></DataLoading>
 
     return (
-        <>
+        <div className='cypher--wrapper'>
         <Navigation/>
         <main id='main--wrapper'>
             <Aside/>
@@ -54,7 +54,7 @@ function CypherApp() {
             null
             }
         </main>
-        </>
+        </div>
     )
 }
 

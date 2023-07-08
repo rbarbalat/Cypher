@@ -2,6 +2,7 @@ import React from 'react'
 import useOutsideClick from '../../hooks/useOutsideClick';
 import Modal from '../modal';
 import NavigationMenu from './navigationmenu';
+import {FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom';
 import { thunkGetUserThread } from '../../store/thread';
 import { useSelector, useDispatch } from 'react-redux';
@@ -33,10 +34,13 @@ function Navigation() {
     return (
         <nav className='navigation--wrapper'>
             <div className='navigation--contents'>
-                { isTeamOwner ? <span>(You are the Owner of this Team)</span> : null}
-                <div onClick={() => setIsVisible(true)} className='navigation--user'>
+                { isTeamOwner ? <span className='navigation--owner'>You are the Owner of this Team</span> : null}
+                <div onClick={() => setIsVisible(!isVisible)} className='navigation--user'>
                     <span>{user.username}</span>
-                    <div className='navigation--image'></div>
+                    <div className='navigation--image' style={{backgroundImage: `url(${user.image})`}}></div>
+                    <div className='navigation--icon--wrapper'>
+                    { isVisible ? <FaChevronUp className='navigation--icon'/> : <FaChevronDown className='navigation--icon'/> }
+                    </div>
                 </div>
             </div>
             {

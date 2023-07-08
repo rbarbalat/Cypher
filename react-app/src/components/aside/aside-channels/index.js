@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
+import { FaArrowRightToBracket } from 'react-icons/fa6'
 import ChannelItem from './channelitem'
 import ChannelLabel from './channellabel'
 import CreateChannelForm from '../../createchannelform';
@@ -47,7 +48,7 @@ function AsideChannels() {
                 <li>
                     <div onClick={() => setJoinChannel(true)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
-                            <FaPlus className='aside_dropdown--add_icon'/>
+                            <FaArrowRightToBracket className='aside_dropdown--add_icon'/>
                         </div>
                         <span>Join a channel</span>
                     </div>

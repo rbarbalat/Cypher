@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkCreateChannel, thunkGetChannels, thunkGetChannelsByUser, thunkJoinChannel } from '../../store/channels'
-import { FaTimes } from 'react-icons/fa'
+import { FaHashtag, FaLock, FaSearch, FaTimes } from 'react-icons/fa'
 import Input from '../inputs/input'
 import TextArea from '../inputs/textarea'
 import './createchannelform.css';
@@ -96,8 +96,14 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
                         :
                         <h3>Join Channel</h3>
                     }
-                    <p onClick={() => setTab('create')}>Create New Channel</p>
-                    <p onClick={() => setTab('join')}>Join Channel</p>
+                    <div className='channel_details--tabs'>
+                        <div onClick={() => setTab('create')} className={`channel_details--tab ${tab === 'create' ? 'active--tab' : ''}`}>
+                            Create New Channel
+                        </div>
+                        <div  onClick={() => setTab('join')} className={`channel_details--tab ${tab === 'join' ? 'active--tab' : ''}`}>
+                            Join Channel
+                        </div>
+                    </div>
                 </header>
                 { tab === 'create' ?
                 <form onSubmit={e => handleCreateChannel(e)}>
@@ -135,15 +141,27 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
 
                 </div>
                 </form> :
-                <div>
-                    <header>
-                        <input value={query} onChange={(e)=>setQuery(e.target.value)}></input>
+                <div className='join_channel--contents'>
+                    <header className='join_channel--header'>
+                        <div className='join_channel--search'>
+                            <FaSearch className='join_channel--search_icon'/>
+                            <input className='join_channel--input' value={query} onChange={(e)=>setQuery(e.target.value)}></input>
+                        </div>
                     </header>
-                    <ul>
+                    <ul className='join_channel--channels'>
                         {
+                            filteredChannels.length ?
                             filteredChannels.map(channel => {
-                                return <li style={{color:"red"}} onClick={() => handleJoin(channel.id)}>{channel.name}</li>
-                            })
+                                return (
+                                    <li className='join_channel--channel' onClick={() => handleJoin(channel.id)}>
+                                        {channel.private ? <FaLock/> : <FaHashtag/> }
+                                        <span>{channel.name}</span>
+                                    </li>
+                                )
+                            }) :
+                            <li className='no-matching-channels'>
+                                <span>No Channels matching <strong>"{query}"</strong></span>
+                            </li>
                         }
                     </ul>
                 </div>

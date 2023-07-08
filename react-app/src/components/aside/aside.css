@@ -15,6 +15,7 @@
     justify-content: space-between;
     padding: 0 15px;
     height: 60px;
+    border-top: 1px solid var(--dark-hover);
     border-bottom: 1px solid var(--dark-hover);
 }
 

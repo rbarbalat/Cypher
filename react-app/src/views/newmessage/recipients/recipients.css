@@ -97,6 +97,7 @@
     padding: 15px 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
     cursor: pointer;
 }
@@ -112,6 +113,9 @@
     justify-content: center;
     aspect-ratio: 1;
     background-color: var(--color-hover);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 5px;
 }
 
@@ -127,5 +131,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     width: 100%;
 }
