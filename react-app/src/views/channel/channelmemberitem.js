@@ -14,7 +14,10 @@ function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwn
     const channelOwner = channel.users.find(user => user.status === "owner")
     const teamOwner = team.users.find(user => user.status === "owner")
     let teamUsers = useSelector(state => state.teams.singleTeam.users)
-    let memberStatusInTeam = teamUsers.find(user => user.id == member.id).status
+    console.log(teamUsers)
+    console.log("SEARCHING---------------", teamUsers.find(user => user.id === member.id))
+    let userInTeam = teamUsers.find(user => user.id === member.id)
+    let memberStatusInTeam = userInTeam.status
     if(memberStatusInTeam == "member"){
         if(user.id == member.id)
         {
