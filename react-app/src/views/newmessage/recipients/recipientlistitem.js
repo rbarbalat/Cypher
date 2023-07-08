@@ -5,7 +5,7 @@ function RecipientListItem({data, handleSelectRecipients}) {
   return (
     <li onClick={() => handleSelectRecipients(data)} className='recipient_list_item--wrapper'>
         <div className='recipient_list_item--image'>
-           <span>{data.username.charAt(0)}</span>
+           { data.image ? null : <span>{data.username.charAt(0)}</span> }
         </div>
         <span className='recipient_list_item--name'>{data.username}</span>
     </li>

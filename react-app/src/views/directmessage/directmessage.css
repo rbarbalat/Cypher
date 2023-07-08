@@ -37,7 +37,6 @@
     position: relative;
     background-color: var(--light-hover);
     border-radius: 10px;
-    padding-bottom: 50px;
 }
 
 .direct_message_details--header {

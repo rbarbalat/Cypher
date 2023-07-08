@@ -54,6 +54,9 @@
     align-items: center;
     justify-content: center;
     text-transform: capitalize;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     font-weight: 600;
     font-size: 150px;
 }

@@ -9,7 +9,7 @@ function DirectMessageLabel() {
     return (
         <div className='direct_message_label--wrapper'>
             <div className='direct_message_label--label'>
-            <span className='direct_message_label--text'>Direct messages</span>
+            <span className='direct_message_label--text'><strong>Direct messages</strong></span>
             </div>
         </div>
     )

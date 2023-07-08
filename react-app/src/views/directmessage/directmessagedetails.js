@@ -36,7 +36,6 @@ const DirectMessageDetails = React.forwardRef((props, ref) => {
                     </div>
                     <p onClick={handleUserThread} className='direct_message_details--link'>View Full Profile</p>
                 </div>
-                <span className='direct_message_details--channel_id'>Channel ID: {`channel Id`}</span>
             </div>
         </div>
     )
