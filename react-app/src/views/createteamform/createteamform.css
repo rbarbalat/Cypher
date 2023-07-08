@@ -9,7 +9,7 @@
 }
 
 .create_team_form--navigation {
-    height: 60px;
+    height: 50px;
     width: 100%;
     background-color: var(--blue);
     flex-shrink: 0;
