@@ -263,9 +263,15 @@
 }
 
 .landing_footer--section li {
-  color: var(--body)
+  color: var(--body);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
+.landing_footer--section li span:first-of-type {
+  position: relative;
+  top: 3px;
+}
 .landing_footer--logo {
   height: 100px;
   align-self: center;

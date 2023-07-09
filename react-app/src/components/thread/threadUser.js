@@ -10,6 +10,7 @@ function ThreadUser({thread}) {
   const [imagePreview, setImagePreview ] = useState(undefined)
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch()
+  const auth = useSelector(state => state.session.user)
   const user = useSelector(state => state.users.users[thread.id])
 
   const handleImage = (e) => {
@@ -34,6 +35,7 @@ function ThreadUser({thread}) {
       //BECAUSE OTHER PARTS OF THE PAGE PULL IMAGE FROM DIFF PARTS OF THE STORE
       // await dispatch(thunkGetUserThread(thread.id))
       await dispatch(thunkGetUsers())
+      setImage(undefined)
     }
     else{
       const data = await res.json()
@@ -48,7 +50,9 @@ function ThreadUser({thread}) {
       <div className='thread_user--image' style={imagePreview ? {backgroundImage: `url(${imagePreview})`} : {backgroundImage: `url(${thread.image})`}}>
         { user.image || imagePreview ? null : <span>{user.username.charAt(0)}</span> }
       </div>
-      <form onSubmit={handleUpdateImage} encType="multipart/form-data">
+      {
+        auth.id === user.id ?
+        <form onSubmit={handleUpdateImage} encType="multipart/form-data">
         <div className='update_image--span'>
             <label className='update_image--button' htmlFor='user-image'>Change Image</label>
             { image ? <span>{image.name}</span> : <span>No file chosen</span> }
@@ -62,7 +66,10 @@ function ThreadUser({thread}) {
           null
         }
         {errors.image && <p style={{"color": "red"}}>{errors.image}</p>}
-      </form>
+        </form> :
+        null
+      }
+
       <h2 className='user_thread--username'>{user.username}</h2>
     </div>
   )

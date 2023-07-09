@@ -182,3 +182,12 @@
     display: flex;
     gap: 20px
 }
+
+.create_team_form--error {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 5px;
+    color: var(--red)
+}

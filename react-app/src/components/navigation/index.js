@@ -11,7 +11,7 @@ import './navigation.css';
 
 function Navigation() {
     const user = useSelector(state => state.session.user)
-    const userImage = useSelector(state => state.users.users[user.id].image)
+    const userImage = useSelector(state => state.users.users[user.id])
     const team = useSelector(state => state.teams.singleTeam)
     const channel = useSelector(state => state.channels.singleChannel)
 
@@ -38,8 +38,8 @@ function Navigation() {
                 { isTeamOwner ? <span className='navigation--owner'>You are the Owner of this Team</span> : null}
                 <div onClick={() => setIsVisible(!isVisible)} className='navigation--user'>
                     <span>{user.username}</span>
-                    <div className='navigation--image' style={{backgroundImage: `url(${userImage})`}}>
-                        { user.image ? null : <span>{user.username.charAt(0)}</span>}
+                    <div className='navigation--image' style={{backgroundImage: `url(${userImage?.image})`}}>
+                        { user.image || userImage?.image ? null : <span>{user.username.charAt(0)}</span>}
                     </div>
                     <div className='navigation--icon--wrapper'>
                     { isVisible ? <FaChevronUp className='navigation--icon'/> : <FaChevronDown className='navigation--icon'/> }

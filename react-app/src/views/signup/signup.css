@@ -92,6 +92,7 @@
     border: 2px solid var(--blue);
     color: var(--blue);
     background-color: white;
+    text-align: center;
 }
 
 /* .btn auth--demo */

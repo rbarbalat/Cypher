@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { thunkCreateTeam } from "../../store/teams";
 import "./createteamform.css";
 import Input from "../../components/inputs/input"
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaRegTimesCircle } from "react-icons/fa";
 
 function CreateTeamForm() {
   const [name, setName] = useState("");
@@ -100,7 +100,12 @@ function CreateTeamForm() {
                 onChange={(e) => handleImage(e)}
               />
           </div>
-          {errors.image && <span  className="create_team_form--error">{errors.image}</span>}
+          {errors.image &&
+            <span  className="create_team_form--error">
+              <FaRegTimesCircle className='error-icon'/>
+              <small>{errors.image}</small>
+            </span>
+          }
           </div>
 
 

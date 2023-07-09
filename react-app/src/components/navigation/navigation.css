@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: flex-end;
     position: relative;
+    z-index: 500;
 }
 
 .navigation--contents {

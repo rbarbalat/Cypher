@@ -7,6 +7,18 @@ import {
   FaCss3,
   FaAws,
   FaJsSquare,
+  FaChessBishop,
+  FaPuzzlePiece,
+  FaCode,
+  FaFistRaised,
+  FaMap,
+  FaBasketballBall,
+  FaMusic,
+  FaFutbol,
+  FaPalette,
+  FaBook,
+  FaPaintBrush,
+  FaMoneyBill
 } from "react-icons/fa";
 import logo from "../../assets/cypher-white.svg";
 import logo2 from "../../assets/cypher-logo.svg";
@@ -15,7 +27,7 @@ import chris_Eke from "../../assets/chris_Eke.jpeg";
 import roman_Barbalat from "../../assets/roman_Barbalat.jpeg";
 import jonathan_Carter from "../../assets/jonathan_Carter.jpeg";
 import landing from '../../assets/landing.svg';
-import { FaTwitter, FaLinkedinIn, FaGithub, FaDribbble } from "react-icons/fa6";
+import { FaTwitter, FaRightLeft, FaCircleNodes,FaDiamond, FaLinkedinIn, FaGithub, FaDribbble } from "react-icons/fa6";
 function Landing() {
   const history = useHistory();
 
@@ -154,37 +166,61 @@ function Landing() {
           <div className="landing_footer--section">
             <h4>Jonathan Carter</h4>
             <ul>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
+              <li>
+                <span><FaChessBishop/></span>
+                <span>Chess</span>
+              </li>
+              <li>
+                <span><FaPuzzlePiece/></span>
+                <span>Puzzles</span>
+              </li>
+              <li>
+                <span><FaCircleNodes/></span>
+                <span>Algorithims</span>
+              </li>
+              <li>
+                <span><FaFutbol/></span>
+                <span>Soccer</span>
+              </li>
             </ul>
           </div>
           <div className="landing_footer--section">
             <h4>Omar El Sahlah</h4>
             <ul>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
+              <li>
+                <span><FaCode/></span>
+                <span>Coding</span>
+              </li>
+              <li>
+                <span><FaPalette/></span>
+                <span>Design</span>
+              </li>
+              <li>
+                <span><FaFistRaised/></span>
+                <span>MMA</span>
+              </li>
+              <li>
+                <span><FaMap/></span>
+                <span>Traveling</span>
+              </li>
             </ul>
           </div>
           <div className="landing_footer--section">
             <h4>Chris Eke</h4>
             <ul>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
+              <li><span><FaBasketballBall/></span><span>Basketball</span></li>
+              <li><span><FaPaintBrush/></span><span>UI/UX Design</span></li>
+              <li><span><FaMusic/></span><span>Music Production</span></li>
+              <li><span><FaMoneyBill/></span><span>Finance</span></li>
             </ul>
           </div>
           <div className="landing_footer--section">
             <h4>Roman Barbalat</h4>
             <ul>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
-              <li>Sample Interests</li>
+              <li><span><FaCode/></span><span>Coding</span></li>
+              <li><span><FaRightLeft/></span><span>Trading</span></li>
+              <li><span><FaDiamond/></span><span>Poker</span></li>
+              <li><span><FaBook/></span><span>Reading</span></li>
             </ul>
           </div>
         </div>
