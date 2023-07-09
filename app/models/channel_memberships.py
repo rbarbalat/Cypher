@@ -11,7 +11,7 @@ class ChannelMembership(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("channels.id")), nullable=False)
-    status = db.Column(db.Enum('owner', 'admin', 'member', name='channel_enum'), nullable=False, default='member')
+    status = db.Column(db.Enum('owner', 'admin', 'member', name='channel_enum'), nullable=False, default='member', index=True)
 
     #a user instance corresponding to a channelMembershp instance
     user = db.relationship("User", back_populates="channels")

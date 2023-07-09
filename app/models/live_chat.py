@@ -11,7 +11,7 @@ class LiveChat(db.Model):
   sender_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
   channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("channels.id")), nullable=False)
   message = db.Column(db.String(2000), nullable=False)
-  created_at = db.Column(db.DateTime, default=datetime.now())
+  created_at = db.Column(db.DateTime, default=datetime.now(), index=True)
 
   #original signle association (originally no association between live replies and users)
   replies = db.relationship("LiveReplies", back_populates="chat", cascade="all, delete-orphan")
