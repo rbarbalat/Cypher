@@ -61,5 +61,5 @@ Jonathan, Omar, Chris, and Roman have successfully completed this project with a
 
 <img src="./react-app/src/assets/Full_access.png" alt="The landing page"/>
 <p>
-&#8226; Inside a team users are able to joing existing channels, create a new channels, participate in channel wide chats and engage in private conversations with team members
+&#8226; Inside a team users are able to join existing channels, create a new channels, participate in channel wide chats and engage in private conversations with team members
 </p>
