@@ -45,17 +45,19 @@ function ThreadUser({thread}) {
 
   }
 
+  if(!user) return <div></div>
+
   return (
     <div className='user_thread--wrapper'>
-      <div className='thread_user--image' style={imagePreview ? {backgroundImage: `url(${imagePreview})`} : {backgroundImage: `url(${thread.image})`}}>
-        { user.image || imagePreview ? null : <span>{user.username.charAt(0)}</span> }
+      <div className='thread_user--image' style={imagePreview ? {backgroundImage: `url(${imagePreview})`} : {backgroundImage: `url(${thread?.image})`}}>
+        { user?.image || imagePreview ? null : <span>{user?.username.charAt(0)}</span> }
       </div>
       {
-        auth.id === user.id ?
+        auth?.id === user?.id ?
         <form onSubmit={handleUpdateImage} encType="multipart/form-data">
         <div className='update_image--span'>
             <label className='update_image--button' htmlFor='user-image'>Change Image</label>
-            { image ? <span>{image.name}</span> : <span>No file chosen</span> }
+            { image ? <span>{image?.name}</span> : <span>No file chosen</span> }
             <input id='user-image' type="file" accept="image/*" onChange={(e) => handleImage(e)}/>
         </div>
         { image ?
@@ -70,7 +72,7 @@ function ThreadUser({thread}) {
         null
       }
 
-      <h2 className='user_thread--username'>{user.username}</h2>
+      <h2 className='user_thread--username'>{user?.username}</h2>
     </div>
   )
 }

@@ -17,15 +17,15 @@ function ChannelItem({channel}) {
   }
 
   return (
-    <div onClick={() => handlePopulateChannel(channel.id) } className='channel_item--wrapper'>
+    <div onClick={() => handlePopulateChannel(channel?.id) } className='channel_item--wrapper'>
         <div className='channel_item--icon_wrapper'>
             {
-            channel.private ?
+            channel?.private ?
             <FaLock className='channel_item--icon' /> :
             <FaHashtag  className='channel_item--icon'/>
             }
         </div>
-        <span className='channel_item--label'>{channel.name}</span>
+        <span className='channel_item--label'>{channel?.name}</span>
     </div>
   )
 }

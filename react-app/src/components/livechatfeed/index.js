@@ -56,11 +56,11 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
         <div className='message_feed--introduction'>
             <div className='message_feed--introduction--recipient'>
                 <div className='message_feed--channel_introduction--information'>
-                    {channel.private ? <FaLock className='message_feed--channel_icon'/> : <FaHashtag className='message_feed--channel_icon' />}
-                    <p className='message_feed--channel_name'>{channel.name}</p>
+                    {channel?.private ? <FaLock className='message_feed--channel_icon'/> : <FaHashtag className='message_feed--channel_icon' />}
+                    <p className='message_feed--channel_name'>{channel?.name}</p>
                 </div>
             </div>
-            <p className='message_feed--introduction--greeting' ><span onClick={() => handleUserThread(owner.id)} className='formal basic--link'>{owner.username}</span> created this {channel.private ? 'private' : 'public'} channel. This is the very beginning of the <span onClick={() => setIsVisible(true)} className='basic--link'>#{channel.name}</span> channel.</p>
+            <p className='message_feed--introduction--greeting' ><span onClick={() => handleUserThread(owner?.id)} className='formal basic--link'>{owner?.username}</span> created this {channel?.private ? 'private' : 'public'} channel. This is the very beginning of the <span onClick={() => setIsVisible(true)} className='basic--link'>#{channel?.name}</span> channel.</p>
             <button className="view--bottom" onClick={handleBottomScroll}>
               <span>Most Recent</span>
               <FaArrowDown/>

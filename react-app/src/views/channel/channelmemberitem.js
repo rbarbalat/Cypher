@@ -41,16 +41,16 @@ function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwn
   return (
     <li onClick={handleSelectRecipients} className='recipient_list_item--wrapper'>
         <span className='recipient_list_item--span'>
-            <div className='recipient_list_item--image' style={{backgroundImage: `url(${member.image})`}}>
-            { member.image ? null : <span>{member.username.charAt(0)}</span> }
+            <div className='recipient_list_item--image' style={{backgroundImage: `url(${member?.image})`}}>
+            { member?.image ? null : <span>{member?.username.charAt(0)}</span> }
             </div>
             <span className='recipient_list_item--name'>
                 <span>{member.username}</span>
-                { teamOwner.id === member.id ?
+                { teamOwner?.id === member?.id ?
                     <span className='recipient_list_item--owner'>Team Owner</span> :
                 null
                 }
-                { channelOwner.id === member.id ?
+                { channelOwner?.id === member?.id ?
                     <span className='recipient_list_item--owner'>Channel Owner</span> :
                 null
                 }

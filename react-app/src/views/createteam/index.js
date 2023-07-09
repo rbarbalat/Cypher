@@ -54,7 +54,7 @@ function CreateTeam() {
                 <h3>Open Team</h3>
                 <div className='dashboard--teams create_team--width'>
                     <header className='dashboard--teams_header'>
-                        <p>Teams for <strong>{sessionUser.email}</strong></p>
+                        <p>Teams for <strong>{sessionUser?.email}</strong></p>
                     </header>
                     {normalizedTeams.map(team => (
                         <div key={team.id}  onClick={() => handleTeam(team.id)} className='dashboard--team'>

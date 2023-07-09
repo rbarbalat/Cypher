@@ -70,6 +70,10 @@
     cursor: pointer;
 }
 
+.navigation--user span {
+    text-transform: capitalize;
+}
+
 .navigation_menu--wrapper {
     position: absolute;
     background-color: white;

@@ -69,7 +69,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     <section ref={ref} id="message_feed--wrapper">
       <div className="message_feed--introduction">
         <div className="message_feed--introduction--recipient">
-          <div className="message_feed--introduction--image" style={{backgroundImage: `url(${partnerImage.image})`}}>
+          <div className="message_feed--introduction--image" style={{backgroundImage: `url(${partnerImage?.image})`}}>
             {partnerImage ? null : <span>{partner.charAt(0)}</span>}
           </div>
           <div className="message_feed--introduction--information">

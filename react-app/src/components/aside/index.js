@@ -28,14 +28,14 @@ function Aside() {
         <aside id='aside--wrapper'>
             <header className='aside--header'>
                 <AsideTeamName team={team}/>
-                <button onClick={() => history.push(`/team/${team.id}/new-message`)} className='aside--new_message'>
+                <button onClick={() => history.push(`/team/${team?.id}/new-message`)} className='aside--new_message'>
                     <FaEdit className='aside--new_message_icon' />
                 </button>
             </header>
             <div className='aside--quick-links'>
-                <div onClick={() => history.push(`/team/${team.id}`)} className='aside--quick-link'>
+                <div onClick={() => history.push(`/team/${team?.id}`)} className='aside--quick-link'>
                     <span className='aside--quick-link_icon'><FaHouse /></span>
-                    <span className='aside--quick-link_text'>{team.name} Home</span>
+                    <span className='aside--quick-link_text'>{team?.name} Home</span>
                 </div>
             </div>
             <AsideChannels />

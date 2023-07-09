@@ -155,9 +155,9 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
                             filteredChannels.length ?
                             filteredChannels.map(channel => {
                                 return (
-                                    <li className='join_channel--channel' onClick={() => handleJoin(channel.id)}>
+                                    <li className='join_channel--channel' onClick={() => handleJoin(channel?.id)}>
                                         {channel.private ? <FaLock/> : <FaHashtag/> }
-                                        <span>{channel.name}</span>
+                                        <span>{channel?.name}</span>
                                     </li>
                                 )
                             }) :

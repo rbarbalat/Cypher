@@ -92,18 +92,18 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
     <div className="message--wrapper">
       { isLiveChat ?
       <div className="message--sender_image" style={{backgroundImage: `url(${senderImage?.image})`}}>
-        { message.image ? null : <span>{message.username.charAt(0)}</span> }
+        { message?.image ? null : <span>{message?.username.charAt(0)}</span> }
       </div>
       :
-      <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${userImage?.image})`} : user.id === message.recipient_id ? {backgroundImage: `url(${senderImage?.image})`} : {backgroundImage: `url(${recipientImage?.image})`}}>
-        {user.id === message.sender_id ? user.image ? null : <span>{user.username.charAt(0)}</span> : message.image ? null : <span>{message.sender.charAt(0)}</span>}
+      <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${userImage?.image})`} : user.id === message?.recipient_id ? {backgroundImage: `url(${senderImage?.image})`} : {backgroundImage: `url(${recipientImage?.image})`}}>
+        {user.id === message?.sender_id ? user.image ? null : <span>{user.username.charAt(0)}</span> : message?.image ? null : <span>{message?.sender.charAt(0)}</span>}
       </div>
       }
 
       <div className="message--details_wrapper">
         <div className="message--name_time">
-          <p onClick={() => handleUserThread(message.sender_id)} className="message--sender_name message_feed--user basic--link">
-            {isLiveChat ? message.username : message.sender}
+          <p onClick={() => handleUserThread(message?.sender_id)} className="message--sender_name message_feed--user basic--link">
+            {isLiveChat ? message?.username : message?.sender}
           </p>
           <span className="message--time">{convertTime()}</span>
         </div>
@@ -117,7 +117,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
             </div>
                :
               <div className="message--contents">
-                <p className="message--message">{message.message}</p>
+                <p className="message--message">{message?.message}</p>
               </div>
             }
             {
@@ -130,7 +130,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
               null
             }
           </div>
-          { user.id === message.sender_id ?
+          { user.id === message?.sender_id ?
           <div className={`message--actions ${updating ? 'show--actions' : ''}`}>
               <button className="message--action--btn message--edit" onClick={updating ? () => setUpdating(false) : () => setUpdating(true)}>
               {
@@ -154,17 +154,17 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         </div>
 
 
-        {message.replies ? (
+        {message?.replies ? (
           <div
             onClick={() => setThread({ state: true })}
             className="message--replies"
           >
             <div className="message--replies--flex">
-              {message.replies.slice(0, 2).map((replier) => (
+              {message?.replies.slice(0, 2).map((replier) => (
                 <div className="message--replier--image"></div>
               ))}
               <span className="message--replies--count">
-                {message.replies.length} replies
+                {message?.replies.length} replies
               </span>
             </div>
             <FaChevronRight className="message--replies--icon" />

@@ -32,7 +32,7 @@ function AsideChannels() {
         <ul className='aside-dropdown--list'>
             {normalizedChannels.map((channel) => {
                 return (
-                   <li key={channel.id}>
+                   <li key={channel?.id}>
                     <ChannelItem channel={channel}/>
                     </li>
                 )
