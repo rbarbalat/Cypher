@@ -37,7 +37,9 @@ function Navigation() {
                 { isTeamOwner ? <span className='navigation--owner'>You are the Owner of this Team</span> : null}
                 <div onClick={() => setIsVisible(!isVisible)} className='navigation--user'>
                     <span>{user.username}</span>
-                    <div className='navigation--image' style={{backgroundImage: `url(${user.image})`}}></div>
+                    <div className='navigation--image' style={{backgroundImage: `url(${user.image})`}}>
+                        { user.image ? null : <span>{user.username.charAt(0)}</span>}
+                    </div>
                     <div className='navigation--icon--wrapper'>
                     { isVisible ? <FaChevronUp className='navigation--icon'/> : <FaChevronDown className='navigation--icon'/> }
                     </div>

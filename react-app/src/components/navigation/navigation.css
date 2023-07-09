@@ -30,11 +30,18 @@
 .navigation--image {
     height: 30px;
     aspect-ratio: 1;
-    background-color: var(--border);
+    background-color: var(--color-hover);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px;
+}
+.navigation--image span {
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .navigation--icon--wrapper {

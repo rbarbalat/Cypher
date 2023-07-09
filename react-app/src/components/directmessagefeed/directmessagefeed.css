@@ -24,11 +24,21 @@
 .message_feed--introduction--image {
     height: 70px;
     aspect-ratio: 1;
-    background-color: var(--border);
+    background-color: var(--color-hover);
     border-radius: 10px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message_feed--introduction--image span {
+    color: white;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 40px;
 }
 
 .message_feed--introduction--information p {
