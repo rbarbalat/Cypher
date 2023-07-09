@@ -10,6 +10,7 @@ import DataLoading from '../../components/loading/DataLoading';
 import Navigation from '../../components/navigation';
 import TeamHome from '../teamhome';
 import Thread from '../../components/thread'
+import TeamMembers from '../teammembers';
 
 function CypherApp() {
     const [ loading, setLoading ] = useState(true)
@@ -45,9 +46,13 @@ function CypherApp() {
                 <Route path={`/team/${teamId}/new-message`}>
                     <NewMessage/>
                 </Route>
+                <Route path={`/team/${teamId}/members`}>
+                    <TeamMembers/>
+                </Route>
                 <Route path={`/team/${teamId}`}>
                     <TeamHome/>
                 </Route>
+
             </Switch>
             {Object.keys(thread).length ?
             <Thread/> :

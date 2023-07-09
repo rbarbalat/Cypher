@@ -162,7 +162,11 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
                                 )
                             }) :
                             <li className='no-matching-channels'>
-                                <span>No Channels matching <strong>"{query}"</strong></span>
+                                {
+                                    nonPrivateChannels.length ?
+                                    <span>No Channels matching <strong>"{query}"</strong></span> :
+                                    <span>No Channels</span>
+                                }
                             </li>
                         }
                     </ul>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FaEdit } from 'react-icons/fa'
-import { FaHouse } from 'react-icons/fa6'
+import { FaHouse, FaUserGroup } from 'react-icons/fa6'
 import AsideChannels from './aside-channels';
 import AsideDirectMessages from './aside-direct-messages';
 import AsideTeamName from './aside-team-name';
@@ -36,6 +36,10 @@ function Aside() {
                 <div onClick={() => history.push(`/team/${team?.id}`)} className='aside--quick-link'>
                     <span className='aside--quick-link_icon'><FaHouse /></span>
                     <span className='aside--quick-link_text'>{team?.name} Home</span>
+                </div>
+                <div onClick={() => history.push(`/team/${team?.id}/members`)} className='aside--quick-link'>
+                    <span className='aside--quick-link_icon'><FaUserGroup /></span>
+                    <span className='aside--quick-link_text'>All Members</span>
                 </div>
             </div>
             <AsideChannels />

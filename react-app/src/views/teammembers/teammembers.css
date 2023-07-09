@@ -1,0 +1,68 @@
+@import url('../../index.css');
+
+.team_members--contents {
+
+}
+.team_members--list {
+    padding: 0;
+    list-style-type: none;
+    margin-top: 100px;
+    border-radius: 5px;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 5px;
+    width: 100%;
+}
+
+.team_members--list_item {
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.team_members--list_item:hover {
+    background-color: var(--light-hover);
+}
+
+.team_members--list_item--image span {
+    color: white;
+    text-transform: capitalize;
+    font-size: 40px;
+}
+
+.team_members--list_item--image {
+    height: 50px;
+    aspect-ratio: 1;
+    background-color: var(--color-hover);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.team_member {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.team_member--name {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.team_member--status {
+    font-size: 12px;
+    background-color: var(--light-hover);
+    color: var(--body);
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border)
+}

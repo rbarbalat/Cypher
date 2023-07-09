@@ -330,3 +330,24 @@
     color: var(--red);
     border: 1px solid var(--red)
 }
+
+
+.member-count-1 {
+    left: 10px;
+}
+
+.member-count-2 {
+    left: 5px;
+}
+
+.member-count-3 {
+    left: 0px;
+}
+
+.member-count-4 {
+    left: -5px;
+}
+
+.member-count-5 {
+    left: -10px;
+}

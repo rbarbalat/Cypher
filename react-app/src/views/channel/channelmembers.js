@@ -8,7 +8,7 @@ function ChannelMembers({members, setIsVisible}) {
                 <div className='channel_members--member' style={{backgroundImage: `url(${member?.image})`}}></div>
             ))}
         </div>
-        <span className='channel_members--count'>{members?.length}</span>
+        <span className={`channel_members--count member-count-${members?.slice(0,3).length}`}>{members?.length}</span>
     </div>
   )
 }

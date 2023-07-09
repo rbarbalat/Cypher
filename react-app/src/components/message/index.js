@@ -96,7 +96,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
       </div>
       :
       <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${userImage?.image})`} : user.id === message?.recipient_id ? {backgroundImage: `url(${senderImage?.image})`} : {backgroundImage: `url(${recipientImage?.image})`}}>
-        {user.id === message?.sender_id ? user.image ? null : <span>{user.username.charAt(0)}</span> : message?.image ? null : <span>{message?.sender.charAt(0)}</span>}
+        {user.id === message?.sender_id ? userImage.image ? null : <span>{user.username.charAt(0)}</span> : message?.image ? null : <span>{message?.sender.charAt(0)}</span>}
       </div>
       }
 
