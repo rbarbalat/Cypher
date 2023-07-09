@@ -46,14 +46,17 @@
 .aside--new_message {
     height: 35px;
     aspect-ratio: 1;
-    border-radius: 100%;
+    border-radius: 5px;
     background-color: white;
     border: none;
     cursor: pointer;
 }
-
+.aside--new_message:hover {
+    background-color: var(--light-hover);
+}
 .aside--new_message_icon {
-    font-size: 15px;
+    font-size: 18px;
+    color: var(--body)
 }
 .aside_dropdown--wrapper {
     padding: 15px;

@@ -82,7 +82,7 @@ function Dashboard() {
                                     <FaSearch className='dashboard--teams_input_icon'/>
                                     <input placeholder="Search All Teams" className='dashboard--teams_input_input' value={teamQuery} onChange={(x) => setTeamQuery(x.target.value)}/>
                                 </div>
-                                <button onClick={() => setTeamList(false)}>My Teams</button>
+                                <button className='light--button' onClick={() => setTeamList(false)}>My Teams</button>
                             </header>
                             <div className='dashboard--teams_scroller'>
                             {filteredTeams.length > 0 ? filteredTeams.map(team => (
@@ -111,8 +111,8 @@ function Dashboard() {
                              <div className='dashboard--team--none'>
                                 <span>No Teams Available to Join</span>
                                 <div className='dashboard--team-none-actions'>
-                                    <button onClick={() => setTeamList(false)}>View My Teams</button>
-                                    <button onClick={() => handleCreateTeam()}>Create A Team</button>
+                                    <button className='light--button' onClick={() => setTeamList(false)}>View My Teams</button>
+                                    <button className='light--button' onClick={() => handleCreateTeam()}>Create A Team</button>
                                 </div>
                             </div>
                             }
@@ -121,7 +121,7 @@ function Dashboard() {
                         <div className='dashboard--teams'>
                         <header className='dashboard--teams_header'>
                             <p>Teams for <strong>{sessionUser.email}</strong></p>
-                            <button onClick={() => setTeamList(true)}>Join a Team</button>
+                            <button className='light--button' onClick={() => setTeamList(true)}>Join a Team</button>
                         </header>
                         {normalizedTeams.map(team => (
                             <div key={team.id}  onClick={() => handleGoToTeam(team.id)} className='dashboard--team'>

@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { thunkCreateTeam } from "../../store/teams";
-import StepOne from "./stepone";
-import StepTwo from "./steptwo";
-import StepThree from "./stepthree";
-import StepFour from "./stepfour";
 import "./createteamform.css";
 import Input from "../../components/inputs/input"
 import { FaArrowLeft } from "react-icons/fa";
@@ -50,10 +46,14 @@ function CreateTeamForm() {
     }
   };
 
+  const handleToDashboard = () => {
+    history.push('/dashboard')
+  }
+
   return (
     <main id="create_team_form--wrapper">
       <div className="create_team_form--navigation">
-        <div className="create_team_form--back">
+        <div onClick={handleToDashboard} className="create_team_form--back">
           <FaArrowLeft/>
           <span>Back to Dashboard</span>
         </div>

@@ -1,11 +1,12 @@
 import React from 'react'
 import { FaTimes } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 function RecipientItem({member, handleRemoveRecipients}) {
-  console.log(member)
+  const image = useSelector(state => state.users.users[member.id].image)
   return (
     <div className='recipient_item--wrapper'>
-        <div className='recipient_item--image' style={{backgroundImage: `url(${member.image})`}}>
+        <div className='recipient_item--image' style={{backgroundImage: `url(${image})`}}>
            { member.image ? null : <span>{member.username.charAt(0)}</span> }
         </div>
         <span className='recipient_item--name'>{member.username}</span>

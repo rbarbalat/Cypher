@@ -72,3 +72,58 @@
     overflow-y: scroll;
     padding: 0px 0 175px 0;
 }
+
+.update_image--span {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.update_image--span span {
+    font-size: 15px;
+    color: var(--body)
+}
+
+.update_image--span-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.update_image--button {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    align-self: flex-start;
+    font-size: 13.33333px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.update_image--button:hover {
+    background-color: var(--light-hover);
+}
+
+#user-image {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+.submit_image--button {
+    background-color: green;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.submit_image--button:hover {
+    background-color: darkgreen;
+}
