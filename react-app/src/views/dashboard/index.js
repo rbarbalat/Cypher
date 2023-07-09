@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetTeams, thunkJoinTeam } from '../../store/teams';
+import { thunkGetEveryTeam, thunkGetTeams, thunkJoinTeam } from '../../store/teams';
 import { thunkclearThread } from '../../store/thread';
 import { logout } from "../../store/session";
 import { FaArrowRight, FaSearch } from 'react-icons/fa'
@@ -55,6 +55,7 @@ function Dashboard() {
 
     useEffect(() => {
         dispatch(thunkGetTeams())
+        .then(() => dispatch(thunkGetEveryTeam()))
         .then(() => dispatch(thunkclearThread()))
         .then(() => setLoading(false))
     }, [dispatch])

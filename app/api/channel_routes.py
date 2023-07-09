@@ -11,8 +11,8 @@ channel_routes = Blueprint('channels', __name__)
 #GET ALL CHANNELS
 @channel_routes.route('/')
 def get_channels():
-    if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}, 403
+    # if not current_user.is_authenticated:
+    #     return {"error" : "go get logged in"}, 403
     channels = Channel.query.all()
     # print("hello world")
     # print(channels)
@@ -40,8 +40,8 @@ def get_channels():
 #GET CHANNEL BY ID
 @channel_routes.route('/<int:id>')
 def get_channel_by_id(id):
-    if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}, 403
+    # if not current_user.is_authenticated:
+    #     return {"error" : "go get logged in"}, 403
     channel = Channel.query.get(id)
     if channel is None:
         return {"error": "Channel not found"}, 404
@@ -61,8 +61,8 @@ def get_channel_by_id(id):
 #GET MEMBERS OF A CHANNEL
 @channel_routes.route('/<int:id>/members')
 def get_members_for_channel(id):
-    if not current_user.is_authenticated:
-        return {"error" : "go get logged in"}, 403
+    # if not current_user.is_authenticated:
+    #     return {"error" : "go get logged in"}, 403
     channel = Channel.query.get(id)
     if channel is None:
       return {"error": "channel does not exist"}, 404

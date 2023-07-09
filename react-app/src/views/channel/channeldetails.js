@@ -60,7 +60,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
             method: "POST"
         })
         if(res.ok){
-            const romansThing = await res.json;
+            const romansThing = await res.json();
             console.log(romansThing);
             dispatch(thunkGetChannel(id));
         }

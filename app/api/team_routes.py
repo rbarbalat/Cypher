@@ -15,8 +15,8 @@ def get_teams():
   # if not current_user.is_authenticated:
   #   return {"error" : "go get logged in"}
   teams = Team.query.all()
-  if len(teams) == 0:
-    return []
+  # if len(teams) == 0:
+  #   return []
 
   list_of_list_of_users = [ [tm.user.to_dict() for tm in team.users] for team in teams ]
 
