@@ -47,7 +47,7 @@
 .thread_user--image {
     width: 100%;
     aspect-ratio: 1;
-    background-color: var(--border);
+    background-color: var(--color-hover);
     border-radius: 10px;
     margin: 0 auto;
     display: flex;
@@ -58,6 +58,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     font-weight: 600;
+    color: white;
     font-size: 150px;
 }
 
