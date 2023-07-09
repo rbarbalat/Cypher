@@ -40,7 +40,7 @@ def all_users():
 def add_image():
     if not current_user.is_authenticated:
         return {"error": "got get logged in"}, 403
-
+    print('inside the backend')
     form = UserImageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -51,7 +51,7 @@ def add_image():
         upload = upload_file_to_s3(image)
         if "url" not in upload:
             return {"error": "failed b/c of problem with the image file"}, 400
-
+        print(upload["url"])
         current_user.image = upload["url"]
         db.session.commit()
         return current_user.to_dict()
