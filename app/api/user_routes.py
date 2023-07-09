@@ -29,8 +29,8 @@ def user(id):
 
 @user_routes.route("/all")
 def all_users():
-    if not current_user.is_authenticated:
-        return {"error": "got get logged in"}, 403
+    # if not current_user.is_authenticated:
+    #     return {"error": "got get logged in"}, 403
     #better structure for us, other route in auth might be used
     #with that structure elsewhere
     users = User.query.all()

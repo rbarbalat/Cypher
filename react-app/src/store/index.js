@@ -6,6 +6,7 @@ import channels from './channels';
 import messages from './messages';
 import feed from './feed';
 import thread from './thread';
+import users from "./users"
 
 const rootReducer = combineReducers({
   session,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   channels,
   messages,
   feed,
-  thread
+  thread,
+  users
 });
 
 
