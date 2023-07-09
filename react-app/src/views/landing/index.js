@@ -6,20 +6,16 @@ import {
   FaReact,
   FaCss3,
   FaAws,
-  FaGithub,
   FaJsSquare,
 } from "react-icons/fa";
 import logo from "../../assets/cypher-white.svg";
+import logo2 from "../../assets/cypher-logo.svg";
 import omar_Elsahlah from "../../assets/omar_Elsahlah.jpeg";
 import chris_Eke from "../../assets/chris_Eke.jpeg";
 import roman_Barbalat from "../../assets/roman_Barbalat.jpeg";
 import jonathan_Carter from "../../assets/jonathan_Carter.jpeg";
-import {
-  AiFillTwitterCircle,
-  AiFillLinkedin,
-  AiFillGithub,
-} from "react-icons/ai";
-
+import landing from '../../assets/landing.svg';
+import { FaTwitter, FaLinkedinIn, FaGithub, FaDribbble } from "react-icons/fa6";
 function Landing() {
   const history = useHistory();
 
@@ -61,11 +57,12 @@ function Landing() {
               Connect the right people, find anything you need and automate the
               rest. That’s work in Cypher, your productivity platform.
             </p>
-            <button onClick={() => history.push("/sign-up")} className="btn">
+            <button onClick={() => history.push("/sign-up")} className="landing_splash--text_btn btn">
               Sign Up
             </button>
           </div>
-          <div className="landing_splash--image"></div>
+          <img src={landing} className="landing_splash--image"/>
+          {/* <div className="landing_splash--image"></div> */}
         </div>
       </section>
       <section className="landing_technologies--wrapper">
@@ -81,94 +78,119 @@ function Landing() {
           </div>
         </div>
       </section>
-      <section className="landing_outro--wrapper">
-        <div className="landing_outro--contents">
-      <h1 className="about_us">About Us:</h1>
-          <div className="landing_outro--boxes">
-            <div className="landing_outro--box">
+      <section className="landing_about">
+        <h1 className="landing_about--heading">Meet Your Developers</h1>
+        <div className="landing_about--boxes">
+            <div className="landing_about--box">
               <img src={jonathan_Carter} alt="Jonathan Carter" />
               <p>
-                Hi! My name is Jonathan, and I used work in sales. I have a new
+                Hi! My name is <strong>Jonathan</strong>, and I used work in sales. I have a new
                 found passion for backend development
               </p>
               <div className="social-icons">
-                <a href="https://www.linkedin.com/in/jonathan-carter-12b600174/">
-                  <AiFillLinkedin className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://www.linkedin.com/in/jonathan-carter-12b600174/">
+                  <FaLinkedinIn className="social-icon" />
                 </a>
-                <a href="https://github.com/JonathanSCarter">
-                  <AiFillGithub className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://github.com/JonathanSCarter">
+                  <FaGithub className="social-icon" />
                 </a>
               </div>
             </div>
-            <div className="landing_outro--box">
+            <div className="landing_about--box">
               <img src={omar_Elsahlah} alt="Omar Elsahlah" />
               <p>
-                Hi! My name is Omar, I used to be a Technical Recruiter. Excited
+                Hi! My name is <strong>Omar</strong>, I used to be a Technical Recruiter. Excited
                 to work as a Software Engineer!
               </p>
               <div className="social-icons">
-                <a href="https://twitter.com/TallTechTitan">
-                  <AiFillTwitterCircle className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://twitter.com/TallTechTitan">
+                  <FaTwitter className="social-icon" />
                 </a>
-                <a href="https://www.linkedin.com/in/omarelsahlah">
-                  <AiFillLinkedin className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://www.linkedin.com/in/omarelsahlah">
+                  <FaLinkedinIn className="social-icon" />
                 </a>
-                <a href="https://github.com/FullStackin">
-                  <AiFillGithub className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://github.com/FullStackin">
+                  <FaGithub className="social-icon" />
                 </a>
               </div>
             </div>
-            <div className="landing_outro--box">
+            <div className="landing_about--box">
               <img src={chris_Eke} alt="Chris Eke" />
               <p>
-                Hi! I am Chris, and I was a self taught developer then joined
+                Hi! I am <strong>Chris</strong>, and I was a self taught developer then joined
                 a/A to further my knowledge!
               </p>
               <div className="social-icons">
-                <a href="https://www.linkedin.com/in/iamchriseke/">
-                  <AiFillLinkedin className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://www.linkedin.com/in/iamchriseke/">
+                  <FaLinkedinIn className="social-icon" />
                 </a>
-                <a href="https://github.com/ChrisEkeDev">
-                  <AiFillGithub className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://github.com/ChrisEkeDev">
+                  <FaGithub className="social-icon" />
+                </a>
+                <a rel="noreferrer" target="_blank" href="https://dribbble.com/chriseke">
+                  <FaDribbble className="social-icon"/>
                 </a>
               </div>
             </div>
-            <div className="landing_outro--box">
+            <div className="landing_about--box">
               <img src={roman_Barbalat} alt="Roman Barbalat" />
               <p>
-                Hi! I am Roman, I was an options trader. Looking for Software engineering role!
+                Hi! I am <strong>Roman</strong>, I was an options trader. Looking for Software engineering role!
               </p>
               <div className="social-icons">
-                <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">
-                  <AiFillLinkedin className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://www.linkedin.com/in/roman-barbalat-00140a63/">
+                  <FaLinkedinIn className="social-icon" />
                 </a>
-                <a href="https://github.com/rbarbalat">
-                  <AiFillGithub className="social-icon" />
+                <a rel="noreferrer" target="_blank" href="https://github.com/rbarbalat">
+                  <FaGithub className="social-icon" />
                 </a>
               </div>
             </div>
           </div>
-          <h2>See all you can accomplish with Cypher</h2>
-          <div className="landing_outro--actions">
-            <button
-              onClick={() => history.push("/sign-up")}
-              id="outro-sign-up"
-              className="btn"
-            >
-              Sign Up
-            </button>
-            <button
-              onClick={() => history.push("/sign-in")}
-              id="outro-sign-in"
-              className="btn"
-            >
-              Sign In
-            </button>
-          </div>
-        </div>
       </section>
       <footer className="landing_footer--wrapper">
-        <div className="landing_footer--contents"></div>
+        <div className="landing_footer--contents">
+          <img src={logo2} className="landing_footer--logo"/>
+          <div className="landing_footer--section">
+            <h4>Jonathan Carter</h4>
+            <ul>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+            </ul>
+          </div>
+          <div className="landing_footer--section">
+            <h4>Omar El Sahlah</h4>
+            <ul>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+            </ul>
+          </div>
+          <div className="landing_footer--section">
+            <h4>Chris Eke</h4>
+            <ul>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+            </ul>
+          </div>
+          <div className="landing_footer--section">
+            <h4>Roman Barbalat</h4>
+            <ul>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+              <li>Sample Interests</li>
+            </ul>
+          </div>
+        </div>
+        <div className="landing_footer--footer">
+          <p>Copyright Cypher 2023</p>
+        </div>
       </footer>
     </main>
   );

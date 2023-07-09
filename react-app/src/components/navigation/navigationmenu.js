@@ -8,8 +8,8 @@ const NavigationMenu = forwardRef((props, ref) => {
                 <span>View Profile</span>
             </span>
             <span onClick={logout} className='navigation_menu--option'>
+                <FaSignOutAlt className='option--icon'/>
                 <span>Log Out</span>
-                <FaSignOutAlt/>
             </span>
         </div>
     )

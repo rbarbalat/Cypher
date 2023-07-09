@@ -78,7 +78,7 @@
 .navigation_menu--option {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     padding: 10px 20px;
     cursor: pointer;
     color: var(--body);

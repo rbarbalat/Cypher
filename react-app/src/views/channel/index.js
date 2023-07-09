@@ -44,7 +44,7 @@ function Channel(){
             "channel_id": parseInt(channelId),
         })
         messageRef.current.scroll({
-            top: messageRef.current.scrollHeight,
+            top: messageRef.current.scrollHeight + 300,
             behavior: 'smooth'
         });
         setChatInput("")
