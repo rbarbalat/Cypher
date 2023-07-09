@@ -54,10 +54,10 @@ Jonathan, Omar, Chris, and Roman have successfully completed this project with a
 
 <img src="./react-app/src/assets/Channel_cRt_SlcT.png" alt="The landing page"/>
 <p>
-&#8226; After logging in, you will have the option to either create a channel or join an existing one.
+&#8226; After logging in users have the ability to join existing teams or create a team of their own.
 </p>
 
 <img src="./react-app/src/assets/Full_access.png" alt="The landing page"/>
 <p>
-&#8226; After choosing a channel you can perform various actions such as Direct Messaging, joining and creating channels, logging out, updating your profile image, as well as deleting channels and Direct Messages.
+&#8226; Inside a team users are able to joing existing channels, create a new channels, participate in channel wide chats and engage in private conversations with team members
 </p>
