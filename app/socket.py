@@ -15,36 +15,10 @@ else:
 socketio = SocketIO(cors_allowed_origins = origins)
 
 
-# Named events are the most flexible, as they eliminate the need to include additional metadata to describe the message type. The names message, json, connect and disconnect are reserved and cannot be used for named events.
-
-# where users receive messages from the room or rooms they are in, but not from other rooms where other users are
-
-# @socketio.on('join')
-# def on_join(data):
-#     username = data['username']
-#     room = data['room']
-#     join_room(room)
-#     send(username + ' has entered the room.', to=room)
-
-# @socketio.on('leave')
-# def on_leave(data):
-#     username = data['username']
-#     room = data['room']
-#     leave_room(room)
-#     send(username + ' has left the room.', to=room)
-
-# When working with namespaces, send() and emit() use the namespace of the incoming message by default. A different namespace can be specified with the optional namespace argument:
-
-# When a message is sent with the broadcast option enabled, all clients connected to the namespace receive it, including the sender.
-
-#everytime client connects
-
 @socketio.on('join', namespace="/direct")
 def on_join(data):
     room = data['room']
     join_room(room)
-    # join_room(request.sid)
-    # request.sid is a user's session id
 
 @socketio.on('join', namespace="/channel")
 def on_join(data):
@@ -53,15 +27,14 @@ def on_join(data):
 
 @socketio.on("chat", namespace="/direct")
 def handle_direct_messages(data):
-    if data != "User connected!":
-        dm = DirectMessage(
-            sender_id = data["sender_id"],
-            recipient_id = data["recipient_id"],
-            message = data["message"],
-            created_at = datetime.now()
-        )
-        db.session.add(dm)
-        db.session.commit()
+    dm = DirectMessage(
+        sender_id = data["sender_id"],
+        recipient_id = data["recipient_id"],
+        message = data["message"],
+        created_at = datetime.now()
+    )
+    db.session.add(dm)
+    db.session.commit()
     # send_direct_messages(data["recipient_id"])
     emit("chat", data, room=[data["sender_id"], data["recipient_id"]])
     # emit(to = user with a session id)
@@ -91,16 +64,14 @@ def delete_direct_message(data):
 
 @socketio.on("live_chat", namespace="/channel")
 def handle_live_chat(data):
-    if data != "User connected!":
-        print("95.5 in socket.python")
-        lc = LiveChat(
-            sender_id = data["sender_id"],
-            channel_id = data["channel_id"],
-            message = data["message"],
-            created_at = datetime.now()
-        )
-        db.session.add(lc)
-        db.session.commit()
+    lc = LiveChat(
+        sender_id = data["sender_id"],
+        channel_id = data["channel_id"],
+        message = data["message"],
+        created_at = datetime.now()
+    )
+    db.session.add(lc)
+    db.session.commit()
     # send_direct_messages(data["recipient_id"])
     emit("live_chat", data, room=f'Channel {data["channel_id"]}')
 

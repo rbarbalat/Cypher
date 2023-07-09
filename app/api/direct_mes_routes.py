@@ -53,6 +53,7 @@ def get_message(id):
 # GET ALL MESSAGES BETWEEN 2 USERS
 @direct_mes_routes.route("/partner/<int:id>")
 def get_messages(id):
+    #this needs to be commented out, messes up sockets
     # if not current_user.is_authenticated:
     #     return {"error": "go get logged in"}, 403
     messages = DirectMessage.query.filter(
