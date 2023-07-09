@@ -12,6 +12,7 @@ import CreateTeam from "./views/createteam";
 import CreateTeamForm from "./views/createteamform";
 import { thunkGetEveryTeam } from "./store/teams";
 import ProtectedRoute from "./components/auth/ProtectedRoute"
+import { thunkGetUsers } from "./store/users";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +23,9 @@ function App() {
   useEffect(() => {
     dispatch(authenticate())
     .then(() => setIsLoaded(true))
-    .then(() => dispatch(thunkGetEveryTeam())).catch(error => error);
+    .then(() => dispatch(thunkGetEveryTeam()))
+    .then(() => dispatch(thunkGetUsers()))
+    .catch(error => error);
   }, [dispatch]);
 
   if (sessionUser) {

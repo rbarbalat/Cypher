@@ -188,14 +188,19 @@ def delete_member_from_channel(chan_id, mem_id):
 #GET all chats for channel
 @channel_routes.route('/<int:id>/chats')
 def get_all_chats_by_channel(id):
-  if not current_user.is_authenticated:
-    return {"error": "go get logged in"}, 403
+  # if not current_user.is_authenticated:
+  #   return {"error": "go get logged in"}, 403
   channel = Channel.query.get(id)
   if not channel:
     return {"error": "channel not found"}, 404
   chats = LiveChat.query.filter(LiveChat.channel_id == id).order_by(LiveChat.created_at).all()
   # return {"chats":[chat.to_dict_no_assoc() for chat in chats]}
-  return [ { **chat.to_dict_no_assoc(), "username": chat.sender_to_channel.username } for chat in chats]
+  return [ {
+            **chat.to_dict_no_assoc(),
+            "username": chat.sender_to_channel.username,
+            "image": chat.sender_to_channel.image
+            }
+            for chat in chats]
 
 #POST chat
 @channel_routes.route('/<int:id>/chats', methods=['POST'])

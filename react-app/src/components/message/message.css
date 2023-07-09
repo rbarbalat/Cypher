@@ -20,10 +20,20 @@
    height: 50px;
    aspect-ratio: 1;
    border-radius: 5px;
-   background-color: var(--border);
+   background-color: var(--color-hover);
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.message--sender_image span {
+   color: white;
+   font-size: 30px;
+   font-weight: 600;
+   text-transform: capitalize;
 }
 
 .message--name_time {

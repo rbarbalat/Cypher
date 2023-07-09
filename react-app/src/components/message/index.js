@@ -87,7 +87,9 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
       null
     }
     <div className="message--wrapper">
-      <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${user.image})`} : {backgroundImage: `url(${message.image})`}}></div>
+      <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${user.image})`} : {backgroundImage: `url(${message.image})`}}>
+        {user.id === message.sender_id ? user.image ? null : <span>{user.username.charAt(0)}</span> : message.image ? null : <span>{message.sender.charAt(0)}</span>}
+      </div>
       <div className="message--details_wrapper">
         <div className="message--name_time">
           <p onClick={() => handleUserThread(message.sender_id)} className="message--sender_name message_feed--user basic--link">
