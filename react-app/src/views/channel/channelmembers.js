@@ -5,10 +5,10 @@ function ChannelMembers({members, setIsVisible}) {
     <div onClick={() => setIsVisible(true)} className='channel_members--wrapper'>
         <div className='channel_members--span'>
             {members?.slice(0,3).map(member => (
-                <div className='channel_members--member' style={{backgroundImage: `url(${member.image})`}}></div>
+                <div className='channel_members--member' style={{backgroundImage: `url(${member?.image})`}}></div>
             ))}
         </div>
-        <span className='channel_members--count'>{members.length}</span>
+        <span className='channel_members--count'>{members?.length}</span>
     </div>
   )
 }

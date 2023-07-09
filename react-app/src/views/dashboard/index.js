@@ -120,7 +120,7 @@ function Dashboard() {
                         </div> :
                         <div className='dashboard--teams'>
                         <header className='dashboard--teams_header'>
-                            <p>Teams for <strong>{sessionUser.email}</strong></p>
+                            <p>Teams for <strong>{sessionUser?.email}</strong></p>
                             <button className='light--button' onClick={() => setTeamList(true)}>Join a Team</button>
                         </header>
                         {normalizedTeams.map(team => (

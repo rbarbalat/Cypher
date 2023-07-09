@@ -35,7 +35,7 @@ function AsideDirectMessages() {
                     )
                 })}
                 <li>
-                    <div  onClick={() => history.push(`/team/${team.id}/new-message`)} className='aside_dropdown--add_wrapper'>
+                    <div  onClick={() => history.push(`/team/${team?.id}/new-message`)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>

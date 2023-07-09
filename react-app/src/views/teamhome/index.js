@@ -15,10 +15,10 @@ function TeamHome() {
         </header>
         <section className='team_home--contents'>
               <div className='team_home--data'>
-                  <div className='team_home--image' style={{backgroundImage: `url(${team.image})`}}></div>
-                  <h1 className='team_home--name'>{team.name}</h1>
-                  <p className='team_home--description'>{team.description}</p>
-                  <span className='team_home--member_count'>{team.users.length} members</span>
+                  <div className='team_home--image' style={{backgroundImage: `url(${team?.image})`}}></div>
+                  <h1 className='team_home--name'>{team?.name}</h1>
+                  <p className='team_home--description'>{team?.description}</p>
+                  <span className='team_home--member_count'>{team?.users.length} members</span>
               </div>
         </section>
     </main>

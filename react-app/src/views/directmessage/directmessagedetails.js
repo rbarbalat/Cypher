@@ -23,8 +23,8 @@ const DirectMessageDetails = React.forwardRef((props, ref) => {
                 <div className='direct_message_details--intro'>
                     <div className='direct_message_details--image'></div>
                     <div className='direct_message_details--information'>
-                        <p className='direct_message_details--title'>{partner.username}</p>
-                        <p className='direct_message_details--subtitle'>{partner.email}</p>
+                        <p className='direct_message_details--title'>{partner?.username}</p>
+                        <p className='direct_message_details--subtitle'>{partner?.email}</p>
                     </div>
                 </div>
             </header>

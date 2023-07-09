@@ -5,6 +5,7 @@ import { login } from "../../store/session";
 import { signUp } from "../../store/session";
 import Input from "../../components/inputs/input";
 import logo from '../../assets/cypher-logo.svg'
+import { thunkGetUsers } from "../../store/users";
 import './signup.css'
 
 function SignUp() {
@@ -30,7 +31,8 @@ function SignUp() {
             setErrors(data)
           }
           else{
-            history.push("/dashboard")
+            dispatch(thunkGetUsers())
+            .then(() => history.push("/dashboard"))
           }
       } else {
           setErrors({confirmPassword: 'Passwords should match'});

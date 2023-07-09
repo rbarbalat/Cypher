@@ -10,7 +10,7 @@ function AsideTeamName({team}) {
     return (
         <div className='aside_team--wrapper'>
             <div className='aside_team--name' onClick={() => setIsVisible(true)}>
-                <h1 className='aside_team--label'>{team.name}</h1>
+                <h1 className='aside_team--label'>{team?.name}</h1>
                 <FaChevronDown className='aside_team--icon'/>
             </div>
             {

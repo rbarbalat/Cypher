@@ -10,11 +10,11 @@ function DirectMessageItem({directPartner}) {
   const userImage = useSelector(state => state.users.users[directPartner.id])
 
   return (
-    <div onClick={() => history.push(`/team/${team.id}/direct-messages/${directPartner.id}`)} className='direct_message_item--wrapper'>
-        <div className='direct_message_item--profile_image' style={{backgroundImage: `url(${userImage.image})`}}>
-          {directPartner.image ? null : <span>{directPartner.partner.charAt(0)}</span>}
+    <div onClick={() => history.push(`/team/${team.id}/direct-messages/${directPartner?.id}`)} className='direct_message_item--wrapper'>
+        <div className='direct_message_item--profile_image' style={{backgroundImage: `url(${userImage?.image})`}}>
+          {directPartner?.image ? null : <span>{directPartner?.partner.charAt(0)}</span>}
         </div>
-        <span className='direct_message_item--label'>{directPartner.partner}</span>
+        <span className='direct_message_item--label'>{directPartner?.partner}</span>
     </div>
   )
 }

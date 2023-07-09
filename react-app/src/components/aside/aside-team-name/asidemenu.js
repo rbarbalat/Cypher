@@ -63,14 +63,14 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
                 null
             }
             <div className='aside_team--header'>
-                <div className='aside_team--image' style={{backgroundImage: `url(${team.image})`}}></div>
+                <div className='aside_team--image' style={{backgroundImage: `url(${team?.image})`}}></div>
                 <div className='aside_team--information'>
-                    <p>{team.name}</p>
+                    <p>{team?.name}</p>
                 </div>
             </div>
             <div className='aside_team--contents'>
                 <span onClick={() => handleTeamSignOut()} className='aside_team--links_section'>
-                    <span>Sign out of {team.name}</span>
+                    <span>Sign out of {team?.name}</span>
                 </span>
                 {
                 isOwner ?

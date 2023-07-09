@@ -98,7 +98,7 @@ function Channel(){
                 />
                 <ChannelMembers
                     setIsVisible={setIsVisible}
-                    members={channel.users}
+                    members={channel?.users}
                 />
             </div>
         </header>

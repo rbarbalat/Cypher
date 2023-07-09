@@ -39,7 +39,7 @@ function Navigation() {
                 <div onClick={() => setIsVisible(!isVisible)} className='navigation--user'>
                     <span>{user.username}</span>
                     <div className='navigation--image' style={{backgroundImage: `url(${userImage?.image})`}}>
-                        { user.image || userImage?.image ? null : <span>{user.username.charAt(0)}</span>}
+                        { user?.image || userImage?.image ? null : <span>{user?.username.charAt(0)}</span>}
                     </div>
                     <div className='navigation--icon--wrapper'>
                     { isVisible ? <FaChevronUp className='navigation--icon'/> : <FaChevronDown className='navigation--icon'/> }
