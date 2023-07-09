@@ -94,10 +94,12 @@ function Dashboard() {
                                             <div className='dashboard_team_members--wrapper'>
                                                 <div className='dashboard_team_members--span'>
                                                     {team.users.slice(0,5).map(member => (
-                                                        <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'></div>
+                                                        <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'>
+                                                            {member.image ? null : <span>{member?.username.charAt(0)}</span>}
+                                                        </div>
                                                     ))}
                                                 </div>
-                                                <span className='dashboard_team_members--count'>{team.numMembers} members</span>
+                                                <span className={`dashboard_team_members--count member-count-${team.users.slice(0,5).length}`}>{team.numMembers} members</span>
                                             </div>
                                         </div>
                                     </div>
@@ -132,10 +134,12 @@ function Dashboard() {
                                         <div className='dashboard_team_members--wrapper'>
                                             <div className='dashboard_team_members--span'>
                                                 {team.users.slice(0,5).map(member => (
-                                                    <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'></div>
+                                                    <div key={member.id} style={{backgroundImage: `url(${member.image})`}} className='dashboard_team_members--member'>
+                                                        {member.image ? null : <span>{member?.username.charAt(0)}</span>}
+                                                    </div>
                                                 ))}
                                             </div>
-                                            <span className='dashboard_team_members--count'>{team.numMembers} members</span>
+                                            <span className={`dashboard_team_members--count member-count-${team.users.slice(0,5).length}`}>{team.numMembers} members</span>
                                         </div>
                                     </div>
                                 </div>
