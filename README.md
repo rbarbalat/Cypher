@@ -1,148 +1,88 @@
-# Flask React Project
+<p align="center">
+    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.4415 45.1306C13.8795 41.8142 16.299 38 19.9649 38H67.2163C69.1741 38 70.9517 39.1426 71.7648 40.9235L90.5769 82.1311C91.179 83.4499 91.179 84.9652 90.5769 86.284L67.6143 136.583C65.8464 140.456 60.3564 140.488 58.5425 136.637L15.4415 45.1306ZM115.7 155.336C114.267 158.378 116.486 161.876 119.848 161.876V161.876C123.186 161.876 125.406 158.423 124.019 155.386V155.386C122.398 151.834 117.363 151.804 115.7 155.336V155.336Z" fill="#5a8cf0bf"/>
+<path d="M124.75 40.9236C125.563 39.1426 127.34 38.0001 129.298 38.0001H176.55C180.215 38.0001 182.635 41.8143 181.073 45.1306L127.436 159.006C126.611 160.758 124.849 161.876 122.912 161.876H77.3114C73.6714 161.876 71.2513 158.11 72.763 154.799L124.75 40.9236Z" fill="white"/>
+</svg>
 
-This is the starter for the Flask React project.
+   </p>
+   <h1 align="center">Cypher Group Project</h1>
 
-## Getting started
-1. Clone this repository (only this branch)
+<h2 align="center">About</h2>
+   <p>Advanced Team Communication and Collaboration Platform
+Cypher is a cutting-edge web application that revolutionizes team communication and collaboration. Designed to enhance productivity and streamline workflows, Cypher provides a comprehensive suite of features that empower teams to effectively collaborate, share knowledge, and stay connected. With its intuitive interface and robust functionality, Cypher is poised to become the go-to platform for seamless and efficient team communication. </p>
 
-2. Install dependencies
+   <h2 align="center">Development Team</h2>
+   <p>Jonathan Carter :  <a href="https://github.com/FullStackin">
+  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Instagram Logo" width="20">
+</a>
+<a href="https://www.linkedin.com/omarelsahlah">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Linkedin_Shiny_Icon.svg/640px-Linkedin_Shiny_Icon.svg.png" alt="LinkedIn Logo" width="20">
+</a><br>
+   Omar El Sahlah : <a href="https://github.com/FullStackin">
+  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Instagram Logo" width="20">
+</a>
+<a href="https://www.linkedin.com/omarelsahlah">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Linkedin_Shiny_Icon.svg/640px-Linkedin_Shiny_Icon.svg.png" alt="LinkedIn Logo" width="20">
+</a>
+<a href="https://twitter.com/TallTechTitan">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter Logo" width="20">
+</a>
+<br>
+   Roman Barbalat : <a href="https://github.com/FullStackin">
+  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Instagram Logo" width="20">
+</a>
+<a href="https://www.linkedin.com/omarelsahlah">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Linkedin_Shiny_Icon.svg/640px-Linkedin_Shiny_Icon.svg.png" alt="LinkedIn Logo" width="20">
+</a><br>
+   Chris Eke : <a href="https://github.com/FullStackin">
+  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Instagram Logo" width="20">
+</a>
+<a href="https://www.linkedin.com/omarelsahlah">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Linkedin_Shiny_Icon.svg/640px-Linkedin_Shiny_Icon.svg.png" alt="LinkedIn Logo" width="20">
+</a><br>
+   </p>
+Jonathan, Omar, Chris, and Roman have successfully completed this project with a strong desire to continue their learning and personal development. As a cohesive group, we are proud to announce the completion of Cypher. Moving forward, we eagerly anticipate collaborating with exceptional companies. To inquire about our availability for future projects, please feel free to reach out to us using the contact information provided above.
+</p>
 
-      ```bash
-      pipenv install -r requirements.txt
-      ```
+   <h2 align="center">Languages & Tools</h2>
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-
-4. Make sure the SQLite3 database connection URL is in the **.env** file
-
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
-
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+[![Render](https://img.shields.io/badge/render-%23430098.svg?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
+![Amazon AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-%23FFCA28.svg?style=for-the-badge&logo=SQLAlchemy&logoColor=white)
+![WTForms](https://img.shields.io/badge/WTForms-%23F7981D.svg?style=for-the-badge&logo=WTForms&logoColor=white)
+![Werkzeug](https://img.shields.io/badge/Werkzeug-%23000000.svg?style=for-the-badge&logo=Werkzeug&logoColor=white)
 
 
-## Deployment through Render.com
+ <h2 align="center">Landing Page</h2>
 
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
+<img src="./react-app/src/assets/landingPage.png" alt="The landing page"/>
+<p>&#8226; To explore the features without creating a profile, simply click on 'Login' and select 'Demo User'.</p>
 
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
 
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
+<img src="./react-app/src/assets/AboutUs.png" alt="The landing page"/>
+<p>
+  &#8226; Users are provided with a personalized meet the developers, allowing them to associate a face with the project.
+</p>
 
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
+<img src="./react-app/src/assets/Channel_cRt_SlcT.png" alt="The landing page"/>
+<p>
+&#8226; After logging in, you will have the option to either create a channel or join an existing one.
+</p>
 
-### Part A: Configure the Start and Build Commands
-
-Start by giving your application a name.
-
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
-
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
-
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
-
-For your Flask project, enter the following command into the Build field, all in
-one line:
-
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
-```
-
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
-
-Now, add your start command in the Start field:
-
-```shell
-# start script
-gunicorn app:app
-```
-
-_If you are using websockets, use the following start command instead for increased performance:_
-
-`gunicorn --worker-class eventlet -w 1 app:app`
-
-### Part B: Add the Environment Variables
-
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
-
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
-
-Add the following keys and values in the Render GUI form:
-
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
-
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
-
-Add the following keys and values:
-
-- DATABASE_URL (copy value from Internal Database URL field)
-
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
-
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
-
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
-
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+<img src="./react-app/src/assets/Full_access.png" alt="The landing page"/>
+<p>
+&#8226; After choosing a channel you can perform various actions such as Direct Messaging, joining and creating channels, logging out, updating your profile image, as well as deleting channels and Direct Messages.
+</p>
