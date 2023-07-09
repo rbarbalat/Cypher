@@ -40,7 +40,7 @@ def all_users():
 def add_image():
     if not current_user.is_authenticated:
         return {"error": "got get logged in"}, 403
-
+    print('inside the backend')
     form = UserImageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 

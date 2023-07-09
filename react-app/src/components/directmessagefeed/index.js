@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Message from "../message";
 import TimeStamp from "../message/timestamp";
 import { format, isSameDay } from "date-fns";
@@ -25,6 +25,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
   };
 
   const handleBottomScroll = () => {
+    console.log(ref.current.scrollHeight)
     ref.current.scroll({
       top: ref.current.scrollHeight,
       behavior: "smooth",
@@ -52,8 +53,17 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
       return isSameDay(new Date(message.created_at), new Date(specificDate));
     });
   };
-  console.log("inside the direct message feed");
-  console.log(messages);
+
+  useEffect(() => {
+      if (ref.current) {
+        ref.current.scroll({
+          top: ref.current.scrollHeight,
+          behavior: "smooth",
+        })
+      }
+  }, [ref])
+
+
   if (messages.length == 0) return <div>loading</div>;
   return (
     <section ref={ref} id="message_feed--wrapper">

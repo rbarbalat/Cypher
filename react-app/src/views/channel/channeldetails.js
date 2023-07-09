@@ -89,7 +89,7 @@ const ChannelDetails = React.forwardRef((props, ref) => {
                     <div
                     onClick={() => setTab('members')}
                     className={`channel_details--tab ${tab === 'members' ? 'active--tab' : ''}`}>
-                        Members (Num)
+                        Members ({channel.users.length})
                     </div>
                     {
                       isAuthorized ?

@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react'
+import React, { useState, forwardRef, useEffect } from 'react'
 import Message from '../message'
 import TimeStamp from '../message/timestamp'
 import { format, isSameDay } from 'date-fns';
@@ -11,7 +11,6 @@ import { thunkGetUserThread } from '../../store/thread';
 
 const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
   const {messages, channel, socket, setIsVisible} = props
-    const [ loading, setLoading ] = useState(true)
     const owner = channel.users.find(user => user.status === 'owner')
     let start;
     start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
@@ -22,8 +21,6 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
         : new Date();
     const dates = [];
     const dispatch = useDispatch()
-    const { pathname } = useLocation()
-    const recipientId = pathname.split('/')[4]
 
     const areMessagesPresent = (messages, specificDate) => {
         return messages.some(message => {
@@ -44,6 +41,16 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
     for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
       dates.push(format(date, "P"));
     }
+
+    useEffect(() => {
+      if (ref.current) {
+        ref.current.scroll({
+          top: ref.current.scrollHeight,
+          behavior: "smooth",
+        })
+      }
+    }, [messages])
+
     return (
         <section ref={ref} id='message_feed--wrapper'>
         <div className='message_feed--introduction'>

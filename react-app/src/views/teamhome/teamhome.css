@@ -2,12 +2,21 @@
 
 .team_home--header {
     justify-content: flex-start;
-    gap: 30px;
+    gap: 10px;
+}
+
+.views--header_label {
+    flex-shrink: 0;
 }
 
 .team--description {
     font-size: 15px;
-    color: var(--body)
+    color: var(--body);
+    overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+           line-clamp: 1;
+   -webkit-box-orient: vertical;
 }
 
 .team_home--contents {

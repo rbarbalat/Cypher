@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import { FaArrowRight, FaSearch } from 'react-icons/fa'
 import logo from '../../assets/cypher-logo.svg'
+import landing from '../../assets/create-landing.svg'
 import './createteam.css';
 import '../dashboard/dashboard.css';
 
@@ -43,9 +44,7 @@ function CreateTeam() {
                     <p>Cypher gives your team a home — a place where they can talk and work together. To create a new team, click the button below.</p>
                     <Link className='create_landing--button' to="/create-team/new/1">Create a Team</Link>
                 </div>
-                 <div className='create_landing--image'>
-
-                 </div>
+                <img src={landing} className='create_landing--image'/>
             </div>
             <div className='create_landing--or'>
                 <span>or</span>
