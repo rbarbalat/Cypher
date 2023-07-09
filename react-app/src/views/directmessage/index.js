@@ -89,7 +89,7 @@ function DirectMessage() {
 
   //shouldn't be zero if clic
 //   if(loading)  return <DataLoading></DataLoading>
-    if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
+    // if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
 //   if(messages.length === 0)  return <DataLoading></DataLoading>
     // return <div>loading</div>
 
@@ -104,7 +104,9 @@ function DirectMessage() {
                     </div>
                 </header>
                 {/* { messages && */}
+
                 <DirectMessageFeed ref={messageRef} messages={messages} socket={socket} partnerId={partnerId}/>
+
                 {/* } */}
                 <MessageTextArea
                     value={chatInput}

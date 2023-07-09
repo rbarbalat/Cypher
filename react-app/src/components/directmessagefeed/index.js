@@ -63,8 +63,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
       }
   }, [])
 
-
-  if (messages.length == 0) return <div>loading</div>;
   return (
     <section ref={ref} id="message_feed--wrapper">
       <div className="message_feed--introduction">
@@ -101,7 +99,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
       {dates.map((date) => {
         return (
           <>
-            {areMessagesPresent(messages, date) ? (
+            {messages.length && areMessagesPresent(messages, date) ? (
               <TimeStamp label={date}>
                 {messages
                   .filter((message) =>
