@@ -42,7 +42,7 @@ function DirectMessage() {
             "created_at": new Date()
         })
         messageRef.current.scroll({
-            top: messageRef.current.scrollHeight,
+            top: messageRef.current.scrollHeight + 300,
             behavior: 'smooth'
         });
         setChatInput('')
@@ -50,6 +50,12 @@ function DirectMessage() {
 
     useEffect(() => {
         setMessages([...normalizedDirectMessages])
+        if (messageRef.current) {
+            messageRef.current.scroll({
+                top: messageRef.current.scrollHeight + 300,
+                behavior: 'smooth'
+            });
+        }
     }, [directMessages, dispatch])
 
 

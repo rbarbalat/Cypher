@@ -53,8 +53,12 @@
 .create_landing--grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: 30px;
     padding: 0 100px;
+}
+
+.create_landing--image {
+    height: 375px;
 }
 
 .create_landing--text {
@@ -83,6 +87,8 @@
     width: 100%;
     cursor: pointer;
 }
+
+
 
 
 .create_landing--auth {

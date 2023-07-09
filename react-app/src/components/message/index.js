@@ -27,8 +27,6 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
     dispatch(thunkGetUserThread(id))
   }
 
-  console.log(message)
-
   function editDM(){
     if(isLiveChat)
     {

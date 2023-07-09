@@ -19,6 +19,30 @@
     border-bottom: 1px solid var(--dark-hover);
 }
 
+.aside--quick-links {
+    padding: 15px;
+    border-bottom: 1px solid var(--dark-hover);
+    display: flex;
+    flex-direction: column;
+}
+
+.aside--quick-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.aside--quick-link_icon {
+    font-size: 12px;
+}
+
+.aside--quick-link:hover {
+    background-color: var(--dark-hover);
+}
+
 .aside--new_message {
     height: 35px;
     aspect-ratio: 1;

@@ -17,12 +17,13 @@ function App() {
   const dispatch = useDispatch();
   const history = useHistory()
   const [isLoaded, setIsLoaded] = useState(false);
+  const sessionUser = useSelector((state) => state.session.user);
+
   useEffect(() => {
     dispatch(authenticate())
     .then(() => setIsLoaded(true))
     .then(() => dispatch(thunkGetEveryTeam())).catch(error => error);
   }, [dispatch]);
-  const sessionUser = useSelector((state) => state.session.user);
 
   if (sessionUser) {
     history.push('/dashboard')
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <>
+
     {
       isLoaded && (
         <div id='app--wrapper'>
@@ -57,7 +59,6 @@ function App() {
             </ProtectedRoute>
         </Switch>
       </div>
-
       )}
     </>
 
