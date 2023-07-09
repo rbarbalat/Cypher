@@ -35,6 +35,10 @@
     color: var(--body)
 }
 
+.light--button:hover {
+    background-color: var(--light-hover);
+}
+
 .dashboard--teams {
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -100,6 +104,11 @@
     border: 1px solid var(--border);
     border-radius: 5px;
     width: 100%;
+}
+
+.dashboard--teams_input_input:focus {
+    outline: transparent;
+    border: 1px solid var(--active-border)
 }
 
 .dashboard--team:last-of-type {

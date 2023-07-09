@@ -16,8 +16,11 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
   const [updating, setUpdating] = useState(false);
   const [update, setUpdate] = useState(message.message);
   const { ref, isVisible, setIsVisible } = useOutsideClick();
-  const user = useSelector(state => state.session.user)
-
+  const user = useSelector(state => state.session.user);
+  const recipientImage = useSelector(state => state.users.users[message.recipient_id])
+  const senderImage = useSelector(state => state.users.users[message.sender_id].image)
+  const userImage = useSelector(state => state.users.users[user.id].image)
+  console.log(message)
   const convertTime = () => {
     const date = new Date(message.created_at);
     return format(new Date(date), "p");
@@ -87,9 +90,16 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
       null
     }
     <div className="message--wrapper">
-      <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${user.image})`} : {backgroundImage: `url(${message.image})`}}>
+      { isLiveChat ?
+      <div className="message--sender_image" style={{backgroundImage: `url(${senderImage})`}}>
+        { message.image ? null : <span>{message.username.charAt(0)}</span> }
+      </div>
+      :
+      <div className="message--sender_image" style={user.id === message.sender_id ? {backgroundImage: `url(${userImage})`} : user.id === message.recipient_id ? {backgroundImage: `url(${senderImage})`} : {backgroundImage: `url(${recipientImage?.image})`}}>
         {user.id === message.sender_id ? user.image ? null : <span>{user.username.charAt(0)}</span> : message.image ? null : <span>{message.sender.charAt(0)}</span>}
       </div>
+      }
+
       <div className="message--details_wrapper">
         <div className="message--name_time">
           <p onClick={() => handleUserThread(message.sender_id)} className="message--sender_name message_feed--user basic--link">

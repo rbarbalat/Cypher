@@ -48,10 +48,18 @@
   color: white;
 }
 
+#sign-in:hover {
+  text-decoration: underline;
+}
+
 #sign-up {
-  border: 2px solid white;
+  border: none;
   background-color: white;
   color: var(--blue);
+}
+
+#sign-up:hover {
+  background-color: var(--light-hover);
 }
 
 .landing_splash--wrapper {
@@ -95,8 +103,12 @@
   align-self: center;
 }
 
-.landing_splash--text_btn{
+.landing_splash--text_btn {
   border: none;
+}
+
+.landing_splash--text_btn:hover {
+  background-color: var(--light-hover);
 }
 
 .landing_technologies--wrapper {
@@ -265,4 +277,6 @@
   width: var(--content);
   padding: 30px 0;
   margin-top: 50px;
+  font-size: 15px;
+  color: var(--body)
 }

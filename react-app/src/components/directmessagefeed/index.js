@@ -42,7 +42,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     (state) => state.messages.partners[recipientId].partner
   );
 
-  const partnerImage = useSelector(state => state.messages.partners[recipientId].image)
+  const partnerImage = useSelector(state => state.users.users[recipientId].image)
 
   for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
     dates.push(format(date, "P"));
@@ -61,7 +61,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
           behavior: "smooth",
         })
       }
-  }, [ref])
+  }, [])
 
 
   if (messages.length == 0) return <div>loading</div>;

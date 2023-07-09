@@ -3,6 +3,7 @@ import { thunkGetUserThread } from '../../store/thread';
 import { useDispatch } from "react-redux"
 import { thunkGetUsers } from '../../store/users';
 import { useSelector } from "react-redux"
+import { FaCheck } from 'react-icons/fa';
 
 function ThreadUser({thread}) {
   const [image, setImage] = useState(undefined)
@@ -45,11 +46,21 @@ function ThreadUser({thread}) {
   return (
     <div className='user_thread--wrapper'>
       <div className='thread_user--image' style={imagePreview ? {backgroundImage: `url(${imagePreview})`} : {backgroundImage: `url(${thread.image})`}}>
-        { user.image ? null : <span>{user.username.charAt(0)}</span> }
+        { user.image || imagePreview ? null : <span>{user.username.charAt(0)}</span> }
       </div>
       <form onSubmit={handleUpdateImage} encType="multipart/form-data">
-        <input type="file" accept="image/*" onChange={(e) => handleImage(e)}/>
-        <button>Submit</button>
+        <div className='update_image--span'>
+            <label className='update_image--button' htmlFor='user-image'>Change Image</label>
+            { image ? <span>{image.name}</span> : <span>No file chosen</span> }
+            <input id='user-image' type="file" accept="image/*" onChange={(e) => handleImage(e)}/>
+        </div>
+        { image ?
+          <button className='submit_image--button'>
+            <span>Update</span>
+            <FaCheck/>
+          </button> :
+          null
+        }
         {errors.image && <p style={{"color": "red"}}>{errors.image}</p>}
       </form>
       <h2 className='user_thread--username'>{user.username}</h2>

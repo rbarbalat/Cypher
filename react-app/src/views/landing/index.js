@@ -189,7 +189,7 @@ function Landing() {
           </div>
         </div>
         <div className="landing_footer--footer">
-          <p>Copyright Cypher 2023</p>
+          <p>&copy; Cypher 2023 - An App Academy App</p>
         </div>
       </footer>
     </main>

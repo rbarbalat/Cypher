@@ -49,7 +49,7 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
           behavior: "smooth",
         })
       }
-    }, [messages])
+    }, [])
 
     return (
         <section ref={ref} id='message_feed--wrapper'>
