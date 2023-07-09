@@ -188,8 +188,8 @@ def delete_member_from_channel(chan_id, mem_id):
 #GET all chats for channel
 @channel_routes.route('/<int:id>/chats')
 def get_all_chats_by_channel(id):
-  if not current_user.is_authenticated:
-    return {"error": "go get logged in"}, 403
+  # if not current_user.is_authenticated:
+  #   return {"error": "go get logged in"}, 403
   channel = Channel.query.get(id)
   if not channel:
     return {"error": "channel not found"}, 404
