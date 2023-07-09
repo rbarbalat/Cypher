@@ -7,7 +7,7 @@ class Team(db.Model):
     __table_args__ = {'schema': SCHEMA}
 
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(255), nullable=False, index=True)
+  name = db.Column(db.String(255), nullable=False, index=True, unique=True)
   description = db.Column(db.String(2000))
   image = db.Column(db.String)
   channels = db.relationship('Channel', back_populates="team", cascade='all, delete-orphan')
