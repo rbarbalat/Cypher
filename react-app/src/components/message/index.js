@@ -20,6 +20,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
   const recipientImage = useSelector(state => state.users.users[message.recipient_id])
   const senderImage = useSelector(state => state.users.users[message.sender_id])
   const userImage = useSelector(state => state.users.users[user.id])
+  console.log("HIHIHIHIHIHIHIHIHIHIHIHHIHIH")
   console.log(message)
   const convertTime = () => {
     const date = new Date(message.created_at);

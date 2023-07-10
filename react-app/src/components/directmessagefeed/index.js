@@ -63,6 +63,9 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
       }
   }, [])
 
+  console.log('line 66')
+  console.log(messages)
+
   return (
     <section ref={ref} id="message_feed--wrapper">
       <div className="message_feed--introduction">
@@ -102,9 +105,9 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
             {messages.length && areMessagesPresent(messages, date) ? (
               <TimeStamp label={date}>
                 {messages
-                  .filter((message) =>
-                    isSameDay(new Date(message.created_at), new Date(date))
-                  )
+                  // .filter((message) =>
+                  //   isSameDay(new Date(message.created_at), new Date(date))
+                  // )
                   .map((message) => {
                     return (
                       <Message

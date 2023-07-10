@@ -74,7 +74,8 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
                 messages.length && areMessagesPresent(messages, date) ?
                 <TimeStamp label={date}>
                   {
-                    messages.filter(message => isSameDay(new Date(message.created_at), new Date(date))).map(message => {
+                    // messages.filter(message => isSameDay(new Date(message.created_at), new Date(date)))
+                    messages.map(message => {
                       return (
                         <Message type='channel' message={message} isLiveChat={true} channelId={channel.id} socket={socket}/>
                       )

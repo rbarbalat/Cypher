@@ -69,7 +69,12 @@ function DirectMessage() {
         })
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            console.log("messages line 72")
+            console.log("HELLOHELLOHELLOHELLO")
+            console.log(msgs);
             let normMsgs = Object.values(msgs)
+            console.log("LINE 76")
+            console.log(normMsgs)
             setMessages([...normMsgs])
         })
         socket.on("update_chat", async (chat) => {
