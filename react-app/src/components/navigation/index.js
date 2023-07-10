@@ -15,8 +15,20 @@ function Navigation() {
     const team = useSelector(state => state.teams.singleTeam)
     const channel = useSelector(state => state.channels.singleChannel)
 
+    console.log("user")
+    console.log(user)
+    console.log("userImage")
+    console.log(userImage)
+    console.log("team")
+    console.log(team)
+    console.log("channel")
+    console.log(channel)
     const TeamOwner = team.users.find(user => user.status === "owner");
+    console.log("TeamOwner")
+    console.log(TeamOwner)
     const isTeamOwner = TeamOwner.id === user.id;
+    console.log("isTeamOwner")
+    console.log(isTeamOwner)
 
     const dispatch = useDispatch();
     const history = useHistory();
