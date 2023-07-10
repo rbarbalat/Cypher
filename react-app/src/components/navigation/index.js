@@ -23,6 +23,11 @@ function Navigation() {
     console.log(team)
     console.log("channel")
     console.log(channel)
+    //singleteam seems to be in the store so team is defined
+    //probably because Navigation is called inside <CypherApp>
+    //and get single team thunk is called in a useEffect there
+    //and there is a if statement blocking loading the return which includes this component
+    //if (loading || !team) return <DataLoading></DataLoading>
     const TeamOwner = team.users.find(user => user.status === "owner");
     console.log("TeamOwner")
     console.log(TeamOwner)
