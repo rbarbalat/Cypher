@@ -14,7 +14,7 @@ def seed_direct_messages(users):
             sender=pair[0],
             recipient=pair[1],
             message=fake.text(max_nb_chars=randint(300, 499)),
-            created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+            created_at = datetime(2023, 1, i + 1, 15)
         )
         db.session.add(dm)
     db.session.commit()

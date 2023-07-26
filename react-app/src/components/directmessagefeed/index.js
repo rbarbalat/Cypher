@@ -11,25 +11,8 @@ import { FaArrowDown } from "react-icons/fa";
 const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
   const { messages, socket, partnerId } = props;
   const dispatch = useDispatch();
-  const [start, setStart] = useState(new Date(messages[0]?.created_at) || new Date());
-  const [end, setEnd] = useState(new Date(messages[messages.length - 1]?.created_at) || new Date())
+
   const [dates, setDates] = useState([]);
-
-  console.log("end is initialized to ", end)
-
-  // start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
-  // end =
-  //   messages.length !== 0
-  //     ? new Date(messages[messages.length - 1].created_at)
-  //     : new Date();
-
-  // console.log("last message")
-  // console.log(messages[messages.length - 1])
-  // console.log("last message date")
-  // console.log( new Date(messages[messages.length - 1].created_at)  )
-
-  // console.log("start ", start);
-  // console.log("end ", end);
 
   const handleUserThread = (id) => {
     dispatch(thunkGetUserThread(id));
@@ -67,35 +50,26 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     });
   };
 
-  console.log("messsages above useEffect")
-  console.log(messages);
+  // console.log("messsages above useEffect")
+  // console.log(messages);
 
   useEffect(() => {
-    setStart(messages.length !== 0 ? new Date(messages[0].created_at) : new Date());
+    console.log("line 57 in useEffect");
+    console.log("pathname is ", pathname);
+    const newDates = []
+    messages.forEach(ele => {
+      if(!newDates.includes(format(new Date(ele.created_at), "P")))
+      {
+          newDates.push(format(new Date(ele.created_at), "P"));
+      }
+    });
+    setDates(newDates);
+  }, [messages])
 
-    setEnd(
-      messages.length !== 0
-        ? new Date(messages[messages.length - 1].created_at)
-        : new Date()
-    );
-    const tempDates = []
-    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-      tempDates.push(format(date, "P"));
-      console.log("date in for loop ", date);
-    }
-    setDates(tempDates);
-    // console.log("dates in useEffect")
-    // console.log(dates);
-    // console.log(messages?.length)
-    // console.log("last date in array")
-    // console.log(dates[dates.length - 1])
-    // console.log(end)
-  }, [messages.length])
-
-  console.log("messages array")
-  console.log(messages)
-  console.log("dates array");
-  console.log(dates)
+  // console.log("messages array")
+  // console.log(messages)
+  // console.log("dates array");
+  // console.log(dates)
   useEffect(() => {
       if (ref.current) {
         ref.current.scroll({

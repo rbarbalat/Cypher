@@ -53,7 +53,7 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
       setDates(newDates);
       // console.log("new dates in useEffect");
       // console.log(newDates);
-    }, [messages.length])
+    }, [messages])
 
 
     useEffect(() => {
