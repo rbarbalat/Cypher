@@ -25,6 +25,8 @@ function Channel(){
     const team = useSelector(state => state.teams.singleTeam)
     const messageRef = useRef(null)
     const liveChats = useSelector(state => state.channels.liveChats)
+    console.log("liveChats in Channel");
+    console.log(liveChats);
     const normalizedLiveChats = Object.values(liveChats)
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)

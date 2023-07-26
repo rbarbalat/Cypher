@@ -55,9 +55,9 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
 
   const partnerImage = useSelector(state => state.users.users[recipientId])
 
-  for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-    dates.push(format(date, "P"));
-  }
+  // for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+  //   dates.push(format(date, "P"));
+  // }
 
   const areMessagesPresent = (messages, specificDate) => {
     // console.log("specificDate");
@@ -79,7 +79,7 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
         : new Date()
     );
     const tempDates = []
-    for (let date = start; date <= new Date(end.getTime() + 1000*60*60*24); date.setDate(date.getDate() + 1)) {
+    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
       tempDates.push(format(date, "P"));
       console.log("date in for loop ", date);
     }

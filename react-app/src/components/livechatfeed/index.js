@@ -1,7 +1,7 @@
-import React, { useState, forwardRef, useEffect } from 'react'
+import React, { useState, forwardRef, useEffect, useMemo } from 'react'
 import Message from '../message'
 import TimeStamp from '../message/timestamp'
-import { format, isSameDay } from 'date-fns';
+import { format, isSameDay, parseISO } from 'date-fns';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import './livechatfeed.css'
@@ -13,11 +13,10 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
   const {messages, channel, socket, setIsVisible} = props
     const owner = channel.users.find(user => user.status === 'owner')
 
-    const [start, setStart] = useState(new Date(messages[0]?.created_at) || new Date());
-    const [end, setEnd] = useState(new Date(messages[messages.length - 1]?.created_at) || new Date())
     const [dates, setDates] = useState([]);
 
     const dispatch = useDispatch()
+    // const memoMessages = useMemo(() => messages, [messages]);
 
     const areMessagesPresent = (messages, specificDate) => {
         return messages.some(message => {
@@ -35,25 +34,25 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
       dispatch(thunkGetUserThread(id))
     }
 
-    // for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-    //   dates.push(format(date, "P"));
-    // }
+    // console.log("messages in livechatfeed");
+    // console.log(messages);
+    // console.log("type of created at")
+    // console.log(typeof messages[0].created_at)
+
+    // console.log("dates array outside of useEffect");
+    // console.log(dates);
 
     useEffect(() => {
-      setStart(messages.length !== 0 ? new Date(messages[0].created_at) : new Date());
-
-      setEnd(
-        messages.length !== 0
-          ? new Date(messages[messages.length - 1].created_at)
-          : new Date()
-      );
-      console.log("ends value in the useEffect", end)
-      const tempDates = []
-      for (let date = start; date <= new Date(end.getTime() + 1000*60*60*24); date.setDate(date.getDate() + 1)) {
-        tempDates.push(format(date, "P"));
-        console.log("date in for loop ", date);
-      }
-      setDates(tempDates);
+      const newDates = []
+      messages.forEach(ele => {
+        if(!newDates.includes(format(new Date(ele.created_at), "P")))
+        {
+            newDates.push(format(new Date(ele.created_at), "P"));
+        }
+      })
+      setDates(newDates);
+      // console.log("new dates in useEffect");
+      // console.log(newDates);
     }, [messages.length])
 
 
@@ -66,6 +65,8 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
       }
     }, [])
 
+    console.log("dates before return block");
+    console.log(dates);
     return (
         <section ref={ref} id='message_feed--wrapper'>
         <div className='message_feed--introduction'>

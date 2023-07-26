@@ -11,181 +11,181 @@ def seed_live_chats(users, channels):
         sender_to_channel = users[0],
         channel = channels[0],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 1, 15)
     )
     lc2 = LiveChat(
         sender_to_channel = users[1],
         channel = channels[0],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 2, 15)
     )
     lc3 = LiveChat(
         sender_to_channel = users[1],
         channel = channels[1],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 3, 15)
     )
     lc4 = LiveChat(
         sender_to_channel = users[2],
         channel = channels[1],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 4, 15)
     )
     lc5 = LiveChat(
         sender_to_channel = users[2],
         channel = channels[2],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 5, 15)
     )
     lc6 = LiveChat(
         sender_to_channel = users[3],
         channel = channels[2],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 6, 15)
     )
     lc7 = LiveChat(
         sender_to_channel = users[3],
         channel = channels[3],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 7, 15)
     )
     lc8 = LiveChat(
         sender_to_channel = users[4],
         channel = channels[3],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 8, 15)
     )
     lc9 = LiveChat(
         sender_to_channel = users[4],
         channel = channels[4],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 9, 15)
     )
     lc10 = LiveChat(
         sender_to_channel = users[5],
         channel = channels[4],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 10, 15)
     )
     lc11 = LiveChat(
         sender_to_channel = users[5],
         channel = channels[5],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 11, 15)
     )
     lc12 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[5],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 12, 15)
     )
     lc13 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[6],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 13, 15)
     )
     lc14 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[6],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 14, 15)
     )
     lc15 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[7],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 15, 15)
     )
     lc16 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[7],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 16, 15)
     )
     lc17 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[8],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 17, 15)
     )
     lc18 = LiveChat(
         sender_to_channel = users[9],
         channel = channels[8],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 18, 15)
     )
     lc19 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[9],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 19, 15)
     )
     lc20 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[9],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 20, 15)
     )
     lc21 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[10],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 21, 15)
     )
     lc22 = LiveChat(
         sender_to_channel = users[5],
         channel = channels[10],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 22, 15)
     )
     lc23 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[11],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 23, 15)
     )
     lc24 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[11],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 24, 15)
     )
     lc25 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[12],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 25, 15)
     )
     lc26 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[12],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 26, 15)
     )
     lc27 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[13],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 27, 15)
     )
     lc28 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[13],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 28, 15)
     )
     lc29 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[14],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 28, 16)
     )
     lc30 = LiveChat(
         sender_to_channel = users[9],
         channel = channels[14],
         message=fake.text(max_nb_chars=randint(300, 499)),
-        created_at = datetime(2023, randint(1,6), randint(1,25), 15)
+        created_at = datetime(2023, 1, 28, 17)
     )
 
     db.session.add(lc1)
