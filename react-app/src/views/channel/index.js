@@ -102,7 +102,10 @@ function Channel(){
                 />
             </div>
         </header>
-        <LiveChatFeed setIsVisible={setIsVisible} ref={messageRef} messages={messages} channel={channel} socket={socket}></LiveChatFeed>
+        {
+            messages.length &&
+            <LiveChatFeed setIsVisible={setIsVisible} ref={messageRef} messages={messages} channel={channel} socket={socket}></LiveChatFeed>
+        }
         <MessageTextArea
             value={chatInput}
             setValue={(e) => setChatInput(e.target.value)}

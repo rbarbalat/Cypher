@@ -12,14 +12,11 @@ import { thunkGetUserThread } from '../../store/thread';
 const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
   const {messages, channel, socket, setIsVisible} = props
     const owner = channel.users.find(user => user.status === 'owner')
-    let start;
-    start = messages.length !== 0 ? new Date(messages[0].created_at) : new Date();
-    let end;
-    end =
-      messages.length !== 0
-        ? new Date(messages[messages.length - 1].created_at)
-        : new Date();
-    const dates = [];
+
+    const [start, setStart] = useState(new Date(messages[0]?.created_at) || new Date());
+    const [end, setEnd] = useState(new Date(messages[messages.length - 1]?.created_at) || new Date())
+    const [dates, setDates] = useState([]);
+
     const dispatch = useDispatch()
 
     const areMessagesPresent = (messages, specificDate) => {
@@ -38,9 +35,27 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
       dispatch(thunkGetUserThread(id))
     }
 
-    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-      dates.push(format(date, "P"));
-    }
+    // for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+    //   dates.push(format(date, "P"));
+    // }
+
+    useEffect(() => {
+      setStart(messages.length !== 0 ? new Date(messages[0].created_at) : new Date());
+
+      setEnd(
+        messages.length !== 0
+          ? new Date(messages[messages.length - 1].created_at)
+          : new Date()
+      );
+      console.log("ends value in the useEffect", end)
+      const tempDates = []
+      for (let date = start; date <= new Date(end.getTime() + 1000*60*60*24); date.setDate(date.getDate() + 1)) {
+        tempDates.push(format(date, "P"));
+        console.log("date in for loop ", date);
+      }
+      setDates(tempDates);
+    }, [messages.length])
+
 
     useEffect(() => {
       if (ref.current) {
@@ -67,15 +82,17 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
             </button>
         </div>
         {
-          dates.map(date => {
+          dates.sort((a,b) => {
+            return new Date(a).getTime() - new Date(b).getTime();
+          }).map(date => {
             return (
               <>
               {
                 messages.length && areMessagesPresent(messages, date) ?
                 <TimeStamp label={date}>
                   {
-                    // messages.filter(message => isSameDay(new Date(message.created_at), new Date(date)))
-                    messages.map(message => {
+                    messages.filter(message => isSameDay(new Date(message.created_at), new Date(date)))
+                    .map(message => {
                       return (
                         <Message type='channel' message={message} isLiveChat={true} channelId={channel.id} socket={socket}/>
                       )

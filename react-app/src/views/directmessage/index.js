@@ -108,11 +108,11 @@ function DirectMessage() {
                         />
                     </div>
                 </header>
-                {/* { messages && */}
+                { messages.length &&
 
                 <DirectMessageFeed ref={messageRef} messages={messages} socket={socket} partnerId={partnerId}/>
 
-                {/* } */}
+                }
                 <MessageTextArea
                     value={chatInput}
                     setValue={(e) => setChatInput(e.target.value)}
