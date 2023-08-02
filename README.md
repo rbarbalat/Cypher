@@ -63,3 +63,113 @@ Jonathan, Omar, Chris, and Roman have successfully completed this project with a
 <p>
 &#8226; Inside a team users are able to join existing channels, create a new channels, participate in channel wide chats and engage in private conversations with team members
 </p>
+
+# API-Routes
+
+This web app uses the following API routes to dynamically update the page to create a single-page-app-like feel for the user for specific features.
+
+## Teams
+
+*  Returns a list all Teams that the user is a member of
+
+    * `GET /api/teams`
+
+      ```json
+      [
+          {
+              “id”: 1,
+              “name”: Team Name,
+              “image: Image url
+          }
+      ]
+      ```
+
+* Returns a dictionary representing a single Team
+
+    * `GET /api/teams/<int:id>`
+      ```json
+      {
+          “id”: 1,
+          “name”: Team Name,
+          “image: Image url
+      }
+      ```
+
+* Returns a dictionary of the newly created Team
+
+    * `POST /api/teams`
+
+* Returns a dictionary containing the newly added member, and the updated member list
+
+    * `POST /api/teams/<int:id>/members`
+
+* If user is Admin, returns confirmation message of successful deletion of Team
+
+    * `DELETE /api/teams/<int:id>`
+
+
+## Channels
+
+* Returns a list of all Channels that belong to the specified Team
+
+    * `GET /api/teams/<int:id>/channels`
+
+* Returns a dictionary of the specified Channel
+
+    * `GET /api/channels/<int:id>`
+
+* Returns a list of all members of a Channel
+
+    * `GET /api/channels/<int:id>/members`
+
+* If the user is Admin, Returns a dictionary of the newly created Channel
+
+    * `POST /api/teams/<int:id>/channels`
+
+* Returns a dictionary containing the newly added member, and the updated member list
+
+    * `POST /api/channels/<int:id>/members`
+
+* If user is Admin, returns confirmation message of successful deletion of Channel
+
+    * `DELETE /api/teams/<int:id>`
+
+
+## Live Chat
+
+* Returns an ordered list of messages that belong to a Channel
+
+    * `GET /api/channels/<int:id>/chats`
+
+* Returns an updated list of of messages including the newly created message
+
+    * `POST /api/channels/<int:id>/chats`
+
+* Returns the list of messages with the updated message
+
+    * `PATCH /api/messages/<int:id>`
+
+* Returns a confirmation message that the specified message was deleted
+
+    * `DELETE /api/messages/<int:id>`
+
+
+## Direct Messages
+
+* Returns an ordered list of messages that belong to a direct message between two users
+
+    * `GET /api/direct-messages/<int:user_id>/<int:recipient_id>`
+
+* Returns an updated list of of messages including the newly created message
+
+    * `POST /api/direct-messages/<int:user_id>/<int:recipient_id>`
+
+* If the user is the sender of the message, Returns the list of messages with the updated message
+
+    * `PATCH /api/direct-messages/<int:id>`
+
+* If the user is the sender of the message, Returns a confirmation message that the specified message was deleted
+
+    * `DELETE /api/direct-messages/<int:id>`
+
+
