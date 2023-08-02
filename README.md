@@ -426,7 +426,7 @@ This web app uses the following API routes to dynamically update the page to cre
                               "image": String
                           }
                       ],
-          "user": User
+          "user": {User}
       }
       ```
 
