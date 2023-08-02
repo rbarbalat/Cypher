@@ -81,7 +81,7 @@ This web app uses the following API routes to dynamically update the page to cre
               "id": Integer,
               "name": String,
               "image": String,
-              "users": [ Users ],
+              "users": [Users],
               "num_members": Integer
           }
       ]
@@ -98,7 +98,7 @@ This web app uses the following API routes to dynamically update the page to cre
               "id": Integer,
               "name": String,
               "image": String,
-              "users": [ Users ],
+              "users": [Users],
               "num_members": Integer
           }
       ]
@@ -114,7 +114,7 @@ This web app uses the following API routes to dynamically update the page to cre
           "id": Integer,
           "name": String,
           "image": String,
-          "users": [ Users ],
+          "users": [Users],
           "num_members": Integer
       }
       ```
@@ -230,7 +230,7 @@ This web app uses the following API routes to dynamically update the page to cre
           "private": Boolean,
           "team_id": Integer,
           "description": String,
-          "users": [ Users ],
+          "users": [Users],
           "num_members": Integer
       }
       ```
@@ -262,7 +262,7 @@ This web app uses the following API routes to dynamically update the page to cre
           "private": Boolean,
           "team_id": Integer,
           "description": String,
-          "users": [ Users ]
+          "users": [Users]
       }
       ```
 
