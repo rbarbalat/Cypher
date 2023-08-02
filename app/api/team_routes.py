@@ -28,7 +28,6 @@ def get_teams():
     for team in teams]
 
   for i, user_list in enumerate(list_of_list_of_users, start = 0):
-    # print(i)
     new_teams[i]["users"] = user_list
     new_teams[i]["numMembers"] = len(user_list)
 
@@ -67,7 +66,6 @@ def get_user_teams():
     for team in team_list]
 
   for i, user_list in enumerate(list_of_list_of_users, start = 0):
-    # print(i)
     new_teams[i]["users"] = user_list
     new_teams[i]["numMembers"] = len(user_list)
 
@@ -145,23 +143,18 @@ def create_team():
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
 
-  #weird syntax was jonathan testing something
   form = team_form.TeamForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
 
-  # print(form.data["name"])
-  # print(form.data["description"])
   if form.validate_on_submit():
     image = form.data["image"]
     image.filename = get_unique_filename(image.filename)
     upload = upload_file_to_s3(image)
-    #upload is a dicitonary with a key of url or a key of errors
+    #upload is a dictionary with a key of url or a key of errors
     if "url" not in upload:
       return {"error": "failed b/c of problem with the image file"}, 400
-      #the key here is error but below is "errors", recheck this
 
     team = Team()
-    # form.populate_obj(team)
     team.name = form.data["name"]
     team.description = form.data["description"]
     team.image = upload["url"]
@@ -175,7 +168,6 @@ def create_team():
       "description": team.description,
       "image": team.image
     }
-  # RECHECK FRONT END, MIGHT NEED TO BE error not errors
   return {"errors": form.errors}, 400
 
 #DELETE A TEAM
@@ -197,7 +189,6 @@ def delete_team(id):
     db.session.commit()
     return {"message": "team deleted"}
   else:
-    #is this what we want?
     db.session.delete(team)
     db.session.commit()
     return {"message": "team deleted but error on image deletion"}
@@ -211,10 +202,6 @@ def create_channel(id):
     return {"error" : "go get logged in"}, 403
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
-  #DO WE WANT ONLY TEAM OWNNERS/ADMIN TO BE ABLE TO CREATE CHANNELS FOR A TEAM?
-  # isOwnerOrAdmin = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(TeamMembership.team_id == id).first()
-  # if not isOwnerOrAdmin:
-  #     return {"error" : "not authorized"}
   if form.validate_on_submit():
     channel = Channel()
     form.populate_obj(channel)
@@ -242,8 +229,7 @@ def add_member_to_team(id):
   if team is None:
     return {"error": "team does not exist"}, 404
   if len(team.users) == 0:
-    #DOUBLE CHECK THIS ERROR CODE
-    return {"error": "can't add yourself to a team with zero members"}, 500
+    return {"error": "can't add yourself to a team with zero members"}, 401
   isAlreadyMember = current_user.id in [tm.user_id for tm in team.users]
   if isAlreadyMember:
     return {"error" : "you've already joined"}, 500
@@ -263,7 +249,6 @@ def delete_member_from_team(team_id, mem_id):
 
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
-  #print("PRINTING CURRENT USER ----  ", current_user.id)
 
   #this is the tm to be deleted
   tm = TeamMembership.query.filter(TeamMembership.user_id == mem_id).filter(TeamMembership.team_id == team_id).first()
@@ -307,8 +292,6 @@ def roll_delete_team_to_channels(team_id, user_id):
     if cm:
       db.session.delete(cm)
   db.session.commit()
-
-
 
 
 #this is an alternative to  get_team_channel_user specifically

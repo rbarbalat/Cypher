@@ -44,13 +44,9 @@ def handle_direct_messages(data):
 def update_direct_message(data):
     id = data["id"]
     message = data["message"]
-    print("printing message inside backend---", message)
     uc = DirectMessage.query.get(id)
     uc.message = message
-    #probably don't need to add this to the database
-    # db.session.add(uc)
     db.session.commit()
-    print(uc.message)
     emit("update_chat", data, room=[data["sender_id"], data["recipient_id"]])
 
 #Delete Chat
@@ -80,11 +76,9 @@ def handle_live_chat(data):
 def update_live_chat(data):
     id = data["id"]
     message = data["message"]
-    print("printing message inside backend---", message)
     lc = LiveChat.query.get(id)
     lc.message = message
     db.session.commit()
-    print(lc.message)
     emit("update_live_chat", data, room=f'Channel {data["channel_id"]}')
 
 #Delete Live chat
@@ -115,7 +109,6 @@ def handle_live_reply(data):
 def update_live_reply(data):
     id = data["id"]
     message = data["message"]
-    print("printing message inside backend---", message)
     lr = LiveReplies.query.get(id)
     lr.message = message
     db.session.commit()

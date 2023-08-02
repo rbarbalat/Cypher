@@ -29,10 +29,6 @@ def user(id):
 
 @user_routes.route("/all")
 def all_users():
-    # if not current_user.is_authenticated:
-    #     return {"error": "got get logged in"}, 403
-    #better structure for us, other route in auth might be used
-    #with that structure elsewhere
     users = User.query.all()
     return [user.to_dict() for user in users]
 
@@ -40,7 +36,6 @@ def all_users():
 def add_image():
     if not current_user.is_authenticated:
         return {"error": "got get logged in"}, 403
-    print('inside the backend')
     form = UserImageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -52,11 +47,8 @@ def add_image():
         if "url" not in upload:
             return {"error": "failed b/c of problem with the image file"}, 400
 
-        print("backend")
-        print(upload["url"])
         current_user.image = upload["url"]
         db.session.commit()
         return current_user.to_dict()
 
-    print({"errors": form.errors})
     return {"errors": form.errors}, 400

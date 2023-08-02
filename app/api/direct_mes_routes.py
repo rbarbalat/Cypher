@@ -82,7 +82,6 @@ def get_messages(id):
 
 @direct_mes_routes.route("/<int:id>", methods=["POST"])
 def send_direct_messages(id):
-    print("we are inside the send_direct_messages function")
     if not current_user.is_authenticated:
         return {"error": "go get logged in"}, 403
     form = direct_mes_form.DirectMessageForm()
