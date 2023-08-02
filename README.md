@@ -92,7 +92,7 @@ This web app uses the following API routes to dynamically update the page to cre
   
     * `GET /api/teams/currentuser`
 
-     ```json
+      ```json
       [
           {
               "id": Integer,
