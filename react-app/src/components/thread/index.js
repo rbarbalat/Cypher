@@ -14,8 +14,6 @@ function Thread() {
         dispatch(thunkclearThread())
     }
 
-    console.log(thread)
-
     return (
     <aside id='thread--wrapper'>
         <header className='thread--header'>

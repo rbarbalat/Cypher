@@ -17,20 +17,14 @@ export const thunkGetUserThread = (id) => async dispatch => {
         headers: { "Content-Type": "application/json" }
     })
 
-    //data.type = 'user'
-    //dispatch(actionGetUserThread(data))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         data.type = "user";
         dispatch(actionGetUserThread(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
-        return errorData
+        return errorData;
     }
 }
 

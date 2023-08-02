@@ -34,14 +34,6 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
       dispatch(thunkGetUserThread(id))
     }
 
-    // console.log("messages in livechatfeed");
-    // console.log(messages);
-    // console.log("type of created at")
-    // console.log(typeof messages[0].created_at)
-
-    // console.log("dates array outside of useEffect");
-    // console.log(dates);
-
     useEffect(() => {
       const newDates = []
       messages.forEach(ele => {
@@ -51,8 +43,6 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
         }
       })
       setDates(newDates);
-      // console.log("new dates in useEffect");
-      // console.log(newDates);
     }, [messages])
 
 
@@ -65,8 +55,6 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
       }
     }, [])
 
-    console.log("dates before return block");
-    console.log(dates);
     return (
         <section ref={ref} id='message_feed--wrapper'>
         <div className='message_feed--introduction'>

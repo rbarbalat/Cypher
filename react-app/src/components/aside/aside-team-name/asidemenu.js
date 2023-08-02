@@ -21,7 +21,6 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
     }
 
     const handleTeamDelete = () => {
-        // console.log('inside delete team')
         dispatch(deleteTeam(teamId))
         history.push('/dashboard')
     }

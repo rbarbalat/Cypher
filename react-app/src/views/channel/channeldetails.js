@@ -24,7 +24,6 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     const userIds = users.map(user => user.id)
 
     const notInChannelUsers = teamUsers.filter(tu => !userIds.includes(tu.id) )
-    console.log(notInChannelUsers)
 
     const {channelId} = useParams()
     const handleDelete = () => {
@@ -33,21 +32,17 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     }
     const user = useSelector(state => state.session.user)
     const deleteMember = () => {
-        console.log("inside deleteMember")
         history.push(`/team/${team.id}`)
         dispatch(thunkDeleteUserFromChannel(channelId, user.id))
     }
     const owner = channel.users.find(user => user.status === "owner")
     const isOwner = owner.id === user.id;
-    console.log("isOwner    ", isOwner)
 
     const authorizedTeam = team.users.filter(user => user.status === "owner" || user.status == "admin" );
     let isAuthorizedByTeam = authorizedTeam.find(person => person.id == user.id)
     isAuthorizedByTeam ? isAuthorizedByTeam = true : isAuthorizedByTeam = false
     const onlyTeamAuthorized = isAuthorizedByTeam
     const isAuthorized = isOwner || isAuthorizedByTeam;
-    console.log("auth from team", isAuthorizedByTeam)
-    console.log(isAuthorized, "isAuthorized")
 
     const handleUserThread = (id) => {
         dispatch(thunkGetUserThread(id))
@@ -55,13 +50,10 @@ const ChannelDetails = React.forwardRef((props, ref) => {
     }
 
     const handleJoin = async (id, user_id) => {
-        console.log(id, 'channelId', user_id, 'userId');
         const res = await fetch(`/api/channels/${id}/members/${user_id}`, {
             method: "POST"
         })
         if(res.ok){
-            const romansThing = await res.json();
-            console.log(romansThing);
             dispatch(thunkGetChannel(id));
         }
     }

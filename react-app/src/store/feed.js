@@ -13,17 +13,12 @@ export const thunkGetFeed = (type, id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    //dispatch(actionGetFeed(data))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         dispatch(actionGetFeed(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 }

@@ -6,12 +6,6 @@ function ThreadReplies() {
   return (
     <div>
         <h1>Thread Replies</h1>
-        {/* <ThreadFeed messages={messages}/>
-        <MessageTextArea
-            value={'none'}
-            setValue={(e) => console.log(e.target.value)}
-            action={null}
-        /> */}
     </div>
   )
 }

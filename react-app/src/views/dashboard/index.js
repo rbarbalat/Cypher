@@ -29,11 +29,6 @@ function Dashboard() {
         filteredTeams = filteredTeams.filter(team => team.name.toLowerCase().includes(teamQuery.toLowerCase()))
     }
 
-    console.log(normalizedEveryTeam)
-
-
-
-
     const handleLogout = (e) => {
         e.preventDefault();
         history.push('/sign-in')

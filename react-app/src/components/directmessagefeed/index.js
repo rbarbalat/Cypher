@@ -19,7 +19,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
   };
 
   const handleBottomScroll = () => {
-    console.log(ref.current.scrollHeight)
     ref.current.scroll({
       top: ref.current.scrollHeight,
       behavior: "smooth",
@@ -38,24 +37,14 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
 
   const partnerImage = useSelector(state => state.users.users[recipientId])
 
-  // for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
-  //   dates.push(format(date, "P"));
-  // }
-
   const areMessagesPresent = (messages, specificDate) => {
-    // console.log("specificDate");
-    // console.log(specificDate);
     return messages.some((message) => {
       return isSameDay(new Date(message.created_at), new Date(specificDate));
     });
   };
 
-  // console.log("messsages above useEffect")
-  // console.log(messages);
 
   useEffect(() => {
-    console.log("line 57 in useEffect");
-    console.log("pathname is ", pathname);
     const newDates = []
     messages.forEach(ele => {
       if(!newDates.includes(format(new Date(ele.created_at), "P")))
@@ -66,10 +55,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
     setDates(newDates);
   }, [messages])
 
-  // console.log("messages array")
-  // console.log(messages)
-  // console.log("dates array");
-  // console.log(dates)
   useEffect(() => {
       if (ref.current) {
         ref.current.scroll({
@@ -78,12 +63,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
         })
       }
   }, [])
-
-  // console.log('line 66')
-  // console.log(messages)
-
-  // console.log("dates array");
-  // console.log(dates)
 
   return (
     <section ref={ref} id="message_feed--wrapper">
@@ -121,8 +100,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
       {dates.sort((a,b) => {
         return new Date(a).getTime() - new Date(b).getTime();
       }).map((date) => {
-        // console.log("date on line 116");
-        // console.log(date);
         return (
           <>
             {messages.length && areMessagesPresent(messages, date) ? (
@@ -132,8 +109,6 @@ const DirectMessageFeed = forwardRef(function DirectMessageFeed(props, ref) {
                     isSameDay(new Date(message.created_at), new Date(date))
                   )
                   .map((message) => {
-                    // console.log("new Date ", new Date(date));
-                    // console.log("new date created at ", new Date(message.created_at));
                     return (
                       <Message
                         type="direct"

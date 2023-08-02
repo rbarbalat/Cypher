@@ -25,8 +25,6 @@ function Channel(){
     const team = useSelector(state => state.teams.singleTeam)
     const messageRef = useRef(null)
     const liveChats = useSelector(state => state.channels.liveChats)
-    console.log("liveChats in Channel");
-    console.log(liveChats);
     const normalizedLiveChats = Object.values(liveChats)
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
@@ -36,8 +34,6 @@ function Channel(){
     const [chatInput, setChatInput] = useState("")
 
     const handleContent = () => {
-        //console.log(chatInput)
-        //console.log(socket)
         if(chatInput.trim().length === 0) return;
         if(chatInput.trim().length > 500) return;
         socket.emit("live_chat", {
@@ -52,14 +48,12 @@ function Channel(){
         setChatInput("")
     }
 
-    console.log("channel line 50      ", channel)
 
     useEffect(() => {
         dispatch(thunkGetChannel(channelId))
     }, [dispatch, channelId])
 
     useEffect(() => {
-        console.log("yoohoooooo")
         setMessages([...normalizedLiveChats])
     }, [liveChats, dispatch])
 
@@ -72,7 +66,6 @@ function Channel(){
         })
         socket.on("live_chat", async (chat) => {
             let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
-            console.log(chats)
             setMessages([...chats])
         })
         socket.on("update_live_chat", async (chat) => {
@@ -88,7 +81,6 @@ function Channel(){
         })
     }, [channelId, dispatch]);
 
-    // if (loading || !channel) return <DataLoading></DataLoading>
     if (loading || !channel.id) return <DataLoading></DataLoading>
     return (
         <main className='views--wrapper'>

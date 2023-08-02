@@ -20,8 +20,6 @@ function CreateTeamForm() {
     setImagePreview(URL.createObjectURL(e.target.files[0]))
   };
 
-  console.log(image)
-
   const handleCreateTeam = async (e) => {
     e.preventDefault()
     const formData = new FormData()

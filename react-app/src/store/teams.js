@@ -47,17 +47,12 @@ export const thunkGetTeams = () => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    //dispatch(actionGetTeams(data))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         dispatch(actionGetTeams(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 }
@@ -67,17 +62,12 @@ export const thunkGetTeam = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    //dispatch(actionGetTeam(data))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         dispatch(actionGetTeam(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 }
@@ -88,17 +78,12 @@ export const thunkGetEveryTeam = () => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    //dispatch(actionGetEveryTeam(data))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         dispatch(actionGetEveryTeam(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 }
@@ -106,20 +91,14 @@ export const thunkGetEveryTeam = () => async dispatch => {
 export const thunkCreateTeam = (team) => async dispatch => {
     const res = await fetch(`/api/teams/`, {
         method: "POST",
-        // headers: { "Content-Type": "application/json" },
         body: team
     })
-    //dispatch(actionCreateTeam(data))
     if (res.ok) {
         const data = await res.json();
-        console.log("good response")
-        console.log(data)
         dispatch(actionCreateTeam(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData;
     }
 }
@@ -131,14 +110,9 @@ export const thunkJoinTeam = (id) => async dispatch => {
     })
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
-        //don't need to dispatch here b/c redirect to a page that gets info
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 
@@ -153,17 +127,12 @@ export const deleteTeam = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    //dispatch(actionDeleteTeam(id))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         dispatch(actionDeleteTeam(id));
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 }
@@ -173,17 +142,12 @@ export const thunkGetAllMembers = (id) => async dispatch => {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-    //dispatch(actionGetAllMembers(data))
     if (res.ok) {
         const data = await res.json();
-        // console.log("good response")
-        // console.log(data)
         dispatch(actionGetAllMembers(data))
         return data;
     }else{
         const errorData = await res.json();
-        console.log("error response");
-        console.log(errorData);
         return errorData
     }
 }

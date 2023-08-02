@@ -16,7 +16,6 @@ export const thunkGetUsers = () => async (dispatch) => {
     }
     else{
         const error = await res.json();
-        console.log(error);
         return error;
     }
 }

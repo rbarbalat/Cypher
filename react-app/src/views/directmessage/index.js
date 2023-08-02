@@ -61,7 +61,6 @@ function DirectMessage() {
 
     useEffect(() => {
         socket = io("/direct") //specify a namespace
-        // console.log(socket.id)
         dispatch(thunkGetDirectMessages(parseInt(partnerId)))
         socket.emit("join", {
             username: user.username,
@@ -69,12 +68,7 @@ function DirectMessage() {
         })
         socket.on("chat", async (chat) => {
             let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-            console.log("messages line 72")
-            console.log("HELLOHELLOHELLOHELLO")
-            console.log(msgs);
             let normMsgs = Object.values(msgs)
-            console.log("LINE 76")
-            console.log(normMsgs)
             setMessages([...normMsgs])
         })
         socket.on("update_chat", async (chat) => {
@@ -90,13 +84,7 @@ function DirectMessage() {
         return (() => {
           socket.disconnect()
         })
-    }, [partnerId, dispatch]);//empty in the sample code, maybe needs dispatch, partnerId
-
-  //shouldn't be zero if clic
-//   if(loading)  return <DataLoading></DataLoading>
-    // if(normalizedDirectMessages.length === 0)  return <DataLoading></DataLoading>
-//   if(messages.length === 0)  return <DataLoading></DataLoading>
-    // return <div>loading</div>
+    }, [partnerId, dispatch]);
 
 
     return (

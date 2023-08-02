@@ -39,8 +39,6 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
         formData.append("private", isPrivate)
         const newChannel = formData;
         const data = await dispatch(thunkCreateChannel(team.id, newChannel))
-        console.log("data in handleCreateChannel")
-        console.log(data)
         if (data.errors)
         {
             const keys = Object.keys(data.errors)
@@ -51,9 +49,7 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
             {
                 valErrors[keys[i]] = vals[i][0]
             }
-            setErrors(valErrors)
-            // console.log("printing state variable errors object")
-            // console.log(errors)
+            setErrors(valErrors);
             return;
         } else {
             setCreateChannel(false); //do we need this?

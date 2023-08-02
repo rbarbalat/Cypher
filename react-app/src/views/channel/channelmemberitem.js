@@ -6,7 +6,6 @@ import {useDispatch} from "react-redux"
 import { FaTrashAlt } from 'react-icons/fa'
 
 function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwner, isAuthorizedByTeam}) {
-    // console.log(member)
     const user = useSelector(state => state.session.user)
     let displayDeleteButton = false;
     const dispatch = useDispatch();
@@ -14,19 +13,13 @@ function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwn
     const channelOwner = channel.users.find(user => user.status === "owner")
     const teamOwner = team.users.find(user => user.status === "owner")
     let teamUsers = useSelector(state => state.teams.singleTeam.users)
-    console.log('teamUsers:', teamUsers);
-    console.log('member.id:', member.id);
     let userInTeam = teamUsers.find(user => user.id === member.id);
-
-    // console.log("SEARCHING---------------", teamUsers.find(user => user.id === member.id))
-    console.log("userInTeam")
-    console.log(userInTeam)
 
     let memberStatusInTeam = null;
     if (userInTeam && userInTeam.status) {
       memberStatusInTeam = userInTeam.status;
     }
-    
+
     if(memberStatusInTeam == "member"){
         if(user.id == member.id)
         {
@@ -42,7 +35,6 @@ function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwn
 
     const deleteMember = (event) => {
         event.stopPropagation();
-        console.log("inside deleteMember");
         history.push(`/team/${team.id}`);
         dispatch(thunkDeleteUserFromChannel(channel.id, member.id));
     }
@@ -63,19 +55,6 @@ function ChannelMemberItem({team, channel, member, handleSelectRecipients, isOwn
                     <span className='recipient_list_item--owner'>Channel Owner</span> :
                 null
                 }
-                {/* {
-                    isAuthorizedByTeam !== null ?
-                    <>
-                    <small style={{color: 'red'}}>
-                    Chan Status: {member.status}
-                    </small>
-                    <span> &bull; </span>
-                    <small style={{color: 'red'}}>
-                    Team Status: {memberStatusInTeam}
-                    </small>
-                    </> :
-                    null
-                } */}
             </span>
         </span>
         {
