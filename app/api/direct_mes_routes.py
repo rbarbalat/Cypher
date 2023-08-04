@@ -81,6 +81,7 @@ def get_messages(id):
         }for message in messages]
     return {"messages": messages, "user": partner.to_dict()}
 
+#THIS ROUTE IS NOT USED, DONE THROUGH SOCKETS IN SOCKET.PY
 @direct_mes_routes.route("/<int:id>", methods=["POST"])
 def send_direct_messages(id):
     if not current_user.is_authenticated:
@@ -93,9 +94,7 @@ def send_direct_messages(id):
         message.sender_id = current_user.id
         message.recipient_id = id
 
-        # this route isn't used to create DMs, goes through the socket
-        # message.created_at = datetime.utcnow()
-        # message.created_at = datetime.now()
+        message.created_at = datetime.utcnow()
         db.session.add(message)
         db.session.commit()
         return {
@@ -109,7 +108,7 @@ def send_direct_messages(id):
 
 
 #EDIT MESSAGE
-
+#THIS ROUTE IS NOT USED, DONE THROUGH SOCKETS IN SOCKET.PY
 @direct_mes_routes.route('/<int:id>/edit', methods=["POST"])
 def edit_direct_message(id):
     if not current_user.is_authenticated:
@@ -132,7 +131,7 @@ def edit_direct_message(id):
     return {"errors": form.errors}, 400
 
 #DELETE MESSAGE
-
+#THIS ROUTE IS NOT USED, DONE THROUGH SOCKETS IN SOCKET.PY
 @direct_mes_routes.route('/<int:id>/delete')
 def delete_direct_message(id):
     if not current_user.is_authenticated:
