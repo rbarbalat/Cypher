@@ -14,6 +14,7 @@ from app.forms import direct_mes_form
 from app.forms import team_form
 from app.forms.channel_form import ChannelForm
 from sqlalchemy import or_
+from datetime import datetime
 
 direct_mes_routes = Blueprint("messages", __name__)
 
@@ -91,6 +92,10 @@ def send_direct_messages(id):
         form.populate_obj(message)
         message.sender_id = current_user.id
         message.recipient_id = id
+
+        # this route isn't used to create DMs, goes through the socket
+        # message.created_at = datetime.utcnow()
+        # message.created_at = datetime.now()
         db.session.add(message)
         db.session.commit()
         return {

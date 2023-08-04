@@ -31,13 +31,11 @@ def handle_direct_messages(data):
         sender_id = data["sender_id"],
         recipient_id = data["recipient_id"],
         message = data["message"],
-        created_at = datetime.now()
+        created_at = datetime.utcnow()
     )
     db.session.add(dm)
     db.session.commit()
-    # send_direct_messages(data["recipient_id"])
     emit("chat", data, room=[data["sender_id"], data["recipient_id"]])
-    # emit(to = user with a session id)
 
 #Update Chat
 @socketio.on("update_chat", namespace="/direct")
@@ -64,11 +62,10 @@ def handle_live_chat(data):
         sender_id = data["sender_id"],
         channel_id = data["channel_id"],
         message = data["message"],
-        created_at = datetime.now()
+        created_at = datetime.utcnow()
     )
     db.session.add(lc)
     db.session.commit()
-    # send_direct_messages(data["recipient_id"])
     emit("live_chat", data, room=f'Channel {data["channel_id"]}')
 
 #Update Live chat
@@ -101,7 +98,6 @@ def handle_live_reply(data):
     )
     db.session.add(lc)
     db.session.commit()
-    # send_direct_messages(data["recipient_id"])
     emit("live_chat", data, room=f'Channel {data["channel_id"]}')
 
 #Update Live reply

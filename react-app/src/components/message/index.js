@@ -22,8 +22,8 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
   const userImage = useSelector(state => state.users.users[user.id])
 
   const convertTime = () => {
-    const date = new Date(new Date(message.created_at).toString() + "PST");
-    return format(new Date(date), "p");
+    const date = new Date(message.created_at);
+    return format(date, "p");
   };
 
   const handleUserThread = (id) => {
