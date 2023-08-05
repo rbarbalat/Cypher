@@ -66,7 +66,7 @@ def get_members_for_channel(id):
 
 
 #DELETE A CHANNEL BY ID
-@channel_routes.route('/<int:id>/delete')
+@channel_routes.route('/<int:id>', methods = ["DELETE"])
 def delete_channel(id):
     if not current_user.is_authenticated:
         return {"error" : "go get logged in"}, 403
@@ -101,12 +101,10 @@ def add_member_to_channel(id):
   if not channel:
      return {"error": "channel does not exist"}, 404
 
-  #late addition
   team = channel.team
   userInTeam = current_user.id in [tm.user_id for tm in team.users]
   if not userInTeam:
      return {"error": "can't join a channel if you don't belong to the right team"}, 404
-  #late addition
 
   team_id = channel.team.id
   isOwner = TeamMembership.query.filter(TeamMembership.user_id == current_user.id).filter(or_(TeamMembership.status == "admin", TeamMembership.status == "owner")).filter(team_id == TeamMembership.team_id).first()
@@ -125,7 +123,7 @@ def add_member_to_channel(id):
   return {"message":"added"}
 
 # DELETE member of channel
-@channel_routes.route("/<int:chan_id>/member/<int:mem_id>")
+@channel_routes.route("/<int:chan_id>/member/<int:mem_id>", methods = ["DELETE"])
 def delete_member_from_channel(chan_id, mem_id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403

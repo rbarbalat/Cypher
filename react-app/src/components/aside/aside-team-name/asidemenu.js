@@ -29,8 +29,7 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
         //fetch w/o thunk b/c redirected to dashboard where other get all teams thunk called anyway
         //and then if you go to diff pages corresponding thunks will be called
         await fetch(`/api/teams/${teamId}/member/${userId}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
+            method: "DELETE"
         });
         history.push("/dashboard")
     }

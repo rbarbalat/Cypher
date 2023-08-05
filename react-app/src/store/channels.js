@@ -110,8 +110,7 @@ export const thunkCreateChannel = (id, channel) => async dispatch => {
 
 export const thunkDeleteUserFromChannel = (chan_id, user_id) => async dispatch => {
     const res = await fetch(`/api/channels/${chan_id}/member/${user_id}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" }
+        method: "DELETE"
     })
     if (res.ok) {
         const data = await res.json();
@@ -124,9 +123,8 @@ export const thunkDeleteUserFromChannel = (chan_id, user_id) => async dispatch =
 }
 
 export const deleteChannel = (id) => async dispatch => {
-    const res = await fetch(`/api/channels/${id}/delete`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" }
+    const res = await fetch(`/api/channels/${id}`, {
+        method: "DELETE"
     })
     if (res.ok) {
         const data = await res.json();

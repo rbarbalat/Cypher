@@ -11,12 +11,7 @@ team_routes = Blueprint("teams", __name__)
 #GET ALL TEAMS
 @team_routes.route("/")
 def get_teams():
-  #commented out b/c sometimes get Teams is called when no user is logged in
-  # if not current_user.is_authenticated:
-  #   return {"error" : "go get logged in"}
   teams = Team.query.all()
-  # if len(teams) == 0:
-  #   return []
 
   list_of_list_of_users = [ [tm.user.to_dict() for tm in team.users] for team in teams ]
 
@@ -53,6 +48,9 @@ def get_team_by_id(id):
 def get_user_teams():
   # if not current_user.is_authenticated:
   #   return {"error" : "go get logged in"}, 403
+  #THIS IS SOMETHING TO LOOK INTO, if accesses current_user in the route
+  #should be authenticated, was it causing problems?
+
   team_list=[]
   for membership in current_user.teams:
     team_list.append(membership.team)
@@ -171,7 +169,7 @@ def create_team():
   return {"errors": form.errors}, 400
 
 #DELETE A TEAM
-@team_routes.route('/<int:id>/delete')
+@team_routes.route('/<int:id>', methods=["DELETE"])
 def delete_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
@@ -243,8 +241,8 @@ def add_member_to_team(id):
   return {"message":"added"}
 
 #DELETE A MEMBER FROM TEAM
-
-@team_routes.route("/<int:team_id>/member/<int:mem_id>")
+#this is called by the func deleteTeamMembership in aside/aside-team-name/asidemenu.js
+@team_routes.route("/<int:team_id>/member/<int:mem_id>", methods = ["DELETE"])
 def delete_member_from_team(team_id, mem_id):
 
   if not current_user.is_authenticated:
@@ -282,9 +280,10 @@ def delete_member_from_team(team_id, mem_id):
 
   return {"error": "Unauthorized"}, 403
 
+#this is used in the route above (delete a member from a team)
 def roll_delete_team_to_channels(team_id, user_id):
   team = Team.query.get(team_id)
-  if team is None:
+  if not team:
     return {"error": "team does not exist"}, 404
   channels = team.channels
   for channel in channels:

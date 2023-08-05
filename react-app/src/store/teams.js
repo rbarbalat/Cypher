@@ -123,9 +123,8 @@ export const clearTeam = () => async dispatch => {
 }
 
 export const deleteTeam = (id) => async dispatch => {
-    const res = await fetch(`/api/teams/${id}/delete`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" }
+    const res = await fetch(`/api/teams/${id}`, {
+        method: "DELETE"
     })
     if (res.ok) {
         const data = await res.json();
