@@ -36,7 +36,7 @@ def get_channels():
 @channel_routes.route('/<int:id>')
 def get_channel_by_id(id):
     channel = Channel.query.get(id)
-    if channel is None:
+    if not channel:
         return {"error": "Channel not found"}, 404
 
     users = [ { **cm.user.to_dict(), "status": cm.status } for cm in channel.users]
@@ -55,7 +55,7 @@ def get_channel_by_id(id):
 @channel_routes.route('/<int:id>/members')
 def get_members_for_channel(id):
     channel = Channel.query.get(id)
-    if channel is None:
+    if not channel:
       return {"error": "channel does not exist"}, 404
     users = [{
         "id":membership.user.id,
@@ -71,7 +71,7 @@ def delete_channel(id):
     if not current_user.is_authenticated:
         return {"error" : "go get logged in"}, 403
     channel = Channel.query.get(id)
-    if channel is None:
+    if not channel:
        return {"error": "channel not found"}, 404
 
     team = channel.team

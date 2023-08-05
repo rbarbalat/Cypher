@@ -34,7 +34,7 @@ def get_team_by_id(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
   team = Team.query.get(id)
-  if team is None:
+  if not team:
     return {"error": "Team not found"}, 404
   users = [{**tm.user.to_dict(), "status": tm.status} for tm in team.users]
   numMembers = len(users)
@@ -76,7 +76,7 @@ def get_team_channels(id):
     return {"error" : "go get logged in"}, 403
   channel_list=[]
   team = Team.query.get(id)
-  if team is None:
+  if not team:
     return {"error": "Team not found"}, 404
   user_key_values = []
   for channel in team.channels:
@@ -99,7 +99,7 @@ def get_team_channel_user(id):
     return {"error" : "go get logged in"}, 403
 
   team = Team.query.get(id)
-  if team is None:
+  if not team:
     return {"error": "Team not found"}, 404
 
   x = set([cm.channel for cm in current_user.channels])
@@ -182,7 +182,7 @@ def delete_team(id):
     return {"error": "not authorized"}, 403
 
   file_delete = remove_file_from_s3(team.image)
-  if file_delete is True:
+  if file_delete:
     db.session.delete(team)
     db.session.commit()
     return {"message": "team deleted"}
@@ -299,7 +299,7 @@ def roll_delete_team_to_channels(team_id, user_id):
 def get_team_channel_user_for_delete(id, user_id):
 
   team = Team.query.get(id)
-  if team is None:
+  if not team:
     return {"error": "Team not found"}, 404
 
   user = User.query.get(user_id)

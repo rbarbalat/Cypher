@@ -6,7 +6,7 @@ from app.forms.live_reply_form import LiveReplyForm
 live_reply_routes = Blueprint('live_replies', __name__)
 
 #Delete replies
-@live_reply_routes.route('/<int:id>/delete')
+@live_reply_routes.route('/<int:id>', methods = ["DELETE"])
 def delete_reply(id):
   if not current_user.is_authenticated:
     return {"error": "go get logged in"}, 403
@@ -20,7 +20,7 @@ def delete_reply(id):
   return {"message" : "message deleted :)"}
 
 #EDIT reply by id
-@live_reply_routes.route('/<int:id>', methods=['POST'])
+@live_reply_routes.route('/<int:id>', methods=['PATCH'])
 def edit_reply(id):
   if not current_user.is_authenticated:
     return {"error": "go get logged in"}, 403

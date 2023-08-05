@@ -65,7 +65,7 @@ def get_messages(id):
             DirectMessage.recipient_id == id,
         )).order_by(DirectMessage.created_at).all()
     partner = User.query.get(id)
-    if partner is None:
+    if not partner:
         return {"error": "partner does not exist"}, 404
     messages =  [{
             "id": message.id,
@@ -109,7 +109,7 @@ def send_direct_messages(id):
 
 #EDIT MESSAGE
 #THIS ROUTE IS NOT USED, DONE THROUGH SOCKETS IN SOCKET.PY
-@direct_mes_routes.route('/<int:id>/edit', methods=["POST"])
+@direct_mes_routes.route('/<int:id>', methods=["PATCH"])
 def edit_direct_message(id):
     if not current_user.is_authenticated:
         return {"error": "go get logged in"}, 403
@@ -132,7 +132,7 @@ def edit_direct_message(id):
 
 #DELETE MESSAGE
 #THIS ROUTE IS NOT USED, DONE THROUGH SOCKETS IN SOCKET.PY
-@direct_mes_routes.route('/<int:id>/delete')
+@direct_mes_routes.route('/<int:id>', methods = ["DELETE"])
 def delete_direct_message(id):
     if not current_user.is_authenticated:
         return {"error": "go get logged in"}, 403

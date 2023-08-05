@@ -32,7 +32,7 @@ def get_chat(id):
 
 #EDIT chat by id
 
-@live_chat_routes.route('/<int:id>', methods=['POST'])
+@live_chat_routes.route('/<int:id>', methods=['PATCH'])
 def edit_chat(id):
   if not current_user.is_authenticated:
     return {"error": "go get logged in"}, 403
@@ -49,7 +49,7 @@ def edit_chat(id):
     return chat.to_dict_no_assoc()
   return {"errors": form.errors}, 400
 
-@live_chat_routes.route('/<int:id>/delete')
+@live_chat_routes.route('/<int:id>', methods = ["DELETE"])
 def delete_chat(id):
   if not current_user.is_authenticated:
     return {"error": "go get logged in"}, 403
