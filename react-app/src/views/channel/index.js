@@ -31,7 +31,7 @@ function Channel(){
 
     const [messages, setMessages] = useState([...normalizedLiveChats])
 
-    const [chatInput, setChatInput] = useState("")
+    const [chatInput, setChatInput] = useState("");
 
     const handleContent = () => {
         if(chatInput.trim().length === 0) return;
@@ -41,7 +41,7 @@ function Channel(){
             "sender_id": parseInt(user.id),
             "channel_id": parseInt(channelId),
         })
-        messageRef.current.scroll({
+        messageRef.current?.scroll({
             top: messageRef.current.scrollHeight + 300,
             behavior: 'smooth'
         });

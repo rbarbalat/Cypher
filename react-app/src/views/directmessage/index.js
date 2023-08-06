@@ -23,7 +23,6 @@ function DirectMessage() {
     const [chatInput, setChatInput] = useState("")
     const [messages, setMessages] = useState([...normalizedDirectMessages])
 
-
     const user = useSelector(state => state.session.user)
 
 
@@ -41,7 +40,7 @@ function DirectMessage() {
             "recipient_id": parseInt(partnerId),
             "created_at": new Date()
         })
-        messageRef.current.scroll({
+        messageRef.current?.scroll({
             top: messageRef.current.scrollHeight + 300,
             behavior: 'smooth'
         });
