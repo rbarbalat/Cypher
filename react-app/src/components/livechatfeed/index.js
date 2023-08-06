@@ -48,6 +48,7 @@ const LiveChatFeed = forwardRef( function LiveChatFeed(props, ref) {
 
     useEffect(() => {
       if (ref.current) {
+        console.log("useEffect in livechatfeed")
         ref.current.scroll({
           top: ref.current.scrollHeight,
           behavior: "smooth",
