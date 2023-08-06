@@ -31,10 +31,7 @@ function Channel(){
 
     const [messages, setMessages] = useState([...normalizedLiveChats])
 
-    const [chatInput, setChatInput] = useState("")
-
-    console.log("messageRef in Channel");
-    console.log(messageRef);
+    const [chatInput, setChatInput] = useState("");
 
     const handleContent = () => {
         if(chatInput.trim().length === 0) return;
@@ -44,7 +41,7 @@ function Channel(){
             "sender_id": parseInt(user.id),
             "channel_id": parseInt(channelId),
         })
-        messageRef.current.scroll({
+        messageRef.current?.scroll({
             top: messageRef.current.scrollHeight + 300,
             behavior: 'smooth'
         });
@@ -58,15 +55,6 @@ function Channel(){
 
     useEffect(() => {
         setMessages([...normalizedLiveChats])
-        //adding this here b/c it in the corresponding section
-        //in the directmessagse component
-        if (messageRef.current) {
-            console.log("in channel message useEffect")
-            messageRef.current.scroll({
-                top: messageRef.current.scrollHeight + 300,
-                behavior: 'smooth'
-            });
-        }
     }, [liveChats, dispatch])
 
 
