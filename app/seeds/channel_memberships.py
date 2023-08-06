@@ -1,4 +1,4 @@
-from app.models import db, ChannelMembership, environment, SCHEMA
+from app.models import db, ChannelMembership, TeamMembership, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_channel_memberships(users, channels):
@@ -75,6 +75,14 @@ def seed_channel_memberships(users, channels):
     cm_list = [cm1, cm2, cm3, cm4, cm5, cm6, cm7, cm8, cm9, cm10, cm11, cm12, cm13, cm14, cm15, cm16, cm17, cm18, cm19, cm20, cm21, cm22, cm23, cm24, cm25, cm26, cm27, cm28, cm29, cm30, cm31, cm32, cm33, cm34, cm35, cm36, cm37, cm38, cm39, cm40, cm41, cm42, cm43, cm44, cm45]
     for cm in cm_list:
         db.session.add(cm)
+    db.session.commit()
+
+    #the team owner must be a member of every channel in his team
+    for channel in channels:
+        team = channel.team
+        team_owner_id = [tm.user_id for tm in team.users if tm.status == "owner"][0]
+        if team_owner_id not in [cm.user_id for cm in channel.users]:
+            db.session.add(ChannelMembership(user_id = team_owner_id, channel=channel))
     db.session.commit()
 
 
