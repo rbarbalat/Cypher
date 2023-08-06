@@ -14,7 +14,7 @@ def seed_direct_messages(users):
         "What are you getting for lunch today?",
         "I just got promoted!",
         "I'm going on vacation to Italy next month!",
-        "Read any good books lately?"
+        "Read any good books lately?",
         "I'm spending way to much time on youtube lately",
         "I won a ton in Vegas last weekend, already planning my next trip!",
         "These gas prices are killing me!!!",
