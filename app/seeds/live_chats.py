@@ -10,73 +10,85 @@ def seed_live_chats(users, channels):
     lc1 = LiveChat(
         sender_to_channel = users[0],
         channel = channels[0],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "I'm looking for a good recipe for blueberry waffles, anyone willing to share?",
         created_at = datetime(2023, 1, 1, 15)
     )
     lc2 = LiveChat(
         sender_to_channel = users[1],
         channel = channels[0],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "My recipe is way to good to share, keeping it all for myself",
         created_at = datetime(2023, 1, 2, 15)
     )
     lc3 = LiveChat(
         sender_to_channel = users[1],
         channel = channels[1],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Help! I'm out of maple syrup what can I do?",
         created_at = datetime(2023, 1, 3, 15)
     )
     lc4 = LiveChat(
         sender_to_channel = users[2],
         channel = channels[1],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Honey is a decent alternative",
         created_at = datetime(2023, 1, 4, 15)
     )
     lc5 = LiveChat(
         sender_to_channel = users[2],
         channel = channels[2],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "crispy concoctions is an all time great channel name",
         created_at = datetime(2023, 1, 5, 15)
     )
     lc6 = LiveChat(
         sender_to_channel = users[3],
         channel = channels[2],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "definitely the best named channel on Cypher",
         created_at = datetime(2023, 1, 6, 15)
     )
     lc7 = LiveChat(
         sender_to_channel = users[3],
         channel = channels[3],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "I'm trapped in a place with only instant coffee for a week!",
         created_at = datetime(2023, 1, 7, 15)
     )
     lc8 = LiveChat(
         sender_to_channel = users[4],
         channel = channels[3],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "We will pray for you!",
         created_at = datetime(2023, 1, 8, 15)
     )
     lc9 = LiveChat(
         sender_to_channel = users[4],
         channel = channels[4],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "The best part of waking up is...",
         created_at = datetime(2023, 1, 9, 15)
     )
     lc10 = LiveChat(
         sender_to_channel = users[5],
         channel = channels[4],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "espresso in your cup!",
         created_at = datetime(2023, 1, 10, 15)
     )
     lc11 = LiveChat(
         sender_to_channel = users[5],
         channel = channels[5],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Former tea drinker here, what do you guys recommend?",
         created_at = datetime(2023, 1, 11, 15)
     )
     lc12 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[5],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Literally anything, you have no where to go but up!",
         created_at = datetime(2023, 1, 12, 15)
     )
     lc13 = LiveChat(

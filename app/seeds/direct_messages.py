@@ -8,6 +8,10 @@ from datetime import datetime
 fake = Faker()
 
 def seed_direct_messages(users):
+    messages = [
+        "how is it going today?",
+        "it's going"
+    ]
     for i in range(0, 25):
         pair = sample(users, 2)
         dm = DirectMessage(
