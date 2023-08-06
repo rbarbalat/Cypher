@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useMobileMenu } from '../../../context/mobileMenuProvider';
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
 import { FaArrowRightToBracket } from 'react-icons/fa6'
 import ChannelItem from './channelitem'
@@ -13,6 +14,25 @@ function AsideChannels() {
     const [ joinChannel, setJoinChannel ] = useState(false)
     const channels = useSelector(state => state.channels.allChannels)
     const normalizedChannels = Object.values(channels)
+    const { setMenu } = useMobileMenu();
+
+    const handleCreateChannel = (boolean) => {
+        if (boolean) {
+            setCreateChannel(boolean)
+            setMenu(false)
+        } else {
+            setCreateChannel(boolean)
+        }
+    }
+
+    const handleJoinChannel = (boolean) => {
+        if (boolean) {
+            setJoinChannel(boolean)
+            setMenu(false)
+        } else {
+            setJoinChannel(boolean)
+        }
+    }
 
     return (
         <>
@@ -38,7 +58,7 @@ function AsideChannels() {
                 )
             })}
                 <li>
-                    <div onClick={() => setCreateChannel(true)} className='aside_dropdown--add_wrapper'>
+                    <div onClick={() => handleCreateChannel(true)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>
@@ -46,7 +66,7 @@ function AsideChannels() {
                     </div>
                 </li>
                 <li>
-                    <div onClick={() => setJoinChannel(true)} className='aside_dropdown--add_wrapper'>
+                    <div onClick={() => handleJoinChannel(true)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
                             <FaArrowRightToBracket className='aside_dropdown--add_icon'/>
                         </div>
@@ -61,7 +81,7 @@ function AsideChannels() {
     {
         createChannel || joinChannel ?
         <Modal>
-           <CreateChannelForm setCreateChannel={setCreateChannel} setJoinChannel={setJoinChannel} joinChannel={joinChannel}/>
+           <CreateChannelForm setCreateChannel={handleCreateChannel} setJoinChannel={handleJoinChannel} joinChannel={joinChannel}/>
         </Modal> :
         null
     }

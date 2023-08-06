@@ -105,3 +105,9 @@
     text-align: center;
     padding: 20px 0;
 }
+
+@media screen and (max-width: 600px) {
+  .create_channel--wrapper {
+        width: 90%;
+    }
+}

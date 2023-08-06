@@ -266,3 +266,10 @@
    font-size: 12px;
    padding: 0;
 }
+
+@media screen and (max-width: 600px) {
+   .message--message {
+      font-size: 15px;
+   }
+
+}

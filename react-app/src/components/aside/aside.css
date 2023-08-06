@@ -8,7 +8,14 @@
     height: 100%;
     color: white;
 }
-
+.loading_aside--wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    background-color: var(--blue);
+    height: 100%;
+    color: white;
+}
 .aside--header {
     display: flex;
     align-items: center;
@@ -134,4 +141,26 @@
 
 .aside_dropdown--add_icon {
     font-size: 12px;
+}
+
+
+@media screen and (max-width: 900px) {
+    #aside--wrapper {
+        position: absolute;
+        transition: left 0.3s;
+        z-index: 300;
+    }
+
+    .mobile_menu--open {
+        left: 0;
+    }
+
+    .mobile_menu--closed {
+        left: -300px;
+    }
+
+    .loading_aside--wrapper {
+        display: none;
+    }
+
 }

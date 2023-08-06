@@ -65,3 +65,49 @@
     color: var(--body);
     padding-left: 10px;
 }
+
+
+@media screen and (max-width: 600px) {
+   .message--message {
+      font-size: 15px;
+   }
+
+   .message_textarea--container {
+        flex-direction: row;
+        position: relative;
+   }
+
+   .message_textarea--input {
+        width: 100%;
+        height: 70px;
+        padding: 15px;
+        font-size: 15px;
+   }
+
+   .message_textarea--count {
+        position: absolute;
+        right: 0;
+        top: -25px;
+   }
+
+   .message_textarea--button {
+        padding: unset;
+        height: 40px;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+   }
+
+   .message_textarea--actions {
+        padding: 0 15px;
+    }
+
+   .message_textarea--button span {
+
+        display: none;
+   }
+
+
+
+}

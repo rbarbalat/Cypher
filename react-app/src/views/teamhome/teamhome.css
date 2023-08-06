@@ -61,3 +61,41 @@
     margin: 20px 0;
     background-color: white;
 }
+
+
+@media screen and (max-width: 900px) {
+    .team--description {
+        display: none;
+    }
+
+    .team_home--image {
+    height: 350px;
+    aspect-ratio: 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: 1px 1px 5px 1px var(--shadow);
+}
+}
+
+@media screen and (max-width: 600px) {
+
+    .team_home--image {
+        height: unset;
+        width: 80%;
+    }
+
+    .team_home--data {
+        width: 100%;
+    }
+
+    .team_home--name {
+        font-size: 20px;
+    }
+    .team_home--description {
+        font-size: 15px;
+    }
+
+}

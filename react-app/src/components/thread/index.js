@@ -3,15 +3,18 @@ import './thread.css';
 import { FaTimes } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import ThreadUser from './threadUser';
+import { useMobileMenu } from '../../context/mobileMenuProvider';
 import ThreadReplies from './threadReplies';
 import { thunkclearThread } from '../../store/thread';
 
 function Thread() {
     const thread = useSelector(state => state.thread.current)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const { threadMenu, setThreadMenu } = useMobileMenu();
 
     const handleClearThread = () => {
         dispatch(thunkclearThread())
+        setThreadMenu(false)
     }
 
     return (

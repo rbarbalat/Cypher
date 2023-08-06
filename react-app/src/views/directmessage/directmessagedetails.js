@@ -21,7 +21,9 @@ const DirectMessageDetails = React.forwardRef((props, ref) => {
             </div>
             <header className='direct_message_details--header'>
                 <div className='direct_message_details--intro'>
-                    <div className='direct_message_details--image'></div>
+                    <div className='direct_message_details--image' style={{backgroundImage: `url(${partner.image})`}}>
+                        {partner.image ? null : <span>{partner?.username.charAt(0)}</span>}
+                    </div>
                     <div className='direct_message_details--information'>
                         <p className='direct_message_details--title'>{partner?.username}</p>
                         <p className='direct_message_details--subtitle'>{partner?.email}</p>
@@ -30,10 +32,6 @@ const DirectMessageDetails = React.forwardRef((props, ref) => {
             </header>
             <div className='direct_message_details--contents'>
                 <div className='direct_message_details--container'>
-                    <div className='direct_message_details--flex'>
-                        <FaRegClock/>
-                        <span>Current Time</span>
-                    </div>
                     <p onClick={handleUserThread} className='direct_message_details--link'>View Full Profile</p>
                 </div>
             </div>

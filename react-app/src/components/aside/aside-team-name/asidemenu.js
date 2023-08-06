@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMobileMenu } from '../../../context/mobileMenuProvider';
 import { clearTeam, deleteTeam } from '../../../store/teams';
 import { useParams } from 'react-router-dom';
 import { FaArrowRightFromBracket, FaTrashCan } from 'react-icons/fa6'
@@ -14,15 +15,18 @@ const AsideTeamMenu = React.forwardRef((props, ref) => {
     const userId = useSelector(state => state.session.user.id)
     const status = useSelector(state => state.teams.singleTeam.users.find(user => user.id === userId).status)
     const { teamId } = useParams()
+    const { setMenu } = useMobileMenu();
 
     const handleTeamSignOut = () => {
         history.push('/dashboard')
         dispatch(clearTeam())
+        setMenu(false)
     }
 
     const handleTeamDelete = () => {
         dispatch(deleteTeam(teamId))
         history.push('/dashboard')
+        setMenu(false)
     }
 
     const deleteTeamMembership = async () => {

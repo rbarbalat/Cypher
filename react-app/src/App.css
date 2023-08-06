@@ -17,6 +17,7 @@
 .cypher--wrapper {
   height: calc(100% - 50px);
   width: 100%;
+  position: relative;
   /* display: flex;
   flex-direction: column; */
 }

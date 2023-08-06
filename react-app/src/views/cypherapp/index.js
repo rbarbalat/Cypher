@@ -11,6 +11,7 @@ import Navigation from '../../components/navigation';
 import TeamHome from '../teamhome';
 import Thread from '../../components/thread'
 import TeamMembers from '../teammembers';
+import MobileMenuProvider from '../../context/mobileMenuProvider';
 
 function CypherApp() {
     const [ loading, setLoading ] = useState(true)
@@ -32,34 +33,36 @@ function CypherApp() {
     if (loading || !team) return <DataLoading></DataLoading>
 
     return (
-        <div className='cypher--wrapper'>
-        <Navigation/>
-        <main id='main--wrapper'>
-            <Aside/>
-            <Switch>
-                <Route path={`/team/${teamId}/channels/:channelId`}>
-                    <Channel/>
-                </Route>
-                <Route path={`/team/${teamId}/direct-messages/:userId`}>
-                    <DirectMessage/>
-                </Route>
-                <Route path={`/team/${teamId}/new-message`}>
-                    <NewMessage/>
-                </Route>
-                <Route path={`/team/${teamId}/members`}>
-                    <TeamMembers/>
-                </Route>
-                <Route path={`/team/${teamId}`}>
-                    <TeamHome/>
-                </Route>
+        <MobileMenuProvider>
+            <div className='cypher--wrapper'>
+            <Navigation/>
+            <main id='main--wrapper'>
+                <Aside/>
+                <Switch>
+                    <Route path={`/team/${teamId}/channels/:channelId`}>
+                        <Channel/>
+                    </Route>
+                    <Route path={`/team/${teamId}/direct-messages/:userId`}>
+                        <DirectMessage/>
+                    </Route>
+                    <Route path={`/team/${teamId}/new-message`}>
+                        <NewMessage/>
+                    </Route>
+                    <Route path={`/team/${teamId}/members`}>
+                        <TeamMembers/>
+                    </Route>
+                    <Route path={`/team/${teamId}`}>
+                        <TeamHome/>
+                    </Route>
 
-            </Switch>
-            {Object.keys(thread).length ?
-            <Thread/> :
-            null
-            }
-        </main>
-        </div>
+                </Switch>
+                {Object.keys(thread).length ?
+                <Thread/> :
+                null
+                }
+            </main>
+            </div>
+        </MobileMenuProvider>
     )
 }
 
