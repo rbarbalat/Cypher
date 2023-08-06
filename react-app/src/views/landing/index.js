@@ -22,7 +22,7 @@ import {
 } from "react-icons/fa";
 import logo from "../../assets/cypher-white.svg";
 import logo2 from "../../assets/cypher-logo.svg";
-import omar_Elsahlah from "../../assets/omar_Elsahlah.jpeg";
+import omar_Elsahlah from "../../assets/omar_Elsahlah.jpg";
 import chris_Eke from "../../assets/chris_Eke.jpeg";
 import roman_Barbalat from "../../assets/roman_Barbalat.jpeg";
 import jonathan_Carter from "../../assets/jonathan_Carter.jpeg";
@@ -226,6 +226,9 @@ function Landing() {
         </div>
         <div className="landing_footer--footer">
           <p>&copy; Cypher 2023 - An App Academy App</p>
+          <a href="https://github.com/rbarbalat/Cypher" target="_blank" rel="noreferrer" className="landing_footer--button btn" >
+            <span>Github Repo</span>
+          </a>
         </div>
       </footer>
     </main>
