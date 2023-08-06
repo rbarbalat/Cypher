@@ -94,109 +94,127 @@ def seed_live_chats(users, channels):
     lc13 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[6],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Why did the dinosaur cross the road?",
         created_at = datetime(2023, 1, 13, 15)
     )
     lc14 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[6],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Because chickens didn't exist yet",
         created_at = datetime(2023, 1, 14, 15)
     )
     lc15 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[7],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "What did the triangle say to the circle?",
         created_at = datetime(2023, 1, 15, 15)
     )
     lc16 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[7],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "You are pointless",
         created_at = datetime(2023, 1, 16, 15)
     )
     lc17 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[8],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "What do sprinters eat before they race?",
         created_at = datetime(2023, 1, 17, 15)
     )
     lc18 = LiveChat(
         sender_to_channel = users[9],
         channel = channels[8],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Nothing. They fast",
         created_at = datetime(2023, 1, 18, 15)
     )
     lc19 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[9],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Who do you guys think was the smartest ninja turtle?",
         created_at = datetime(2023, 1, 19, 15)
     )
     lc20 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[9],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Donatello!  How is this even a question?",
         created_at = datetime(2023, 1, 20, 15)
     )
     lc21 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[10],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "So how do you guys handle social interactions?",
         created_at = datetime(2023, 1, 21, 15)
     )
     lc22 = LiveChat(
         sender_to_channel = users[5],
         channel = channels[10],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "We don't",
         created_at = datetime(2023, 1, 22, 15)
     )
     lc23 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[11],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "I called in sick and then ran into my boss at the gym...",
         created_at = datetime(2023, 1, 23, 15)
     )
     lc24 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[11],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Did you ask if you can use him as a reference?",
         created_at = datetime(2023, 1, 24, 15)
     )
     lc25 = LiveChat(
         sender_to_channel = users[6],
         channel = channels[12],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "My partner asked me to stop using so many emojis",
         created_at = datetime(2023, 1, 25, 15)
     )
     lc26 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[12],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Dump them! I couldn't be with someone like that",
         created_at = datetime(2023, 1, 26, 15)
     )
     lc27 = LiveChat(
         sender_to_channel = users[7],
         channel = channels[13],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Did you know that Oxford's word of the year in 2015 was an emoji?",
         created_at = datetime(2023, 1, 27, 15)
     )
     lc28 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[13],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "Yeah! It was the face with tears of joy.",
         created_at = datetime(2023, 1, 28, 15)
     )
     lc29 = LiveChat(
         sender_to_channel = users[8],
         channel = channels[14],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "What is everyone's favorite emoji?",
         created_at = datetime(2023, 1, 28, 16)
     )
     lc30 = LiveChat(
         sender_to_channel = users[9],
         channel = channels[14],
-        message=fake.text(max_nb_chars=randint(300, 499)),
+        # message=fake.text(max_nb_chars=randint(300, 499)),
+        message = "FIRE!",
         created_at = datetime(2023, 1, 28, 17)
     )
 
