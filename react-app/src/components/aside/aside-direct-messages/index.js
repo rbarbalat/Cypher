@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { FaCaretRight, FaCaretDown, FaPlus  } from 'react-icons/fa'
 import DirectMessageItem from './directmessageitem'
+import { useMobileMenu } from '../../../context/mobileMenuProvider'
 import DirectMessageLabel from './directmessagelabel'
 import { useSelector } from 'react-redux'
 
@@ -10,7 +11,13 @@ function AsideDirectMessages() {
     const team = useSelector(state => state.teams.singleTeam)
     const directPartners = useSelector(state => state.messages.partners);
     const normalizedDirectPartners = Object.values(directPartners)
-    const history = useHistory()
+    const history = useHistory();
+    const { setMenu } = useMobileMenu();
+
+    const handleNewMessage = (id) => {
+        history.push(`/team/${id}/new-message`)
+        setMenu(false)
+    }
 
     return (
         <div className='aside_dropdown--wrapper'>
@@ -35,7 +42,7 @@ function AsideDirectMessages() {
                     )
                 })}
                 <li>
-                    <div  onClick={() => history.push(`/team/${team?.id}/new-message`)} className='aside_dropdown--add_wrapper'>
+                    <div  onClick={() => handleNewMessage(team?.id)} className='aside_dropdown--add_wrapper'>
                         <div className='aside_dropdown--add_item'>
                             <FaPlus className='aside_dropdown--add_icon'/>
                         </div>

@@ -56,3 +56,14 @@
     font-size: 18px;
     color: var(--body)
 }
+
+@media screen and (max-width: 600px) {
+    .message_feed--introduction {
+        padding: 15px;
+    }
+
+    .message_feed--introduction--greeting {
+        font-size: 15px;
+    }
+
+}

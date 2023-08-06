@@ -96,3 +96,29 @@
 }
 
 /* .btn auth--demo */
+
+
+@media screen and (max-width: 500px) {
+.auth--to_login {
+    position: absolute;
+    right: 20px;
+    top: unset;
+    bottom: 50px;
+    font-size: 15px;
+    text-align: right;
+}
+
+.auth--contents {
+    width: 100%;
+}
+
+.auth--form {
+    width: 100%;
+    padding: 50px 20px;
+}
+
+.auth--intro h1 {
+    font-size: 25px;
+}
+
+}

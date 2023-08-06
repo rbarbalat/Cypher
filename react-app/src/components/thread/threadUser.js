@@ -71,8 +71,6 @@ function ThreadUser({thread}) {
         </form> :
         null
       }
-
-      <h2 className='user_thread--username'>{user?.username}</h2>
     </div>
   )
 }

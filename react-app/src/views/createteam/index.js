@@ -40,7 +40,7 @@ function CreateTeam() {
                 </div>
             <div className='create_team--contents  create_landing--grid'>
                 <div className='create_landing--text'>
-                    <h1>Create a new Cypher Team</h1>
+                    <h1>Create a new<br/> Cypher Team</h1>
                     <p>Cypher gives your team a home — a place where they can talk and work together. To create a new team, click the button below.</p>
                     <Link className='create_landing--button' to="/create-team/new/1">Create a Team</Link>
                 </div>

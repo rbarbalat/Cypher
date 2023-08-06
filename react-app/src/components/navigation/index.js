@@ -2,10 +2,11 @@ import React from 'react'
 import useOutsideClick from '../../hooks/useOutsideClick';
 import Modal from '../modal';
 import NavigationMenu from './navigationmenu';
-import {FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import {FaChevronDown, FaChevronUp, FaTimes, FaBars, FaKey } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom';
 import { thunkGetUserThread } from '../../store/thread';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMobileMenu } from '../../context/mobileMenuProvider';
 import { logout } from '../../store/session';
 import './navigation.css';
 
@@ -13,13 +14,13 @@ function Navigation() {
     const user = useSelector(state => state.session.user)
     const userImage = useSelector(state => state.users.users[user.id])
     const team = useSelector(state => state.teams.singleTeam)
-    const channel = useSelector(state => state.channels.singleChannel)
 
     const TeamOwner = team.users.find(user => user.status === "owner");
     const isTeamOwner = TeamOwner.id === user.id;
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { menu, setMenu } = useMobileMenu();
     const { ref, isVisible, setIsVisible } = useOutsideClick();
 
     const handleLogOut = () => {
@@ -34,8 +35,15 @@ function Navigation() {
 
     return (
         <nav className='navigation--wrapper'>
+            <div onClick={menu ? () =>  setMenu(false) : () => setMenu(true)} className='navigation--mobile_menu'>
+                {
+                    menu ?
+                    <FaTimes/> :
+                    <FaBars/>
+                }
+            </div>
             <div className='navigation--contents'>
-                { isTeamOwner ? <span className='navigation--owner'>You are the Owner of this Team</span> : null}
+                { isTeamOwner ? <span className='navigation--owner'><FaKey/><span>Owner</span></span> : null}
                 <div onClick={() => setIsVisible(!isVisible)} className='navigation--user'>
                     <span>{user.username}</span>
                     <div className='navigation--image' style={{backgroundImage: `url(${userImage?.image})`}}>

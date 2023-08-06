@@ -351,3 +351,17 @@
 .member-count-5 {
     left: -10px;
 }
+
+@media screen and (max-width: 600px) {
+    .channel--description {
+        display: none;
+    }
+
+    .channel_details--wrapper {
+        width: 90%;
+    }
+    .channel--name {
+        padding: 0;
+    }
+
+}

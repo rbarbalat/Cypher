@@ -26,13 +26,12 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
     const normalizedChannels = Object.values(channels)
     const channelNotJoined = normalizedChannels.filter(channel => !normalizedJoinedChannels.some(cm => cm.id === channel.id))
     const nonPrivateChannels = channelNotJoined.filter(channel => channel.private === false)
-    // const teamsNotJoined = normalizedEveryTeam.filter(team => !normalizedTeams.some(tm => tm.id === team.id));
 
 
     const history = useHistory()
     const handleCreateChannel = async (e) => {
 
-        e.preventDefault(); //add e parameter/argument
+        e.preventDefault();
         const formData = new FormData()
         formData.append("name", name)
         formData.append("description", description)
@@ -52,7 +51,7 @@ function CreateChannelForm({ setCreateChannel, setJoinChannel, joinChannel }) {
             setErrors(valErrors);
             return;
         } else {
-            setCreateChannel(false); //do we need this?
+            setCreateChannel(false);
             setJoinChannel(false)
             history.push(`/team/${team.id}/channels/${data.id}`)
         }

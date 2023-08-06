@@ -75,7 +75,15 @@
     height: 80px;
     aspect-ratio: 1;
     border-radius: 10px;
-    background-color: var(--border);
+    background-color: var(--color-hover);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .direct_message_details--title {
@@ -130,4 +138,11 @@
     display: block;
     font-size: 15px;
     color: var(--border)
+}
+
+
+@media screen and (max-width: 600px) {
+    .direct_message_details--wrapper {
+        width: 90%;
+    }
 }
