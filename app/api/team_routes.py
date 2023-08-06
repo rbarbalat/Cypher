@@ -198,6 +198,16 @@ def delete_team(id):
 def create_channel(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
+
+  #extra check
+  team = Team.query.get(id)
+  if not team:
+    return {"error": "team does not exist"}, 404
+
+  #team guaranteed to have exactly 1 owner
+  team_owner_id = [tm.user_id for tm in team.users if tm.status == "owner"][0]
+  #end change
+
   form = ChannelForm()
   form["csrf_token"].data = request.cookies["csrf_token"]
   if form.validate_on_submit():
@@ -207,6 +217,12 @@ def create_channel(id):
     channel.team_id = id
     db.session.add(channel)
     db.session.add(ChannelMembership(user=current_user, channel=channel, status="owner"))
+
+    #making the team_owner a member of the channel (as a regular member)
+    if current_user.id != team_owner_id:
+      db.session.add(ChannelMembership(user_id = team_owner_id, channel=channel))
+    #end change
+
     db.session.commit()
     return {
       "id":channel.id,
@@ -224,7 +240,7 @@ def add_member_to_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
   team = Team.query.get(id)
-  if team is None:
+  if not team:
     return {"error": "team does not exist"}, 404
   if len(team.users) == 0:
     return {"error": "can't add yourself to a team with zero members"}, 401

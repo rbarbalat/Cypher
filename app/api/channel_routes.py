@@ -129,38 +129,52 @@ def delete_member_from_channel(chan_id, mem_id):
     return {"error" : "go get logged in"}, 403
 
   channel = Channel.query.get(chan_id)
-  if channel is None:
+  if not channel:
     return {"error": "channel does not exist"}, 404
+
   team_id = channel.team.id
   team = channel.team
+
   #this is the cm to be deleted
-  cm = ChannelMembership.query.filter(ChannelMembership.user_id == mem_id).filter(ChannelMembership.channel_id == chan_id).first()
+  cm = ChannelMembership.query.filter(ChannelMembership.user_id == mem_id) \
+                        .filter(ChannelMembership.channel_id == chan_id).first()
   if not cm:
      return {"error": "no such user"}, 404
 
-   # the user to be deleted is the owner but it is not the owner trying to delete himself
-  if cm.status == "owner" and cm.user_id != current_user.id:
+  team_owner_id = [tm.user_id for tm in team.users if tm.status == "owner"][0]
+  chan_owner_id = [cm.user_id for cm in channel.users if cm.status == "owner"][0]
+
+  if cm.user_id == team_owner_id:
+     return {"error": "team owner can't be removed from the channel"}, 403
+
+  #the user trying to remove the chan_owner must be the chan_owner himself or team_owner
+  if cm.status == "owner" and current_user.id not in [cm.user_id, team_owner_id]:
      return {"error": "unauthorized"}, 403
 
-  if cm.status == "owner" and cm.user_id == current_user.id:
-    return {"error": "channel owner can't delete his own membership"}, 403
+  # when chan_owner is removed the team owner becomes the new channel owner
+  if cm.status == "owner" and current_user.id in [cm.user_id, team_owner_id]:
+     db.session.delete(cm)
+     db.session.commit()
+     cm_of_team_owner = [cm for cm in channel.users if cm.user_id == team_owner_id][0]
+     cm_of_team_owner.status = "owner"
+     db.session.commit()
+     return get_team_channel_user_for_delete(team_id, current_user.id)
 
-    #regular user deletes himself
+  #regular user deletes himself
   if cm.user.id == current_user.id:
      db.session.delete(cm)
      db.session.commit()
      return get_team_channel_user_for_delete(team_id, current_user.id)
-  #an owner or admin deletes a user
-  elif current_user.id in [ chan_men.user.id for chan_men in
-                           ChannelMembership.query.filter(ChannelMembership.status != "member").filter(ChannelMembership.channel_id == chan_id).all() ]:
-    db.session.delete(cm)
-    db.session.commit()
-    return get_team_channel_user_for_delete(team_id, current_user.id)
-  elif current_user.id in [ tm.user_id for tm in team.users if tm.status in ['owner', 'admin']]:
-    db.session.delete(cm)
-    db.session.commit()
-    return get_team_channel_user_for_delete(team_id, current_user.id)
-  return {"error": "Unauthorized"}, 403
+
+  #regular user is deleted by a channel_owner or team_owner
+  if cm.status != "owner" and current_user.id in [chan_owner_id, team_owner_id]:
+     db.session.delete(cm)
+     db.session.commit()
+     return get_team_channel_user_for_delete(team_id, current_user.id)
+
+  #purpose of get_team_channel_user_for_delete is to get the right info to display
+  #the page after the deletion
+  return {"error": "Unauthorized backstop"}, 403
 
 #GET all chats for channel
 @channel_routes.route('/<int:id>/chats')
