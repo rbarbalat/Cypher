@@ -73,76 +73,76 @@ This web app uses the following API routes to dynamically update the page to cre
 
 *  Returns a list of all Teams
 
-    * `GET /api/teams`
+    * `GET /api/teams/`
 
       ```json
       [
           {
-              "id": Integer,
-              "name": String,
-              "image": String,
-              "users": [Users],
-              "num_members": Integer
+              "id": "Integer",
+              "name": "String",
+              "image": "String",
+              "users": "[Users]",
+              "num_members": "Integer"
           }
       ]
       ```
 
 
 * Returns a list all Teams that the user is a member of
-  
+
     * `GET /api/teams/currentuser`
 
       ```json
       [
           {
-              "id": Integer,
-              "name": String,
-              "image": String,
-              "users": [Users],
-              "num_members": Integer
+              "id": "Integer",
+              "name": "String",
+              "image": "String",
+              "users": "[Users]",
+              "num_members": "Integer"
           }
       ]
       ```
-      
+
 
 * Returns a dictionary representing a single Team
 
     * `GET /api/teams/<int:id>`
- 
+
       ```json
       {
-          "id": Integer,
-          "name": String,
-          "image": String,
-          "users": [Users],
-          "num_members": Integer
+          "id": "Integer",
+          "name": "String",
+          "image": "String",
+          "users": "[Users]",
+          "num_members": "Integer"
       }
       ```
 
 
 * Returns a dictionary of the newly created Team
 
-    * `POST /api/teams`
- 
+    * `POST /api/teams/`
+
       ```json
       {
-          "id": Integer,
-          "name": String,
-          "description": String
-          "image": String
+          "id": "Integer",
+          "name": "String",
+          "description": "String",
+          "image": "String"
       }
       ```
 
-      
+
 * Returns a  lists of dictionaries containing the members of a team
 
     * `GET /api/teams/<int:id>/members`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "name": String
+              "id": "Integer",
+              "name": "String"
           }
       ]
       ```
@@ -151,11 +151,11 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a dictionary containing the newly added member, and the updated member list
 
     * `POST /api/teams/<int:id>/members`
- 
+
       ```json
       {
-          "id": Integer,
-          "username": String
+          "id": "Integer",
+          "username": "String"
       }
       ```
 
@@ -163,7 +163,7 @@ This web app uses the following API routes to dynamically update the page to cre
 * If user is Admin, returns confirmation message of successful deletion of Team
 
     * `DELETE /api/teams/<int:id>`
- 
+
       ```json
       {
           "message": "Team Deleted"
@@ -174,7 +174,7 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a confirmation message that the member was deleted
 
     * `DELETE /api/teams/<int:team_id>/member/<int:member_id>`
- 
+
       ```json
       {
           "message": "Successfully Deleted"
@@ -188,15 +188,15 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a list of all Channels that belong to the specified Team
 
     * `GET /api/teams/<int:id>/channels`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "name": String,
-              "description": String,
-              "private": Boolean,
-              "team_id": Integer
+              "id": "Integer",
+              "name": "String",
+              "description": "String",
+              "private": "Boolean",
+              "team_id": "Integer"
           }
       ]
       ```
@@ -205,15 +205,15 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a list of channels the current user belongs to
 
     * `GET /api/teams/<int:id>/channels/user`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "name": String,
-              "description": String,
-              "private": Boolean,
-              "team_id": Integer
+              "id": "Integer",
+              "name": "String",
+              "description": "String",
+              "private": "Boolean",
+              "team_id": "Integer"
           }
       ]
       ```
@@ -222,16 +222,16 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a dictionary of the specified Channel
 
     * `GET /api/channels/<int:id>`
- 
+
       ```json
       {
-          "id": Integer,
-          "name": String,
-          "private": Boolean,
-          "team_id": Integer,
-          "description": String,
-          "users": [Users],
-          "num_members": Integer
+          "id": "Integer",
+          "name": "String",
+          "private": "Boolean",
+          "team_id": "Integer",
+          "description": "String",
+          "users": "[Users]",
+          "num_members": "Integer"
       }
       ```
 
@@ -239,13 +239,13 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a list of all members of a Channel
 
     * `GET /api/channels/<int:id>/members`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "username": String,
-              "status": String
+              "id": "Integer",
+              "username": "String",
+              "status": "String"
           }
       ]
       ```
@@ -254,15 +254,15 @@ This web app uses the following API routes to dynamically update the page to cre
 * If the user is Admin, Returns a dictionary of the newly created Channel
 
     * `POST /api/teams/<int:id>/channels`
- 
+
       ```json
       {
-          "id": Integer,
-          "name": String,
-          "private": Boolean,
-          "team_id": Integer,
-          "description": String,
-          "users": [Users]
+          "id": "Integer",
+          "name": "String",
+          "private": "Boolean",
+          "team_id": "Integer",
+          "description": "String",
+          "users": "[Users]"
       }
       ```
 
@@ -270,7 +270,7 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a confirmation that the user was added to the channel
 
     * `POST /api/channels/<int:id>/members/<int:user_id>`
- 
+
       ```json
       {
           "message": "Member Added"
@@ -281,7 +281,7 @@ This web app uses the following API routes to dynamically update the page to cre
 * Returns a confirmation message that the member was deleted
 
     * `DELETE /api/channels/<int:id>/members/<int:user_id>`
- 
+
       ```json
       {
           "message": "Member Deleted"
@@ -292,7 +292,7 @@ This web app uses the following API routes to dynamically update the page to cre
 * If user is Admin, returns confirmation message of successful deletion of Channel
 
     * `DELETE /api/teams/<int:id>`
- 
+
       ```json
       {
           "message": "Channel Deleted"
@@ -305,27 +305,27 @@ This web app uses the following API routes to dynamically update the page to cre
 * Get a Live Chat Message by Id and returns the message
 
     * `GET /api/chats/<int:id>`
- 
+
       ```json
       {
-          "id": Integer,
-          "message": String,
-          "created_at": Date,
-          "sender_id": Integer,
+          "id": "Integer",
+          "message": "String",
+          "created_at": "Date",
+          "sender_id": "Integer",
       }
       ```
-      
+
 
 * Update a Live Chat message by its id and returns the message
 
     * `PATCH /api/chats/<int:id>`
- 
+
       ```json
       {
-          "id": Integer,
-          "message": String,
-          "created_at": Date,
-          "sender_id": Integer,
+          "id": "Integer",
+          "message": "String",
+          "created_at": "Date",
+          "sender_id": "Integer",
       }
       ```
 
@@ -333,60 +333,60 @@ This web app uses the following API routes to dynamically update the page to cre
 * Deletes a Live Chat message and returns a confirmation message
 
     * `DELETE /api/chats/<int:id>`
- 
+
       ```json
       {
           "message": "Message Deleted"
       }
       ```
 
-      
+
 * Returns an ordered list of messages that belong to a Channel
 
     * `GET /api/channels/<int:id>/chats`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "message": String,
-              "created_at": Date,
-              "sender_id": Integer,
-              "username": String,
-              "image": String
+              "id": "Integer",
+              "message": "String",
+              "created_at": "Date",
+              "sender_id": "Integer",
+              "username": "String",
+              "image": "String"
           }
       ]
       ```
-      
+
 
 * Returns an updated list of of messages including the newly created message
 
     * `POST /api/channels/<int:id>/chats`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "message": String,
-              "created_at": Date,
-              "sender_id": Integer
+              "id": "Integer",
+              "message": "String",
+              "created_at": "Date",
+              "sender_id": "Integer"
           }
       ]
       ```
 
- 
+
 ## Direct Messages
 
 * Returns a list of all Direct Message partners for the user
 
-    * `GET /api/messages`
- 
+    * `GET /api/messages/`
+
     ```json
     [
         {
-            "id": Integer,
-            "partner": String,
-            "image": String
+            "id": "Integer",
+            "partner": "String",
+            "image": "String"
         }
     ]
     ```
@@ -395,69 +395,69 @@ This web app uses the following API routes to dynamically update the page to cre
 * Creates a Direct Message message and returns the message
 
     * `POST /api/messages/<int:id>`
- 
+
       ```json
       {
-          "id": Integer,
-          "sender_id": String,
-          "recipient_id": Date,
-          "message": String,
-          "created_at": Date
+          "id": "Integer",
+          "sender_id": "String",
+          "recipient_id": "Date",
+          "message": "String",
+          "created_at": "Date"
       }
       ```
-      
+
 
 * Returns an ordered list of messages that belong to a direct message between two users
 
     * `GET /api/messages/<int:user_id>/<int:recipient_id>`
- 
+
       ```json
       {
           "messages": [
                           {
-                              "id": Integer,
-                              "sender": String,
-                              "recipient": String,
-                              "sender_id": Integer,
-                              "recipient_id": Integer,
-                              "message": String,
-                              "created_at": Date,
-                              "partner": Integer,
-                              "image": String
+                              "id": "Integer",
+                              "sender": "String",
+                              "recipient": "String",
+                              "sender_id": "Integer",
+                              "recipient_id": "Integer",
+                              "message": "String",
+                              "created_at": "Date",
+                              "partner": "Integer",
+                              "image": "String"
                           }
                       ],
-          "user": {User}
+          "user": "{User}"
       }
       ```
 
 * Returns an updated list of of messages including the newly created message
 
     * `POST /api/messages/<int:user_id>/<int:recipient_id>`
- 
+
     ```json
     [
         {
-            "id": Integer,
-            "sender_id": Integer,
-            "recipient_id": Integer,
-            "message": String,
-            "created_at": Date
+            "id": "Integer",
+            "sender_id": "Integer",
+            "recipient_id": "Integer",
+            "message": "String",
+            "created_at": "Date"
         }
     ]
-    ``` 
+    ```
 
 * If the user is the sender of the message, Returns the list of messages with the updated message
 
     * `PATCH /api/messages/<int:id>`
- 
+
       ```json
       [
           {
-              "id": Integer,
-              "sender_id": Integer,
-              "recipient_id": Integer,
-              "message": String,
-              "created_at": Date
+              "id": "Integer",
+              "sender_id": "Integer",
+              "recipient_id": "Integer",
+              "message": "String",
+              "created_at": "Date"
           }
       ]
       ```
@@ -471,7 +471,3 @@ This web app uses the following API routes to dynamically update the page to cre
           "message": "Message Deleted"
       }
       ```
-
-      
-
-
