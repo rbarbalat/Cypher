@@ -71,7 +71,7 @@ This web app uses the following API routes to dynamically update the page to cre
 
 ## Teams
 
-*  Returns a list of all Teams
+*  Returns a list of all Teams (each team is a dictionary)
 
     * `GET /api/teams/`
 
@@ -88,7 +88,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a list all Teams that the user is a member of
+* Returns a list of all the Teams that the user is a member of (each team is a dictionary)
 
     * `GET /api/teams/currentuser`
 
@@ -105,7 +105,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a dictionary representing a single Team
+* Returns a dictionary representing a single Team with the specified id
 
     * `GET /api/teams/<int:id>`
 
@@ -134,7 +134,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a  lists of dictionaries containing the members of a team
+* Returns a list of dictionaries representing the members of the team with the specififed id.
 
     * `GET /api/teams/<int:id>/members`
 
@@ -148,19 +148,18 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a dictionary containing the newly added member, and the updated member list
+* The current user joins the team with specified id and a dictionary with successful response is returned
 
     * `POST /api/teams/<int:id>/members`
 
       ```json
       {
-          "id": "Integer",
-          "username": "String"
+          "message": "added"
       }
       ```
 
 
-* If user is Admin, returns confirmation message of successful deletion of Team
+* Returns a confirmation message of the successful deletion of specified team if the current user is the team owner.
 
     * `DELETE /api/teams/<int:id>`
 
@@ -185,7 +184,25 @@ This web app uses the following API routes to dynamically update the page to cre
 
 ## Channels
 
-* Returns a list of all Channels that belong to the specified Team
+* Returns a list of all Channels.  Each channel is a dictionary.
+
+    * `GET /api/channels/`
+
+      ```json
+      [
+        {
+            "id": "Integer",
+            "name": "String",
+            "description": "String",
+            "private": "Boolean",
+            "team_id": "Integer",
+            "numMembers": "Integer",
+            "users": "[Users]"
+        }
+      ]
+      ```
+
+* Returns a list of all Channels that belong to the specified team.  Each channel is a dictionary.
 
     * `GET /api/teams/<int:id>/channels`
 
@@ -202,7 +219,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a list of channels the current user belongs to
+* Returns a list of channels in the specified team the current user is a member of.  Each channel is a dictionary.
 
     * `GET /api/teams/<int:id>/channels/user`
 
@@ -219,7 +236,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a dictionary of the specified Channel
+* Returns a dictionary of the specified channel.
 
     * `GET /api/channels/<int:id>`
 
@@ -236,7 +253,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a list of all members of a Channel
+* Returns a list of all members of a channel.  Each member is a dictionary.
 
     * `GET /api/channels/<int:id>/members`
 
@@ -251,7 +268,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* If the user is Admin, Returns a dictionary of the newly created Channel
+* Returns a dictionary of the newly created channel.
 
     * `POST /api/teams/<int:id>/channels`
 
@@ -267,7 +284,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a confirmation that the user was added to the channel
+* Returns a confirmation that the current user successfully joined the specified channel.
 
     * `POST /api/channels/<int:id>/members/<int:user_id>`
 
@@ -278,7 +295,7 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Returns a confirmation message that the member was deleted
+* Deletes a member from the channel and returns a list of the remaining channels that the deleted user belongs to.
 
     * `DELETE /api/channels/<int:id>/members/<int:user_id>`
 
