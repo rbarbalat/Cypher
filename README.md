@@ -295,18 +295,24 @@ This web app uses the following API routes to dynamically update the page to cre
       ```
 
 
-* Deletes a member from the channel and returns a list of the remaining channels that the deleted user belongs to.
+* Deletes a member from the channel and returns a list of the remaining channels that the current user belongs to.
 
     * `DELETE /api/channels/<int:id>/members/<int:user_id>`
 
       ```json
-      {
-          "message": "Member Deleted"
-      }
+      [
+          {
+              "id": "Integer",
+              "name": "String",
+              "description": "String",
+              "private": "Boolean",
+              "team_id": "Integer"
+          }
+      ]
       ```
 
 
-* If user is Admin, returns confirmation message of successful deletion of Channel
+* If user is a team owner or channel owner, returns confirmation message of successful deletion of Channel
 
     * `DELETE /api/teams/<int:id>`
 
