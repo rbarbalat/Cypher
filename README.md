@@ -404,15 +404,15 @@ This web app uses the following API routes to dynamically update the page to cre
 
     * `GET /api/messages/`
 
-    ```json
-    [
-        {
-            "id": "Integer",
-            "partner": "String",
-            "image": "String"
-        }
-    ]
-    ```
+        ```json
+        [
+            {
+                "id": "Integer",
+                "partner": "String",
+                "image": "String"
+            }
+        ]
+        ```
 
 
 * Creates a Direct Message message and returns the message
@@ -457,17 +457,17 @@ This web app uses the following API routes to dynamically update the page to cre
 
     * `POST /api/messages/<int:user_id>/<int:recipient_id>`
 
-    ```json
-    [
-        {
-            "id": "Integer",
-            "sender_id": "Integer",
-            "recipient_id": "Integer",
-            "message": "String",
-            "created_at": "Date"
-        }
-    ]
-    ```
+        ```json
+        [
+            {
+                "id": "Integer",
+                "sender_id": "Integer",
+                "recipient_id": "Integer",
+                "message": "String",
+                "created_at": "Date"
+            }
+        ]
+        ```
 
 * If the user is the sender of the message, Returns the list of messages with the updated message
 
