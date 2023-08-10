@@ -42,6 +42,8 @@ Jonathan, Omar, Chris, and Roman have successfully completed this project with a
 ![WTForms](https://img.shields.io/badge/WTForms-%23F7981D.svg?style=for-the-badge&logo=WTForms&logoColor=white)
 ![Werkzeug](https://img.shields.io/badge/Werkzeug-%23000000.svg?style=for-the-badge&logo=Werkzeug&logoColor=white)
 ![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
 
  <h2 align="center">Landing Page</h2>
