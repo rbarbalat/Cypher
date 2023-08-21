@@ -16,7 +16,7 @@ class LiveChat(db.Model):
   #original signle association (originally no association between live replies and users)
   replies = db.relationship("LiveReplies", back_populates="chat", cascade="all, delete-orphan")
 
-  channel = db.relationship("Channel", back_populates="live_chat_users")
+  channel = db.relationship("Channel", back_populates="live_chats")
   sender_to_channel = db.relationship("User", back_populates="channel_chats")
 
   def to_dict_no_assoc(self):

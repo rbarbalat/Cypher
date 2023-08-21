@@ -67,8 +67,10 @@ def get_members_for_channel(id):
         joinedload(ChannelMembership.user)
        )
     ).first()
+
     if not channel:
       return {"error": "channel does not exist"}, 404
+
     users = [{
                 "id": cm.user.id,
                 "username": cm.user.username,
@@ -83,6 +85,7 @@ def get_members_for_channel(id):
 def delete_channel(id):
     if not current_user.is_authenticated:
         return {"error" : "go get logged in"}, 403
+
     channel = Channel.query.get(id)
     if not channel:
        return {"error": "channel not found"}, 404
@@ -193,9 +196,14 @@ def delete_member_from_channel(chan_id, mem_id):
 @channel_routes.route('/<int:id>/chats')
 def get_all_chats_by_channel(id):
   channel = Channel.query.get(id)
+
   if not channel:
     return {"error": "channel not found"}, 404
-  chats = LiveChat.query.filter(LiveChat.channel_id == id).order_by(LiveChat.created_at).all()
+
+  chats = LiveChat.query.filter(LiveChat.channel_id == id).options(
+            joinedload(LiveChat.sender_to_channel)
+  ).order_by(LiveChat.created_at).all()
+
   return [ {
             **chat.to_dict_no_assoc(),
             "username": chat.sender_to_channel.username,
