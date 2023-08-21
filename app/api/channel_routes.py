@@ -6,6 +6,8 @@ from sqlalchemy import or_
 from app.forms.live_chat_form import LiveChatForm
 from .team_routes import get_team_channel_user_for_delete
 
+from sqlalchemy.orm import joinedload
+
 channel_routes = Blueprint('channels', __name__)
 
 #GET ALL CHANNELS
@@ -247,3 +249,17 @@ def auth_user_adds_member_to_channel(id, user_id):
   db.session.add(cm)
   db.session.commit()
   return {"message": "member added"}
+
+
+#TEST ROUTE
+@channel_routes.route('/test')
+def get_test():
+
+   #team_id = channel.team_id
+   team_id = 1
+   tm = TeamMembership.query.filter(
+                  TeamMembership.team_id == team_id,
+                  TeamMembership.status == "owner"
+                ).first()
+
+   user_id = tm.user_id

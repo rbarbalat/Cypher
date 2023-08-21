@@ -6,6 +6,8 @@ from app.forms.channel_form import ChannelForm
 from sqlalchemy import or_
 from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
+from sqlalchemy.orm import joinedload
+
 team_routes = Blueprint("teams", __name__)
 
 #GET ALL TEAMS
@@ -334,3 +336,30 @@ def get_team_channel_user_for_delete(id, user_id):
   for i in range(len(channel_list)):
     channel_list[i]["users"] = user_key_values[i]
   return channel_list
+
+
+
+# get team by ID EAGER
+@team_routes.route("/<int:id>/eager")
+def get_team_by_id(id):
+  if not current_user.is_authenticated:
+    return {"error" : "go get logged in"}, 403
+
+  team = Team.query.filter(Team.id == id).options(
+          joinedload(Team.users).options(
+            joinedload(TeamMembership.user)
+  )).first()
+
+  if not team:
+    return {"error": "Team not found"}, 404
+
+  memberships = team.users
+  numMembers = len(memberships)
+
+  users = [{**tm.user.to_dict(), "status": tm.status }
+           for tm in memberships]
+
+  return {"id": team.id, "name": team.name,
+           "image": team.image, "description":team.description,
+             "users": users, "numMembers": numMembers
+             }
