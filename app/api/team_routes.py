@@ -13,20 +13,17 @@ team_routes = Blueprint("teams", __name__)
 #GET ALL TEAMS
 @team_routes.route("/")
 def get_teams():
-  teams = Team.query.all()
-
-  list_of_list_of_users = [ [tm.user.to_dict() for tm in team.users] for team in teams ]
+  teams = Team.query.options(
+            joinedload(Team.users).options(
+                joinedload(TeamMembership.user)
+  )).all()
 
   new_teams = [{
-    "id": team.id,
-    "name": team.name,
-    "image": team.image,
-    }
-    for team in teams]
-
-  for i, user_list in enumerate(list_of_list_of_users, start = 0):
-    new_teams[i]["users"] = user_list
-    new_teams[i]["numMembers"] = len(user_list)
+                  "id": team.id, "name": team.name, "image": team.image,
+                  "users": [tm.user.to_dict() for tm in team.users],
+                  "numMembers": len(team.users)
+               }
+              for team in teams]
 
   return new_teams
 
@@ -35,23 +32,35 @@ def get_teams():
 def get_team_by_id(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
-  team = Team.query.get(id)
+
+  team = Team.query.filter(Team.id == id).options(
+          joinedload(Team.users).options(
+            joinedload(TeamMembership.user)
+  )).first()
+
   if not team:
     return {"error": "Team not found"}, 404
-  users = [{**tm.user.to_dict(), "status": tm.status} for tm in team.users]
-  numMembers = len(users)
-  return {"id": team.id, "name": team.name,
-           "image": team.image, "description":team.description,
-             "users": users, "numMembers": numMembers
-             }
+
+  memberships = team.users
+  numMembers = len(memberships)
+
+  users = [{**tm.user.to_dict(), "status": tm.status }
+           for tm in memberships]
+
+  return {
+          "id": team.id,
+          "name": team.name,
+          "image": team.image,
+          "description":team.description,
+          "users": users,
+          "numMembers": numMembers
+          }
 
 #GET CURRENT USER'S TEAMS
 @team_routes.route("/currentuser")
 def get_user_teams():
   # if not current_user.is_authenticated:
   #   return {"error" : "go get logged in"}, 403
-  #THIS IS SOMETHING TO LOOK INTO, if accesses current_user in the route
-  #should be authenticated, was it causing problems?
 
   team_list=[]
   for membership in current_user.teams:
@@ -76,10 +85,18 @@ def get_user_teams():
 def get_team_channels(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
-  channel_list=[]
-  team = Team.query.get(id)
+
+  team = Team.query.filter(Team.id == id).options(
+                    joinedload(Team.channels).options(
+                      joinedload(Channel.users).options(
+                          joinedload(ChannelMembership.user)
+                      )
+                    )
+                 ).first()
   if not team:
     return {"error": "Team not found"}, 404
+
+  channel_list=[]
   user_key_values = []
   for channel in team.channels:
     channel_list.append(channel)
@@ -94,7 +111,7 @@ def get_team_channels(id):
     channel_list[i]["users"] = user_key_values[i]
   return channel_list
 
-#get channels of currente user by Team id
+#get channels of current user by Team id
 @team_routes.route("/<int:id>/channels/user")
 def get_team_channel_user(id):
   if not current_user.is_authenticated:
@@ -126,15 +143,20 @@ def get_members_for_team(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
 
-  #DO WE NEED TO PREVENT NON TEAM MEMBERS FROM HAVING ACCESS??
-  team = Team.query.get(id)
-  if team is None:
+  team = Team.query.filter(Team.id == id).options(
+                  joinedload(Team.users).options(
+                    joinedload(TeamMembership.user)
+                )
+              ).first()
+  if not team:
     return {"error": "Team not found"}, 404
-  #DO WE NEED TO ADD USER'S EMAIL?
+
   users = [{
-    "id":membership.user_id,
-    "username":membership.user.username
-      } for membership in team.users]
+            "id": tm.user_id,
+            "username": tm.user.username
+           }
+          for tm in team.users]
+
   return users
 
 #CREATE A TEAM
@@ -341,7 +363,7 @@ def get_team_channel_user_for_delete(id, user_id):
 
 # get team by ID EAGER
 @team_routes.route("/<int:id>/eager")
-def get_team_by_id(id):
+def get_team_by_id_eager(id):
   if not current_user.is_authenticated:
     return {"error" : "go get logged in"}, 403
 
@@ -363,3 +385,33 @@ def get_team_by_id(id):
            "image": team.image, "description":team.description,
              "users": users, "numMembers": numMembers
              }
+
+
+#get channels by team Id eager
+@team_routes.route("/<int:id>/channels_eager")
+def get_team_channels_eager(id):
+  if not current_user.is_authenticated:
+    return {"error" : "go get logged in"}, 403
+  channel_list=[]
+  team = Team.query.filter(Team.id == id).options(
+                    joinedload(Team.channels).options(
+                      joinedload(Channel.users).options(
+                          joinedload(ChannelMembership.user)
+                      )
+                    )
+                 ).first()
+  if not team:
+    return {"error": "Team not found"}, 404
+  user_key_values = []
+  for channel in team.channels:
+    channel_list.append(channel)
+    user_key_values.append([ {**cm.user.to_dict(), "status": cm.status } for cm in channel.users])
+  channel_list = [{
+    "id": channel.id,
+    "name": channel.name,
+    "private": channel.private
+    } for channel in channel_list ]
+
+  for i in range(len(channel_list)):
+    channel_list[i]["users"] = user_key_values[i]
+  return channel_list
