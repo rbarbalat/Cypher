@@ -13,57 +13,68 @@ channel_routes = Blueprint('channels', __name__)
 #GET ALL CHANNELS
 @channel_routes.route('/')
 def get_channels():
-    channels = Channel.query.all()
-    if len(channels) == 0:
+
+    channels = Channel.query.options(
+            joinedload(Channel.users).options(
+                joinedload(ChannelMembership.user)
+      )).all()
+
+    if not channels:
         return []
 
-    list_of_list_of_users = [ [ { **cm.user.to_dict(), "status": cm.status } for cm in channel.users] for channel in channels ]
-
     new_channels = [{
-    "id": channel.id,
-    "name": channel.name,
-    "description": channel.description,
-    "private": channel.private,
-    "team_id": channel.team_id
-    }
-    for channel in channels]
-
-    for i, user_list in enumerate(list_of_list_of_users, start = 0):
-      new_channels[i]["users"] = user_list
-      new_channels[i]["numMembers"] = len(user_list)
+                      "id": channel.id,
+                      "name": channel.name,
+                      "description": channel.description,
+                      "private": channel.private,
+                      "team_id": channel.team_id,
+                      "numMembers": len(channel.users),
+                      "users": [ {**cm.user.to_dict(), "status": cm.status } for cm in channel.users ]
+                    }
+                    for channel in channels]
 
     return new_channels
 
 #GET CHANNEL BY ID
 @channel_routes.route('/<int:id>')
 def get_channel_by_id(id):
-    channel = Channel.query.get(id)
+
+    channel = Channel.query.filter(Channel.id == id).options(
+            joinedload(Channel.users).options(
+                joinedload(ChannelMembership.user)
+      )).first()
+
     if not channel:
         return {"error": "Channel not found"}, 404
 
     users = [ { **cm.user.to_dict(), "status": cm.status } for cm in channel.users]
     numMembers = len(users)
     return {
-        'id': channel.id,
-        'name': channel.name,
-        'private': channel.private,
-        'team_id': channel.team_id,
-        "description": channel.description,
-        "users": users,
-        "numMembers": numMembers
-        }
+            'id': channel.id,
+            'name': channel.name,
+            'private': channel.private,
+            'team_id': channel.team_id,
+            "description": channel.description,
+            "users": users,
+            "numMembers": numMembers
+          }
 
 #GET MEMBERS OF A CHANNEL
 @channel_routes.route('/<int:id>/members')
 def get_members_for_channel(id):
-    channel = Channel.query.get(id)
+    channel = Channel.query.filter(Channel.id == id).options(
+       joinedload(Channel.users).options(
+        joinedload(ChannelMembership.user)
+       )
+    ).first()
     if not channel:
       return {"error": "channel does not exist"}, 404
     users = [{
-        "id":membership.user.id,
-        "username":membership.user.username,
-        "status": membership.status
-              } for membership in channel.users]
+                "id": cm.user.id,
+                "username": cm.user.username,
+                "status": cm.status
+              }
+              for cm in channel.users]
     return users
 
 
@@ -249,17 +260,3 @@ def auth_user_adds_member_to_channel(id, user_id):
   db.session.add(cm)
   db.session.commit()
   return {"message": "member added"}
-
-
-#TEST ROUTE
-@channel_routes.route('/test')
-def get_test():
-
-   #team_id = channel.team_id
-   team_id = 1
-   tm = TeamMembership.query.filter(
-                  TeamMembership.team_id == team_id,
-                  TeamMembership.status == "owner"
-                ).first()
-
-   user_id = tm.user_id
