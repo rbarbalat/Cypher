@@ -38,7 +38,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         message: update,
         channel_id: parseInt(channelId)
       });
-      dispatch(thunkGetLiveChats(parseInt(partnerId)));
+      //dispatch(thunkGetLiveChats(parseInt(partnerId)));
     }
     else
     {
@@ -48,7 +48,7 @@ function Message({ message, setThread, socket, partnerId, channelId, isLiveChat 
         sender_id: parseInt(user.id),
         recipient_id: parseInt(partnerId)
       });
-      dispatch(thunkGetDirectMessages(parseInt(partnerId)));
+      //dispatch(thunkGetDirectMessages(parseInt(partnerId)));
     }
     //message.message is the content of the paragraph below
     message.message = update

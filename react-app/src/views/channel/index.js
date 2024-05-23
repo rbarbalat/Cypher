@@ -65,15 +65,15 @@ function Channel(){
             room: `Channel ${channelId}`
         })
         socket.on("live_chat", async (chat) => {
-            let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
+            const chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
             setMessages([...chats])
         })
         socket.on("update_live_chat", async (chat) => {
-            let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
+            const chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
             setMessages([...chats])
         })
         socket.on("delete_live_chat", async (chat) => {
-            let chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
+            const chats = await dispatch(thunkGetLiveChats(parseInt(channelId)))
             setMessages([...chats])
         })
         return (() => {

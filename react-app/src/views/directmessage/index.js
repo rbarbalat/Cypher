@@ -13,8 +13,8 @@ import { thunkGetDirectMessages } from '../../store/messages';
 import { io } from "socket.io-client"
 import {useState} from "react"
 import MessageTextArea from '../../components/MessageTextBox';
-let socket;
 
+let socket;
 function DirectMessage() {
     const { ref, isVisible, setIsVisible } = useOutsideClick();
     const directMessages = useSelector(state => state.messages.directMessages);
@@ -66,18 +66,18 @@ function DirectMessage() {
             room: parseInt(user.id),
         })
         socket.on("chat", async (chat) => {
-            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-            let normMsgs = Object.values(msgs)
+            const msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            const normMsgs = Object.values(msgs)
             setMessages([...normMsgs])
         })
         socket.on("update_chat", async (chat) => {
-            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-            let normMsgs = Object.values(msgs)
+            const msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            const normMsgs = Object.values(msgs)
             setMessages([...normMsgs])
         })
         socket.on("delete_chat", async (chat) => {
-            let msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
-            let normMsgs = Object.values(msgs)
+            const msgs = await dispatch(thunkGetDirectMessages(parseInt(partnerId)))
+            const normMsgs = Object.values(msgs)
             setMessages([...normMsgs])
         })
         return (() => {
